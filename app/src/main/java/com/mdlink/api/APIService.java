@@ -5,6 +5,7 @@ import com.mdlink.model.BookAppointmentRequest;
 import com.mdlink.model.DoctorPortalRequest;
 import com.mdlink.model.DoctorPortalResponse;
 import com.mdlink.model.DoctorsListModel;
+import com.mdlink.model.PatientProfileRequest;
 
 import java.util.HashMap;
 
@@ -16,6 +17,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIService {
 
@@ -53,4 +56,10 @@ public interface APIService {
 
     @POST("appointment")
     Call<JsonObject> createAppointment(@Body BookAppointmentRequest bookAppointmentRequest);
+
+    @GET("getpatient/{id}")
+    Call<JsonObject> getPatientProfile(@Path("id") String id);
+
+    @POST("profile")
+    Call<JsonObject> updatePatientProfile(@Body PatientProfileRequest patientProfileRequest);
 }

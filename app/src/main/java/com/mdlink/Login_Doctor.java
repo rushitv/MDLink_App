@@ -51,7 +51,6 @@ public class Login_Doctor extends BaseActivity {
                 }
 
                 if (new ConnectionCall(Login_Doctor.this).connectiondetect()) {
-
                     new InserData().execute();
                 } else {
                     new ConnectionCall(Login_Doctor.this).isConnectingToInternet();
@@ -152,7 +151,8 @@ public class Login_Doctor extends BaseActivity {
                 }
 
             } catch (JSONException e) {
-
+                e.printStackTrace();
+                Toast.makeText(Login_Doctor.this,"Oops...Something went wrong! Please try later...!",Toast.LENGTH_LONG).show();
             }
 
 

@@ -1,5 +1,7 @@
 package com.mdlink;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public Toolbar mToolbar;
     private BaseActivity mActivity;
+     ProgressBar progress;
 
     public BaseActivity getBaseActivity() {
         return mActivity;
@@ -116,5 +120,4 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

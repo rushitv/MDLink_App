@@ -53,12 +53,12 @@ public class PatientRegisterAsyncTask extends AsyncTask<Void,Void,String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        System.out.println(">>>>onPostExecute>>>>>>");
         if (pd.isShowing()) {
             pd.dismiss();
         }
         try {
             JSONObject json = new JSONObject(s);
-            System.out.println(">>>>>>>>>>"+json);
             if (json.getString("status").equalsIgnoreCase("200")) {
                 Toast.makeText(context, "Registered Successfully", Toast.LENGTH_SHORT).show();
                 JSONObject jsonArray = json.getJSONObject("result");
