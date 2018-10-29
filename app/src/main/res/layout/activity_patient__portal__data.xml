@@ -14,12 +14,12 @@
         android:layout_height="match_parent" />
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
+        android:id="@+id/nav_viewPatientPortal"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_patient__portal__data"
+        app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_patient__portal__data_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
