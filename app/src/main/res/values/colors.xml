@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#D5D5D5</color>
+    <color name="colorPrimaryDark">#D5D5D5</color>
+    <color name="colorAccent">#1D5CA9</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorSkyBlue">#11b6f6</color>
+    <color name="colorGreenCard">#2e7677</color>
+    <color name="colorRedCard">#fe5a61</color>
+    <color name="colorNevvyBlue">#02283b</color>
+    <color name="colorLightGreenCard">#5dae95</color>
+    <color name="colorDarkPink">#ad5389</color>
+
+    <color name="colorLightGrey">#D3D3D3</color>
+    <color name="colorBlue">#1D5CA9</color>
+
+    <color name="colorBlack">#000000</color>
+    <color name="transparent_white_100">#64ffffff</color>
+    <color name="transparent_white_180">#bdffffff</color>
+    <color name="colorDarkGrey">#A9A9A9</color>
+    <color name="colorButtonBackground">#D04955</color>
+
+</resources>

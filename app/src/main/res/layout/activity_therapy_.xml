@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_therapy_"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.mrprashant_patel.mdlink.Therapy_Activity">
+
+
+
+    <ListView
+        android:id="@+id/therapy_list"
+        android:layout_width="match_parent"
+        android:layout_height="450dp">
+
+    </ListView>
+    <TextView
+        android:background="@drawable/custom_btn"
+        android:text="Book Appointment"
+        android:gravity="center"
+        android:id="@+id/therapy_btn"
+        android:textSize="20dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp" />
+
+</LinearLayout>

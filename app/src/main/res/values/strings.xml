@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">MDLink
+
+    </string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="urgentcare">MDlink doctor see and treat seeveral medical issuse incuding 90% of the top issues seen by Urgent Care and the E.R. </string>
+    <string name="medicaladvice">Not sare to de? Get Medical advice from our MDLink doctors when you send us youe question </string>
+    <string name="labs">if further investigation is required,our doctor can send a Lab Request to you / your nearest laboratory </string>
+    <string name="addction">If you have fallen into a pattern of misusing, alcohol , drugs, cigret</string>
+    <string name="mood">There are several tretment approches for depressions and mood issues that can help yoy start to feel better </string>
+    <string name="therapy"> Our therapists can provide a safe, confidential space for you to get the treatment you</string>
+    <string name="title_activity_depression__and__mood">Depression_And_Mood</string>
+    <string name="title_activity_patient__portal__data">Patient_Portal_Data</string>
+    <string name="title_activity_doctor__portel__data">Doctor_Portel_Data</string>tes,medications or
+    food ,our provide can help
+    <string name="addc">MDLink is a Secure onlime medical \n platform and service that allows \n patients to connect with the best \n doctors and receive trement best \n video , audio or text messages. \n\n\n\n\n Our digital platform helps to address \n the challenges of connecting with \n patients who are unable to reach their \n deliverring a personalized and \n convenient state-of-the-art service</string>
+    <string name="label_login">Login</string>
+    <string name="label_urgentcare">Urgent Care</string>
+    <string name="label_learnmore">Learn More</string>
+    <string name="label_medicaladvice">Medical Advice</string>
+    <string name="label_labesandscreen">Labs and Screening</string>
+    <string name="label_addiction">Addiction</string>
+    <string name="label_depressandmood">Depression And Mood</string>
+    <string name="label_therapy">Therapy</string>
+    <string name="label_signin">Already have an account? Sign in</string>
+    <string name="label_save">Save</string>
+    <string name="label_clear">Clear</string>
+    <string name="label_tap_to_sign">Tap to sign</string>
+    <string name="label_attach_file">Attach file</string>
+    <string name="label_medical_certificate">Medical Certificate</string>
+    <string name="label_phone_number">Phone Number</string>
+    <string name="loading">label_loading</string>
+    <string name="ok">label_ok</string>
+    <string name="label_doctorregistration">Doctor Registration</string>
+    <string name="label_register">REGISTER</string>
+    <string name="label_submit">Submit</string>
+    <string name="label_howconnect">How would you like to connect?</string>
+    <string name="audio_12">Audio ($12)</string>
+    <string name="instant_message_12">Instant Message ($12)</string>
+    <string name="video_call_15">Video Call ($15)</string>
+    <string name="label_coupon_code">Coupon Code</string>
+    <string name="label_bookappointment">Book Appointment</string>
+</resources>

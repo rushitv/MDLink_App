@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/home"
+            android:title="HOME" />
+        <item
+            android:id="@+id/doctor_portal"
+            android:icon="@drawable/doctor"
+            android:title="Doctor Portal" />
+        <item
+            android:id="@+id/patient_portal"
+            android:icon="@drawable/patient"
+            android:title="Patient Portal" />
+        <item
+            android:id="@+id/contactus"
+            android:icon="@drawable/cont"
+            android:title="Contact Us" />
+        <item
+            android:id="@+id/aboutus"
+            android:icon="@drawable/ph"
+            android:title="About Us" />
+        <item
+            android:id="@+id/userguide"
+            android:icon="@drawable/doctor"
+            android:title="User Guide" />
+    </group>
+
+
+
+
+</menu>
