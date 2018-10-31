@@ -33,10 +33,10 @@
     <string name="label_attach_file">Attach file</string>
     <string name="label_medical_certificate">Medical Certificate</string>
     <string name="label_phone_number">Phone Number</string>
-    <string name="loading">label_loading</string>
-    <string name="ok">label_ok</string>
+    <string name="loading">Loading...</string>
+    <string name="ok">Ok</string>
     <string name="label_doctorregistration">Doctor Registration</string>
-    <string name="label_register">REGISTER</string>
+    <string name="label_register">Register</string>
     <string name="label_submit">Submit</string>
     <string name="label_howconnect">How would you like to connect?</string>
     <string name="audio_12">Audio ($12)</string>
@@ -44,4 +44,18 @@
     <string name="video_call_15">Video Call ($15)</string>
     <string name="label_coupon_code">Coupon Code</string>
     <string name="label_bookappointment">Book Appointment</string>
+    <string name="label_updateprofile">Update Profile</string>
+    <string name="label_profile">Profile</string>
+    <string name="label_welcome">Welcome</string>
+    <string name="label_purpose">Purpose</string>
+    <string name="label_pharmacy">Pharmacy</string>
+    <string name="label_previous_hospital">Previous Hospital</string>
+    <string name="label_allergies">Allergies</string>
+    <string name="label_type">Type</string>
+    <string name="label_for">For</string>
+    <string name="label_name">Name</string>
+    <string name="label_age">Age</string>
+    <string name="label_paybypaypal">Pay by Paypal</string>
+    <string name="label_confirmappt">Confirm Appointment</string>
+    <string name="colon">:  %1$s</string>
 </resources>

@@ -19,6 +19,7 @@
     <color name="transparent_white_100">#64ffffff</color>
     <color name="transparent_white_180">#bdffffff</color>
     <color name="colorDarkGrey">#A9A9A9</color>
-    <color name="colorButtonBackground">#D04955</color>
+    <color name="colorButtonBackground">#cd4b58</color>
 
+    <color name="colorDarkGrey500">#555555</color>
 </resources>
