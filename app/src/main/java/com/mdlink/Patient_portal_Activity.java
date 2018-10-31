@@ -77,8 +77,9 @@ public class Patient_portal_Activity extends BaseActivity implements View.OnClic
         toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent_white_180));
         setUpToolbar(toolbar, R.color.colorAccent);
-        setToolbarTitle(getString(R.string.label_doctorregistration), R.color.colorAccent);
+        setToolbarTitle(getString(R.string.label_register), R.color.colorAccent);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -107,7 +108,7 @@ public class Patient_portal_Activity extends BaseActivity implements View.OnClic
                     hashMap.put("confirmpassword", editConfirmPassword.getText().toString());
                     hashMap.put("terms_and_cond", "1");
                     hashMap.put("userID", editEmail.getText().toString());
-                    hashMap.put("role_id", "2");
+                    hashMap.put("role_id", "0");
 
                     new PatientRegisterAsyncTask(Patient_portal_Activity.this, hashMap).execute();
                 }

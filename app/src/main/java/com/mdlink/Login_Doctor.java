@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mdlink.preferences.SharedPreferenceManager;
+import com.mdlink.util.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -120,8 +121,8 @@ public class Login_Doctor extends BaseActivity {
 
                         SharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(Login_Doctor.this);
                         sharedPreferenceManager.saveString("UserName",email.getText().toString());
-                        sharedPreferenceManager.saveString("Role",jsonArray.getString("role_id"));
-                        sharedPreferenceManager.saveString("UserId",jsonArray.getString("user_id"));
+                        sharedPreferenceManager.saveString(Constants.ROLE_ID,jsonArray.getString("role_id"));
+                        sharedPreferenceManager.saveString(Constants.USER_ID,jsonArray.getString("id"));
                         if(jsonArray.has("age")){
                             sharedPreferenceManager.saveString("Age",jsonArray.getString("age"));
                         }

@@ -3,7 +3,9 @@ package com.mdlink.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BookAppointmentRequest {
+import java.io.Serializable;
+
+public class BookAppointmentRequest implements Serializable {
 
     @SerializedName("scheduled_date")
     @Expose

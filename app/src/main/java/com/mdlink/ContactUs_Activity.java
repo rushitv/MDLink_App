@@ -11,7 +11,6 @@ public class ContactUs_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_us_);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

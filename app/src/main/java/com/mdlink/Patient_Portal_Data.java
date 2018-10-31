@@ -3,6 +3,7 @@ package com.mdlink;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,37 +15,47 @@ import android.view.MenuItem;
 import com.mdlink.preferences.SharedPreferenceManager;
 import com.mdlink.splash.SplashActivity;
 
-public class Patient_Portal_Data extends AppCompatActivity
+public class Patient_Portal_Data extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private SharedPreferenceManager sharedPreferenceManager;
 
+    private SharedPreferenceManager sharedPreferenceManager;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient__portal__data);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        initToolbar();
 
         sharedPreferenceManager = new SharedPreferenceManager(this);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_viewPatientPortal);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void initToolbar() {
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent_white_180));
+        setUpToolbar(toolbar, R.color.colorAccent);
+        setToolbarTitle(getString(R.string.label_doctorregistration), R.color.colorAccent);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
-
         finishAffinity();
         finish();
     }

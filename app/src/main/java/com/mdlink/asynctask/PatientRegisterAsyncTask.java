@@ -16,6 +16,7 @@ import com.mdlink.MakeServiceCall;
 import com.mdlink.Patient_Portal_Data;
 import com.mdlink.Patient_portal_Activity;
 import com.mdlink.preferences.SharedPreferenceManager;
+import com.mdlink.util.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,11 +70,11 @@ public class PatientRegisterAsyncTask extends AsyncTask<Void,Void,String> {
 
                     Intent intent = new Intent(context, Patient_Portal_Data.class);
                     intent.putExtra("UserName",hashMap.get("userID"));
-                    intent.putExtra("Role","2");
+                    intent.putExtra(Constants.ROLE_ID,"2");
                     intent.putExtra("UserId",jsonArray.getString("user_id"));
                     SharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(context);
                     sharedPreferenceManager.saveString("UserName",hashMap.get("userID"));
-                    sharedPreferenceManager.saveString("RoleId","2");
+                    sharedPreferenceManager.saveString(Constants.ROLE_ID,"2");
                     sharedPreferenceManager.saveString("UserId",jsonArray.getString("user_id"));
                     sharedPreferenceManager.saveString("Name",jsonArray.getString("name"));
                     sharedPreferenceManager.saveString("Birthdate",jsonArray.getString("birthdate"));

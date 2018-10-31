@@ -17,6 +17,7 @@ import com.mdlink.MainActivity;
 import com.mdlink.Patient_Portal_Data;
 import com.mdlink.R;
 import com.mdlink.preferences.SharedPreferenceManager;
+import com.mdlink.util.Constants;
 
 public class SplashActivity extends AppCompatActivity {
     private AppCompatImageView appCompatImageView;
@@ -42,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    if (preferenceManager.getStringData("Role").equalsIgnoreCase("2")) {
+                    if (preferenceManager.getStringData(Constants.ROLE_ID).equalsIgnoreCase("0")) {
                         Intent intentd = new Intent(SplashActivity.this, Patient_Portal_Data.class);
                         startActivity(intentd);
                         finish();

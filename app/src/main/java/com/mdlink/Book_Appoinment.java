@@ -2,6 +2,7 @@ package com.mdlink;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -35,6 +36,7 @@ import com.mdlink.preferences.SharedPreferenceManager;
 import com.mdlink.util.Constants;
 import com.mdlink.util.ValidationsUtil;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -248,7 +250,7 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
                     stringArrayList.add(cbCancerBookAppt.getText().toString());
                 }
                 if (cbDiabetesBookAppt.isChecked()) {
-                    stringArrayList.add(cbCancerBookAppt.getText().toString());
+                    stringArrayList.add(cbDiabetesBookAppt.getText().toString());
                 }
                 if (cbStrokeBookAppt.isChecked()) {
                     stringArrayList.add(cbStrokeBookAppt.getText().toString());
@@ -285,7 +287,7 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
                     checkboxMedicalCondition.append(checkVal);
                     checkboxMedicalCondition.append(Constants.SEPARATOR);
                 }
-
+                bookAppointmentRequest.setVisitPurpose(edtPurposeBookAppt.getText().toString());
                 bookAppointmentRequest.setAge(edtAgeBookAppt.getText().toString());
                 bookAppointmentRequest.setAllergy(edtAllergiesBookAppt.getText().toString());
                 bookAppointmentRequest.setIsRenew(cbRenew.isChecked() ? "1":"0");
@@ -300,13 +302,14 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
                 bookAppointmentRequest.setScheduledTime(edtChooseTimeBookAppt.getText().toString());
                 bookAppointmentRequest.setType(type);
                 bookAppointmentRequest.setUserId(sharedPreferenceManager.getStringData("UserId"));
+
                 callCreateAppointmentAPI(bookAppointmentRequest);
 
                 break;
         }
     }
 
-    private void callCreateAppointmentAPI(BookAppointmentRequest bookAppointmentRequest) {
+    private void callCreateAppointmentAPI(final BookAppointmentRequest bookAppointmentRequest) {
         Call<JsonObject> callToGetUserProfile = apiService.createAppointment(bookAppointmentRequest);
         callToGetUserProfile.enqueue(new Callback<JsonObject>() {
             @Override
@@ -314,7 +317,10 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
                 Log.i(TAG, ">>>>>>>>>>>>>>>>>" + response.body());
                 if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
                     Toast.makeText(Book_Appoinment.this,response.body().get("message").getAsString(),Toast.LENGTH_LONG).show();
-                    finish();
+                    Intent iConfirmAppt = new Intent(Book_Appoinment.this, ConfirmAppointmentActivity.class);
+                    iConfirmAppt.putExtra("BookAppointmentRequest",bookAppointmentRequest);
+                    iConfirmAppt.putExtra("PreferredDoctorName",edtDoctorBookAppt.getText().toString());
+                    startActivity(iConfirmAppt);
                 }
             }
 

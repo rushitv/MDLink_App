@@ -2,6 +2,7 @@ package com.mdlink.api;
 
 import com.google.gson.JsonObject;
 import com.mdlink.model.BookAppointmentRequest;
+import com.mdlink.model.CreateOrederRequest;
 import com.mdlink.model.DoctorPortalRequest;
 import com.mdlink.model.DoctorPortalResponse;
 import com.mdlink.model.DoctorsListModel;
@@ -62,4 +63,7 @@ public interface APIService {
 
     @POST("profile")
     Call<JsonObject> updatePatientProfile(@Body PatientProfileRequest patientProfileRequest);
+
+    @POST("createorder")
+    Call<JsonObject> createOreder(@Body CreateOrederRequest createOrederRequest);
 }

@@ -21,7 +21,7 @@ import com.mdlink.helper.UiHelper;
 import static com.mdlink.util.Constants.INVALID;
 
 public abstract class BaseActivity extends AppCompatActivity {
-
+    private String TAG = getClass().getSimpleName();
     public Toolbar mToolbar;
     private BaseActivity mActivity;
      ProgressBar progress;

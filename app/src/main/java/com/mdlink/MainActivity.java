@@ -42,6 +42,7 @@ public class MainActivity extends BaseActivity
 
         toggle.syncState();
 
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
         tvThree = findViewById(R.id.tvThree);
