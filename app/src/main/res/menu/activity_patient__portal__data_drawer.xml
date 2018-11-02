@@ -10,9 +10,9 @@
             android:icon="@drawable/bookapo"
             android:title="Book Appointment" />
         <item
-            android:id="@+id/Scheduled_ment"
+            android:id="@+id/ScheduledAppointmentList"
             android:icon="@drawable/scapp"
-            android:title="Schduled Appoinment" />
+            android:title="Scheduled Appoinment" />
         <item
             android:id="@+id/aboutamne"
             android:icon="@drawable/aboutusicon"

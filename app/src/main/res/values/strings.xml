@@ -58,4 +58,5 @@
     <string name="label_paybypaypal">Pay by Paypal</string>
     <string name="label_confirmappt">Confirm Appointment</string>
     <string name="colon">:  %1$s</string>
+    <string name="label_scheduledappointment">Scheduled Appointment</string>
 </resources>

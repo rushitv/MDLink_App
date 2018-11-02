@@ -105,6 +105,9 @@
             android:name=".Doctor_Portel_Data"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
+
+        <activity android:name=".ScheduleAppointmentActivity"
+            android:screenOrientation="portrait"/>
         <!--<activity android:name=".Splash_Activity" />-->
         <activity android:name=".Signacture_Activity" />
         <activity android:name=".Patient_Profile"

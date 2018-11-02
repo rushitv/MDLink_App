@@ -25,6 +25,7 @@ import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.math.BigDecimal;
 
@@ -43,7 +44,7 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
     private TextView txtApptForCA,txtApptTypeCA, txtNameCA, txtAgeCA, txtPurposeCA, txtPreviousHospitalCA,
             txtAllergiesCA, txtMedicalConditionCA, txtPharmacyCA, txtLocationCA, txtDateCA, txtTimeCA,
             txtPreferredDoctorCA, txtPayByPaypalCA;
-
+    private String AppointmentId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +81,7 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
 
     private void bindViews() {
         if(null != getIntent()){
+            AppointmentId = getIntent().getStringExtra("AppointmentId");
             String preferredDoctorName = getIntent().getStringExtra("PreferredDoctorName");
             BookAppointmentRequest bookAppointmentRequest = (BookAppointmentRequest)getIntent().getSerializableExtra("BookAppointmentRequest");
             Log.i(TAG,"name>>>>>>>>>>>"+bookAppointmentRequest.getName());
@@ -184,6 +186,18 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
                          * For sample mobile backend interactions, see
                          * https://github.com/paypal/rest-api-sdk-python/tree/master/samples/mobile_backend
                          */
+                        CreateOrederRequest createOrederRequest = new CreateOrederRequest();
+
+                        JSONObject jsonObject = new JSONObject(confirm.toJSONObject().toString(4));
+                        String transactionId = jsonObject.getJSONObject("response").getString("id");
+                        String state = jsonObject.getJSONObject("response").getString("state");
+                        createOrederRequest.setAppId(Integer.parseInt(AppointmentId));
+                        createOrederRequest.setCouponCode("NOCODE");
+                        createOrederRequest.setTransactionId(transactionId);
+                        createOrederRequest.setTransactionStatus(state);
+                        createOrederRequest.setTransactionResponse(state);
+
+                        callCreatOrderAPI(createOrederRequest);
                         displayResultText("PaymentConfirmation info received from PayPal");
 
                     } catch (JSONException e) {
@@ -223,7 +237,7 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.i(TAG, ">>>>>>>>>>>>>>>>>" + response.body());
                 if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
-                    Toast.makeText(ConfirmAppointmentActivity.this,response.body().get("message").getAsString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(ConfirmAppointmentActivity.this,createOrederRequest.getTransactionStatus().equalsIgnoreCase("approved") ?"Thank You!! " : " Oops " +response.body().get("message").getAsString(),Toast.LENGTH_LONG).show();
                     finish();
                 }
             }

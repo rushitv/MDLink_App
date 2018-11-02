@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.mdlink.preferences.SharedPreferenceManager;
 import com.mdlink.splash.SplashActivity;
+import com.mdlink.util.Constants;
 
 public class Patient_Portal_Data extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -97,6 +98,11 @@ public class Patient_Portal_Data extends BaseActivity
             Intent intent=new Intent(Patient_Portal_Data.this,Book_Appoinment.class);
             startActivity(intent);
 
+
+        }else if (id == R.id.ScheduledAppointmentList) {
+            Intent intentScheduleAppointment = new Intent(this,ScheduleAppointmentActivity.class);
+            intentScheduleAppointment.putExtra(Constants.TYPE, Constants.PATIENT);
+            startActivity(intentScheduleAppointment);
 
         } else if (id == R.id.aboutamne) {
 

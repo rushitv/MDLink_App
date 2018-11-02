@@ -36,6 +36,8 @@ import com.mdlink.preferences.SharedPreferenceManager;
 import com.mdlink.util.Constants;
 import com.mdlink.util.ValidationsUtil;
 
+import org.json.JSONObject;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -317,7 +319,10 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
                 Log.i(TAG, ">>>>>>>>>>>>>>>>>" + response.body());
                 if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
                     Toast.makeText(Book_Appoinment.this,response.body().get("message").getAsString(),Toast.LENGTH_LONG).show();
+
+                    JsonObject jsonObject = response.body().get("result").getAsJsonObject();
                     Intent iConfirmAppt = new Intent(Book_Appoinment.this, ConfirmAppointmentActivity.class);
+                    iConfirmAppt.putExtra("AppointmentId",jsonObject.get("id").getAsString());
                     iConfirmAppt.putExtra("BookAppointmentRequest",bookAppointmentRequest);
                     iConfirmAppt.putExtra("PreferredDoctorName",edtDoctorBookAppt.getText().toString());
                     startActivity(iConfirmAppt);

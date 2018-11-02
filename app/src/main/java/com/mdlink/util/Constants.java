@@ -6,6 +6,9 @@ import java.util.List;
 public class Constants {
     public static final String APP_NAME = "MDLink";
 
+    public static final String TYPE = "Type";
+    public static final String PATIENT = "Patient";
+
     public static final String NAME = "Name";
     public static final String EMAIL = "Email";
     public static final String PHONE = "PhoneNumber";
