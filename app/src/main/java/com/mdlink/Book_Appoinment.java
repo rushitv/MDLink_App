@@ -21,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -29,11 +28,16 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.mdlink.api.APIService;
 import com.mdlink.api.RestAPIClent;
+import com.mdlink.model.AppointmentListResponse;
+import com.mdlink.model.AppointmentOptions;
+import com.mdlink.model.AppointmentOptionsResponse;
 import com.mdlink.model.BookAppointmentRequest;
 import com.mdlink.model.DoctorsListByDateAndTimeModel;
 import com.mdlink.model.DoctorsListModel;
+import com.mdlink.model.OptionDetails;
 import com.mdlink.preferences.SharedPreferenceManager;
 import com.mdlink.util.Constants;
+import com.mdlink.util.MdlinkProgressBar;
 import com.mdlink.util.ValidationsUtil;
 
 import org.json.JSONObject;
@@ -52,7 +56,6 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
 
     private String TAG = getClass().getSimpleName();
     int mYear, mMonth, mDay;
-    Spinner spnrPharmacyBookAppt, spinnerdoc;
     String phamacysel, docsel;
     StringBuilder sb;
     CheckBox cbRenew, cbSickNote, cbCancerBookAppt, cbDiabetesBookAppt, cbHeartDiseasBookAppt, cbStrokeBookAppt, cbHighBPBookAppt, cbHighCholesterolBookAppt, cbHighAsthmaBookAppt, cbDepressionBookAppt, cbArthritisBookAppt, cbAbnormalThyroidBookAppt, cbAPregnantBookAppt, cbOtherBookAppt;
@@ -60,7 +63,7 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
     String[] pharmacy = {"Select pharmacy", "Liguanea Lane Pharmacy-liglanedidp@yahoo.com", "C-cheabowen@gmail.com", "B Pharmacy - unicoreshopping@gmail.com", "Manor Park Pharmacy", "new kingston Pharmacy-nkrxorders@gmail.com", "Musgrave Pharmacy - musgravepharmacyorders@gmail.com"};
     String[] doctor = {"Select Doctor", "JOHN", "A", "b", "c", "d", "E", "F", "G"};
 
-    EditText edtDoctorBookAppt, edtChooseTimeBookAppt, edtDateBookAppt, edtCouponCodeBookAppt,
+    EditText editPharmacyBookAppt, edtDoctorBookAppt, edtChooseTimeBookAppt, edtDateBookAppt, edtCouponCodeBookAppt,
             edtLocationBookAppt, edtPreviousVisitedHospitalBookAppt, edtAllergiesBookAppt,
             edtNameBookAppt, edtAgeBookAppt, edtPurposeBookAppt;
     List<DoctorsListByDateAndTimeModel> listDoctorsListByDateAndTimeModel;
@@ -73,6 +76,8 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
     RadioButton rbHowToConnectVal;
     SharedPreferenceManager sharedPreferenceManager;
     Toolbar toolbar;
+
+    List<OptionDetails> pharmacyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +102,8 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
         rgHowToConnect = findViewById(R.id.rgHowToConnect);
         sharedPreferenceManager = new SharedPreferenceManager(this);
 
-        spnrPharmacyBookAppt = findViewById(R.id.spnrPharmacyBookAppt);
-        spinnerdoc = findViewById(R.id.doc_spinner);
+        editPharmacyBookAppt = findViewById(R.id.editPharmacyBookAppt);
+        editPharmacyBookAppt.setOnClickListener(this);
 
         submitbook = findViewById(R.id.book_submit);
         submitbook.setOnClickListener(this);
@@ -122,43 +127,6 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
 
         edtCouponCodeBookAppt = findViewById(R.id.edtCouponCodeBookAppt);
 
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(Book_Appoinment.this, android.R.layout.simple_spinner_dropdown_item, pharmacy);
-        spnrPharmacyBookAppt.setAdapter(stringArrayAdapter);
-        ArrayAdapter<String> Adapter = new ArrayAdapter<String>(Book_Appoinment.this, android.R.layout.simple_spinner_dropdown_item, doctor);
-        spinnerdoc.setAdapter(Adapter);
-
-
-        spnrPharmacyBookAppt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                phamacysel = (String) parent.getItemAtPosition(position);
-
-                Toast.makeText(Book_Appoinment.this, phamacysel, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        spinnerdoc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                docsel = parent.getItemAtPosition(position).toString();
-                Toast.makeText(Book_Appoinment.this, docsel, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-        if (new ConnectionCall(Book_Appoinment.this).isConnectingToInternet()) {
-            // call api
-        } else new ConnectionCall(Book_Appoinment.this).connectiondetect();
-
         edtDateBookAppt.setText(ValidationsUtil.getCurrentDate());
 
         if (!TextUtils.isEmpty(sharedPreferenceManager.getStringData("Name"))) {
@@ -170,6 +138,7 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
         if (!TextUtils.isEmpty(sharedPreferenceManager.getStringData("Location"))) {
             edtLocationBookAppt.setText(sharedPreferenceManager.getStringData("Location"));
         }
+        CallGetAppointmentOptions();
     }
 
     private void initToolbar() {
@@ -182,6 +151,9 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.editPharmacyBookAppt:
+                bindPharmacyOptions();
+                break;
             case R.id.edtDoctorBookAppt:
                 bindDropdown();
                 break;
@@ -205,15 +177,15 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.book_submit:
                 String type = "";
-                if(spnrPharmacyBookAppt.getSelectedItemPosition() == 0){
-                    Toast.makeText(this, "Please select pharmacy",Toast.LENGTH_LONG).show();
+                if (TextUtils.isEmpty(editPharmacyBookAppt.getText().toString())) {
+                    Toast.makeText(this, "Please choose pharmacy", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 int selectedId = rgHowToConnect.getCheckedRadioButtonId();
                 // find the radiobutton by returned id
                 rbHowToConnectVal = findViewById(selectedId);
-                if(rbHowToConnectVal != null) {
+                if (rbHowToConnectVal != null) {
                     Log.i(TAG, ">>>>>>>>" + rbHowToConnectVal.getText());
                     switch (rbHowToConnectVal.getText().toString()) {
                         case "Audio ($12)":
@@ -227,19 +199,19 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
                             break;
                     }
                     Log.i(TAG, "type>>>>>>>>" + type);
-                }else {
-                    Toast.makeText(this, "Choose How would you like to connect?",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "Choose How would you like to connect?", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 BookAppointmentRequest bookAppointmentRequest = new BookAppointmentRequest();
                 try {
-                    if(selectedDoctor() != -1){
-                        Log.i(TAG,">>>>>"+selectedDoctor());
+                    if (selectedDoctor() != -1) {
+                        Log.i(TAG, ">>>>>" + selectedDoctor());
                         Log.i(TAG, ">>doctor>>id>>>>>" + listDoctorsListByDateAndTimeModel.get(selectedDoctor()).getId());
-                        bookAppointmentRequest.setPreferredDoctor(""+listDoctorsListByDateAndTimeModel.get(selectedDoctor()).getId());
-                    }else {
-                        Toast.makeText(this,"Please choose doctor",Toast.LENGTH_LONG).show();
+                        bookAppointmentRequest.setPreferredDoctor("" + listDoctorsListByDateAndTimeModel.get(selectedDoctor()).getId());
+                    } else {
+                        Toast.makeText(this, "Please choose doctor", Toast.LENGTH_LONG).show();
                         return;
                     }
                 } catch (ArrayIndexOutOfBoundsException exception) {
@@ -292,13 +264,13 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
                 bookAppointmentRequest.setVisitPurpose(edtPurposeBookAppt.getText().toString());
                 bookAppointmentRequest.setAge(edtAgeBookAppt.getText().toString());
                 bookAppointmentRequest.setAllergy(edtAllergiesBookAppt.getText().toString());
-                bookAppointmentRequest.setIsRenew(cbRenew.isChecked() ? "1":"0");
-                bookAppointmentRequest.setSickNote(cbSickNote.isChecked() ? "1":"0");
+                bookAppointmentRequest.setIsRenew(cbRenew.isChecked() ? "1" : "0");
+                bookAppointmentRequest.setSickNote(cbSickNote.isChecked() ? "1" : "0");
                 bookAppointmentRequest.setCouponCode(edtCouponCodeBookAppt.getText().toString());
                 bookAppointmentRequest.setMedicalConditions(String.valueOf(checkboxMedicalCondition));
                 bookAppointmentRequest.setLocation(edtLocationBookAppt.getText().toString());
                 bookAppointmentRequest.setName(edtNameBookAppt.getText().toString());
-                bookAppointmentRequest.setPharmacy(spnrPharmacyBookAppt.getSelectedItem().toString());
+                bookAppointmentRequest.setPharmacy(editPharmacyBookAppt.getText().toString());
                 bookAppointmentRequest.setPreviousHospital(edtPreviousVisitedHospitalBookAppt.getText().toString());
                 bookAppointmentRequest.setScheduledDate(edtDateBookAppt.getText().toString());
                 bookAppointmentRequest.setScheduledTime(edtChooseTimeBookAppt.getText().toString());
@@ -318,13 +290,13 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.i(TAG, ">>>>>>>>>>>>>>>>>" + response.body());
                 if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
-                    Toast.makeText(Book_Appoinment.this,response.body().get("message").getAsString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(Book_Appoinment.this, response.body().get("message").getAsString(), Toast.LENGTH_LONG).show();
 
                     JsonObject jsonObject = response.body().get("result").getAsJsonObject();
                     Intent iConfirmAppt = new Intent(Book_Appoinment.this, ConfirmAppointmentActivity.class);
-                    iConfirmAppt.putExtra("AppointmentId",jsonObject.get("id").getAsString());
-                    iConfirmAppt.putExtra("BookAppointmentRequest",bookAppointmentRequest);
-                    iConfirmAppt.putExtra("PreferredDoctorName",edtDoctorBookAppt.getText().toString());
+                    iConfirmAppt.putExtra("AppointmentId", jsonObject.get("id").getAsString());
+                    iConfirmAppt.putExtra("BookAppointmentRequest", bookAppointmentRequest);
+                    iConfirmAppt.putExtra("PreferredDoctorName", edtDoctorBookAppt.getText().toString());
                     startActivity(iConfirmAppt);
                 }
             }
@@ -415,8 +387,8 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
                     alert.dismiss();
                 }
             });
-        }else {
-            Toast.makeText(this,"Please choose date and time",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Please choose date and time", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -466,5 +438,82 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
 
                 }, CalendarHour, CalendarMinute, false);
         timepickerdialog.show();
+    }
+
+    private void CallGetAppointmentOptions() {
+        MdlinkProgressBar.setProgressBar(this);
+        Call<AppointmentOptionsResponse> getPatientById = App.apiService.getAppointmentOptions();
+        getPatientById.enqueue(new Callback<AppointmentOptionsResponse>() {
+            @Override
+            public void onResponse(retrofit2.Call<AppointmentOptionsResponse> call, Response<AppointmentOptionsResponse> response) {
+                Log.i(TAG, "1>>>>>>>>>>>>" + response.body());
+                if (response.code() == 200) {
+                    Log.i(TAG, "Labs>>>size>>>>>>>" + response.body().getAppointmentOptions().getLabs().size());
+                    Log.i(TAG, "Pharmacy>>>size>>>" + response.body().getAppointmentOptions().getPharmacys().size());
+                    Log.i(TAG, "Radiology>>>size>>>" + response.body().getAppointmentOptions().getRadiologys().size());
+                    if (response.body().getAppointmentOptions().getPharmacys() != null
+                            &&
+                            response.body().getAppointmentOptions().getPharmacys().size() > 0) {
+                        pharmacyList = response.body().getAppointmentOptions().getPharmacys();
+                    }
+                }
+                MdlinkProgressBar.hideProgressBar(Book_Appoinment.this);
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<AppointmentOptionsResponse> call, Throwable t) {
+                t.fillInStackTrace();
+                MdlinkProgressBar.hideProgressBar(Book_Appoinment.this);
+            }
+        });
+    }
+
+    private void bindPharmacyOptions() {
+        if (pharmacyList != null && pharmacyList.size() > 0) {
+            final ArrayList<String> dataList = new ArrayList<>(pharmacyList.size());
+
+            for (int i = 0; i < pharmacyList.size(); i++) {
+                dataList.add(pharmacyList.get(i).getName());
+            }
+
+            AlertDialog.Builder myDialog = new AlertDialog.Builder(this, R.style.LightDialogTheme);
+            final EditText editText = new EditText(this);
+            final ListView listview = new ListView(this);
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.addView(editText);
+            layout.addView(listview);
+            myDialog.setView(layout);
+            final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dataList);
+
+            editText.addTextChangedListener(new TextWatcher() {
+
+                public void afterTextChanged(Editable s) {
+                }
+
+                public void beforeTextChanged(CharSequence s, int start, int count,
+                                              int after) {
+                }
+
+                public void onTextChanged(CharSequence s, int start, int before,
+                                          int count) {
+                    adapter.getFilter().filter(s);
+                }
+            });
+
+            listview.setAdapter(adapter);
+
+            final AlertDialog alert = myDialog.create();
+            alert.show();
+
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                    Log.d(TAG, "Selected Item is = " + listview.getItemAtPosition(position));
+                    editPharmacyBookAppt.setText("" + listview.getItemAtPosition(position));
+                    alert.dismiss();
+                }
+            });
+        }
     }
 }

@@ -28,7 +28,7 @@ public class AppointmentOptions {
         return pharmacys;
     }
 
-    public void setPharmacys(List<OptionDetails> pharmacys) {
+    public void setAppointmentOptionsPharmacys(List<OptionDetails> pharmacys) {
         this.pharmacys = pharmacys;
     }
 

@@ -30,28 +30,6 @@
                 android:textColor="@color/colorWhite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_type"/>
-
-            <TextView
-                android:textColor="@color/colorWhite"
-                android:layout_marginStart="@dimen/pad_10"
-                android:id="@+id/txtApptForCA"
-                style="@style/TextMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_purpose"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                style="@style/TextMedium"
-                android:textColor="@color/colorWhite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/label_name"/>
 
             <TextView
@@ -87,6 +65,37 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/pad_10"
+            android:background="@color/colorLightGrey"
+            android:layout_height="1dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:textColor="@color/colorWhite"
+                android:id="@+id/txtRenewApptForCA"
+                style="@style/TextMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_purpose"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textColor="@color/colorWhite"
+                android:id="@+id/txtSicknoteApptForCA"
+                style="@style/TextMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_purpose"/>
+
+        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_margin="@dimen/pad_10"

@@ -2,6 +2,7 @@ package com.mdlink.api;
 
 import com.google.gson.JsonObject;
 import com.mdlink.model.AppointmentListResponse;
+import com.mdlink.model.AppointmentOptions;
 import com.mdlink.model.AppointmentOptionsResponse;
 import com.mdlink.model.BookAppointmentRequest;
 import com.mdlink.model.CreateOrederRequest;
@@ -70,5 +71,8 @@ public interface APIService {
     Call<JsonObject> createOreder(@Body CreateOrederRequest createOrederRequest);
 
     @GET("patientappointment/{id}")
-    Call<AppointmentListResponse> getAppoitmentOptions(@Path("id") String id);
+    Call<AppointmentListResponse> getScheduledAppointmentList(@Path("id") String id);
+
+    @GET("appointment-options")
+    Call<AppointmentOptionsResponse> getAppointmentOptions();
 }

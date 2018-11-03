@@ -3,7 +3,7 @@ package com.mdlink.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class OptionDetails {
+public class OptionDetails {
     @SerializedName("id")
     @Expose
     private Integer id;

@@ -6,16 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import com.google.gson.JsonObject;
+import com.mdlink.adapter.AppointmentListAdapter;
 import com.mdlink.model.AppointmentListResponse;
 import com.mdlink.model.AppointmentListResponseDetails;
-import com.mdlink.model.AppointmentOptionsResponse;
 import com.mdlink.preferences.SharedPreferenceManager;
 import com.mdlink.util.Constants;
 import com.mdlink.util.MdlinkProgressBar;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,7 +52,7 @@ public class ScheduleAppointmentActivity extends BaseActivity {
     private void callToGetListScheduledAppointment(String UserId) {
         Log.i(TAG, "UserId>>>>>>" +UserId);
         MdlinkProgressBar.setProgressBar(this);
-        Call<AppointmentListResponse> getPatientById = App.apiService.getAppoitmentOptions("3");
+        Call<AppointmentListResponse> getPatientById = App.apiService.getScheduledAppointmentList("3");
         getPatientById.enqueue(new Callback<AppointmentListResponse>() {
             @Override
             public void onResponse(retrofit2.Call<AppointmentListResponse> call, Response<AppointmentListResponse> response) {

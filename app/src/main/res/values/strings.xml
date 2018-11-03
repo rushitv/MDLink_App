@@ -57,6 +57,10 @@
     <string name="label_age">Age</string>
     <string name="label_paybypaypal">Pay by Paypal</string>
     <string name="label_confirmappt">Confirm Appointment</string>
-    <string name="colon">:  %1$s</string>
+    <string name="colon">: %1$s</string>
     <string name="label_scheduledappointment">Scheduled Appointment</string>
+    <string name="label_i_would_to_renew_refill_a_prescription">I would to renew/refill a prescription</string>
+    <string name="i_would_to_renew_refill_a_prescription">I would to renew/refill a prescription : %1$s</string>
+    <string name="label_i_would_to_obtain_sicknote">I would like to obtain a sick note</string>
+    <string name="i_would_to_obtain_sicknote">I would like to obtain a sick note : %1$s</string>
 </resources>

@@ -41,7 +41,7 @@ import static com.mdlink.util.PaypalConfigManager.config;
 public class ConfirmAppointmentActivity extends BaseActivity implements View.OnClickListener {
     private String TAG = getClass().getSimpleName();
     private Toolbar toolbar;
-    private TextView txtApptForCA,txtApptTypeCA, txtNameCA, txtAgeCA, txtPurposeCA, txtPreviousHospitalCA,
+    private TextView txtRenewApptForCA,txtSicknoteApptForCA,txtApptTypeCA, txtNameCA, txtAgeCA, txtPurposeCA, txtPreviousHospitalCA,
             txtAllergiesCA, txtMedicalConditionCA, txtPharmacyCA, txtLocationCA, txtDateCA, txtTimeCA,
             txtPreferredDoctorCA, txtPayByPaypalCA;
     private String AppointmentId;
@@ -62,7 +62,10 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
     }
 
     private void initViews() {
-        txtApptForCA = findViewById(R.id.txtApptForCA);
+
+        txtRenewApptForCA = findViewById(R.id.txtRenewApptForCA);
+        txtSicknoteApptForCA = findViewById(R.id.txtSicknoteApptForCA);
+
         txtApptTypeCA = findViewById(R.id.txtApptTypeCA);
         txtNameCA = findViewById(R.id.txtNameCA);
         txtAgeCA = findViewById(R.id.txtAgeCA);
@@ -86,13 +89,13 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
             BookAppointmentRequest bookAppointmentRequest = (BookAppointmentRequest)getIntent().getSerializableExtra("BookAppointmentRequest");
             Log.i(TAG,"name>>>>>>>>>>>"+bookAppointmentRequest.getName());
             Log.i(TAG,"preferredDoctorName>>>>>>>>>>>"+preferredDoctorName);
-
-            txtApptForCA.setText(getString(R.string.colon,bookAppointmentRequest.getIsRenew() == "1" ? "Renew / Refill": "Sick Note"));
+            txtSicknoteApptForCA.setText(getString(R.string.i_would_to_obtain_sicknote, bookAppointmentRequest.getSickNote() == "1" ? "Yes":"No"));
+            txtRenewApptForCA.setText(getString(R.string.i_would_to_renew_refill_a_prescription, bookAppointmentRequest.getIsRenew() == "1" ? "Yes":"No" ));
             txtNameCA.setText(getString(R.string.colon, bookAppointmentRequest.getName()));
             txtAgeCA.setText(getString(R.string.colon,bookAppointmentRequest.getAge()));
             txtPurposeCA.setText(getString(R.string.colon,bookAppointmentRequest.getVisitPurpose()));
             txtPreviousHospitalCA.setText(getString(R.string.colon,bookAppointmentRequest.getPreviousHospital()));
-            txtMedicalConditionCA.setText(getString(R.string.colon,bookAppointmentRequest.getMedicalConditions()));
+            txtMedicalConditionCA.setText(getString(R.string.colon,"\n"+bookAppointmentRequest.getMedicalConditions()));
             txtPharmacyCA.setText(getString(R.string.colon,bookAppointmentRequest.getPharmacy()));
             txtLocationCA.setText(getString(R.string.colon,bookAppointmentRequest.getLocation()));
             txtDateCA.setText(getString(R.string.colon,bookAppointmentRequest.getScheduledDate()));
@@ -239,6 +242,9 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
                 if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
                     Toast.makeText(ConfirmAppointmentActivity.this,createOrederRequest.getTransactionStatus().equalsIgnoreCase("approved") ?"Thank You!! " : " Oops " +response.body().get("message").getAsString(),Toast.LENGTH_LONG).show();
                     finish();
+                    Intent intent = new Intent(ConfirmAppointmentActivity.this, Patient_Portal_Data.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                 }
             }
 

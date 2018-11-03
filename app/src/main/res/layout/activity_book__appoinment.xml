@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:checked="false"
-                android:text="I would to renew/refill a prescriptior"
+                android:text="@string/label_i_would_to_renew_refill_a_prescription"
                 style="@style/TextSmall" />
 
             <CheckBox
@@ -258,18 +258,23 @@
                 style="@style/TextSmall" />
 
 
-            <TextView
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="please tell us your pharmacy ,if any "
-                style="@style/TextSmall" />
+                android:layout_marginTop="15dp">
 
-            <Spinner
-                android:id="@+id/spnrPharmacyBookAppt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </Spinner>
+                <EditText
+                    android:id="@+id/editPharmacyBookAppt"
+                    android:inputType="none"
+                    android:focusableInTouchMode="false"
+                    android:onClick="onClick"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="please tell us your pharmacy ,if any"
+                    style="@style/TextSmall" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
