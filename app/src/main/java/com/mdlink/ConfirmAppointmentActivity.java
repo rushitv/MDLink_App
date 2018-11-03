@@ -14,12 +14,8 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.mdlink.model.BookAppointmentRequest;
 import com.mdlink.model.CreateOrederRequest;
-import com.mdlink.util.PaypalConfigManager;
 import com.paypal.android.sdk.payments.PayPalAuthorization;
-import com.paypal.android.sdk.payments.PayPalConfiguration;
-import com.paypal.android.sdk.payments.PayPalFuturePaymentActivity;
 import com.paypal.android.sdk.payments.PayPalPayment;
-import com.paypal.android.sdk.payments.PayPalProfileSharingActivity;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
@@ -34,7 +30,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.mdlink.util.PaypalConfigManager.REQUEST_CODE_PAYMENT;
-import static com.mdlink.util.PaypalConfigManager.REQUEST_CODE_PROFILE_SHARING;
 import static com.mdlink.util.PaypalConfigManager.config;
 
 
@@ -242,7 +237,7 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
                 if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
                     Toast.makeText(ConfirmAppointmentActivity.this,createOrederRequest.getTransactionStatus().equalsIgnoreCase("approved") ?"Thank You!! " : " Oops " +response.body().get("message").getAsString(),Toast.LENGTH_LONG).show();
                     finish();
-                    Intent intent = new Intent(ConfirmAppointmentActivity.this, Patient_Portal_Data.class);
+                    Intent intent = new Intent(ConfirmAppointmentActivity.this, PatientPortalActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }

@@ -23,6 +23,7 @@
         android:padding="@dimen/pad_5"
         >
       <TextView
+          android:padding="@dimen/pad_5"
           style="@style/TextSmall"
           android:textColor="@color/colorWhite"
           android:id="@+id/txtNameSAL"
@@ -30,6 +31,7 @@
           android:layout_height="wrap_content"
           android:text="@string/app_name"/>
       <TextView
+          android:padding="@dimen/pad_5"
           style="@style/TextSmall"
           android:textColor="@color/colorWhite"
           android:id="@+id/txtReasonSAL"
@@ -37,6 +39,7 @@
           android:layout_height="wrap_content"
           android:text="@string/app_name"/>
       <TextView
+          android:padding="@dimen/pad_5"
           style="@style/TextSmall"
           android:textColor="@color/colorWhite"
           android:id="@+id/txtDateSAL"
@@ -45,6 +48,7 @@
           android:text="@string/app_name"/>
 
       <TextView
+          android:padding="@dimen/pad_5"
           style="@style/TextSmall"
           android:textColor="@color/colorWhite"
           android:id="@+id/txtTimeSAL"
@@ -53,6 +57,7 @@
           android:text="@string/app_name"/>
 
       <TextView
+          android:padding="@dimen/pad_5"
           style="@style/TextSmall"
           android:textColor="@color/colorWhite"
           android:id="@+id/txtTypeSAL"
@@ -61,25 +66,68 @@
           android:text="@string/app_name"/>
 
       <RelativeLayout
+          android:padding="@dimen/pad_5"
+          android:layout_marginBottom="@dimen/pad_5"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtLabelStatusRSAL"
+            style="@style/TextSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toStartOf="@+id/txtPaymentStatusRSAS"
+            android:text="@string/app_name"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            style="@style/TextMedium.Bold"
+            android:padding="@dimen/pad_5"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colorWhite"
+            android:id="@+id/txtPaymentStatusRSAS"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/corner_low"
+            android:text="@string/join"/>
+
+      </RelativeLayout>
+
+      <RelativeLayout
+          android:layout_marginTop="@dimen/pad_5"
           android:layout_width="match_parent"
           android:layout_height="wrap_content">
         <TextView
-            style="@style/TextSmall"
+            style="@style/TextMedium.Bold"
+            android:padding="@dimen/pad_3"
             android:textColor="@color/colorWhite"
-            android:id="@+id/txtStatusSAL"
-            android:layout_width="match_parent"
+            android:id="@+id/txtJoinCallSAL"
+            android:gravity="center_horizontal"
+            android:layout_width="@dimen/pad_100"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/app_name"/>
-        <TextView
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_btn"
-            android:backgroundTint="@color/colorDarkGrey"
-            android:text="@string/app_name"/>
-      </RelativeLayout>
+            android:background="@drawable/corner_low"
+            android:backgroundTint="@color/colorDarkGrey500"
+            android:text="@string/join"/>
 
+        <TextView
+            style="@style/TextMedium.Bold"
+            android:padding="@dimen/pad_3"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorWhite"
+            android:id="@+id/txtCallCallSAL"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/pad_100"
+            android:layout_height="wrap_content"
+            android:background="@drawable/corner_low"
+            android:backgroundTint="@color/colorDarkGrey500"
+            android:text="@string/cancel"/>
+      </RelativeLayout>
 
     </LinearLayout>
   </android.support.v7.widget.CardView>

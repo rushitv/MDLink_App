@@ -1,6 +1,10 @@
 package com.mdlink.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +45,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvName, tvReason, tvDate, tvTime, tvType, tvPaymentStatus;
+        public TextView tvName, tvReason, tvDate, tvTime, tvType,txtLabelStatus, tvPaymentStatus;
 
         public MyViewHolder(View view) {
             super(view);
@@ -50,6 +54,8 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             tvDate = view.findViewById(R.id.txtDateSAL);
             tvTime = view.findViewById(R.id.txtTimeSAL);
             tvType = view.findViewById(R.id.txtTypeSAL);
+            txtLabelStatus = view.findViewById(R.id.txtLabelStatusRSAL);
+            tvPaymentStatus = view.findViewById(R.id.txtPaymentStatusRSAS);
 
         }
     }
@@ -63,10 +69,39 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         AppointmentListResponseDetails appointmentListResponseDetails = mAppointmentListResponseDetailsList.get(position);
-        holder.tvName.setText(appointmentListResponseDetails.getName());
-        holder.tvReason.setText(appointmentListResponseDetails.getVisitPurpose());
-        holder.tvDate.setText(appointmentListResponseDetails.getScheduledDate());
-        holder.tvTime.setText(appointmentListResponseDetails.getScheduledTime());
+        holder.tvName.setText(context.getString(R.string.name, appointmentListResponseDetails.getName()));
+        holder.tvReason.setText(context.getString(R.string.reason, appointmentListResponseDetails.getVisitPurpose()));
+        holder.tvDate.setText(context.getString(R.string.date,appointmentListResponseDetails.getScheduledDate()));
+        holder.tvTime.setText(context.getString(R.string.time,appointmentListResponseDetails.getScheduledTime()));
+        String type="";
+        if(appointmentListResponseDetails.getType()==1){
+            type="Audio Call";
+        }else if(appointmentListResponseDetails.getType()==2){
+            type="Instant Message";
+        }else if(appointmentListResponseDetails.getType()==3){
+            type="Video Call";
+        }
+        holder.tvType.setText(context.getString(R.string.type,type));
+        holder.txtLabelStatus.setText(context.getString(R.string.payment_status,""));
+
+
+        // Wrap the drawable so that future tinting calls work
+        // on pre-v21 devices. Always use the returned drawable.
+        Drawable drawable = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            drawable = DrawableCompat.wrap(context.getDrawable(R.drawable.corner_low));
+        }
+
+        if(appointmentListResponseDetails.getIsPayed() == 1){
+            holder.tvPaymentStatus.setText(context.getString(R.string.label_paid));
+            DrawableCompat.setTint(drawable,context.getResources().getColor(R.color.colorGreenCard));
+            holder.tvPaymentStatus.setBackground(drawable);
+        }else {
+            holder.tvPaymentStatus.setText(context.getString(R.string.label_pending));
+            DrawableCompat.setTint(drawable,context.getResources().getColor(R.color.colorOrange100));
+            holder.tvPaymentStatus.setBackground(drawable);
+        }
+
     }
 
     @Override

@@ -32,7 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     style="@style/TextSmall"
-                    android:text="@string/label_guide"/>
+                    android:text="@string/label_your_re_safe_with_us"/>
             </LinearLayout>
 
             <LinearLayout
@@ -47,36 +47,7 @@
                     android:layout_gravity="center_vertical|left"
                     style="@style/TextSmall"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/label_guide_one"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:background="@color/colorLightGrey"
-                android:padding="@dimen/pad_3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <TextView
-                    android:textColor="@color/colorBlack"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="viewStart"
-                    style="@style/TextSmall"
-                    android:text="@string/label_for_patient"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginLeft="@dimen/pad_10"
-                android:layout_marginRight="@dimen/pad_10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical|left"
-                    style="@style/TextSmall"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/label_guide_two"/>
+                    android:text="@string/label_about_one"/>
             </LinearLayout>
 
             <LinearLayout
@@ -91,7 +62,7 @@
                     android:layout_height="match_parent"
                     android:textAlignment="viewStart"
                     style="@style/TextSmall"
-                    android:text="@string/label_during_your_medical"/>
+                    android:text="@string/label_mission"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_marginLeft="@dimen/pad_10"
@@ -105,7 +76,7 @@
                     android:layout_gravity="center_vertical|left"
                     style="@style/TextSmall"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/label_guide_three"/>
+                    android:text="@string/label_about_two"/>
             </LinearLayout>
 
             <LinearLayout
@@ -120,7 +91,7 @@
                     android:layout_height="match_parent"
                     android:textAlignment="viewStart"
                     style="@style/TextSmall"
-                    android:text="@string/label_after_your_medical"/>
+                    android:text="@string/label_who"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_marginLeft="@dimen/pad_10"
@@ -134,7 +105,7 @@
                     android:layout_gravity="center_vertical|left"
                     style="@style/TextSmall"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/label_guide_four"/>
+                    android:text="@string/label_about_three"/>
             </LinearLayout>
 
             <LinearLayout
@@ -149,7 +120,7 @@
                     android:layout_height="match_parent"
                     android:textAlignment="viewStart"
                     style="@style/TextSmall"
-                    android:text="@string/label_for_doctor"/>
+                    android:text="@string/label_what"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_marginLeft="@dimen/pad_10"
@@ -163,7 +134,36 @@
                     android:layout_gravity="center_vertical|left"
                     style="@style/TextSmall"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/label_guide_five"/>
+                    android:text="@string/label_about_four"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@color/colorLightGrey"
+                android:padding="@dimen/pad_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="viewStart"
+                    style="@style/TextSmall"
+                    android:text="@string/label_how"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginLeft="@dimen/pad_10"
+                android:layout_marginRight="@dimen/pad_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical|left"
+                    style="@style/TextSmall"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/label_about_five"/>
             </LinearLayout>
 
         </LinearLayout>

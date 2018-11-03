@@ -32,7 +32,7 @@ public class Mood_Activity extends AppCompatActivity {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Mood_Activity.this, Patient_portal_Activity.class);
+                Intent intent = new Intent(Mood_Activity.this, PatientRegistrationActivity.class);
                 startActivity(intent);
             }
         });

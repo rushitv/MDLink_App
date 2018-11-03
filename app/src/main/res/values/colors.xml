@@ -22,4 +22,6 @@
     <color name="colorButtonBackground">#cd4b58</color>
 
     <color name="colorDarkGrey500">#555555</color>
+
+    <color name="colorOrange100">#FF4500</color>
 </resources>

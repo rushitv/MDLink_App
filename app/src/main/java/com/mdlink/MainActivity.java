@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -90,13 +88,13 @@ public class MainActivity extends BaseActivity
 
         } else if (id == R.id.doctor_portal) {
 
-            Doctor_portal_Activity.start(this);
+            DoctorRegistrationActivity.start(this);
 
-            /*Intent intent = new Intent(MainActivity.this, Doctor_portal_Activity.class);
+            /*Intent intent = new Intent(MainActivity.this, DoctorRegistrationActivity.class);
             startActivity(intent);*/
 
         } else if (id == R.id.patient_portal) {
-            Intent intent = new Intent(MainActivity.this, Patient_portal_Activity.class);
+            Intent intent = new Intent(MainActivity.this, PatientRegistrationActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.contactus) {
@@ -109,7 +107,7 @@ public class MainActivity extends BaseActivity
             AboutUsActivity.start(this);
 
         } else if (id == R.id.userguide) {
-            Intent intent = new Intent(MainActivity.this, User_Guide_Activity.class);
+            Intent intent = new Intent(MainActivity.this, UserGuideActivity.class);
             startActivity(intent);
 
         }

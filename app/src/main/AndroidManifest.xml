@@ -28,15 +28,15 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Book_Appoinment"
+            android:name=".BookAppointmentActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name=".Doctor_portal_Activity"
+            android:name=".DoctorRegistrationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name=".Patient_portal_Activity"
+            android:name=".PatientRegistrationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -47,14 +47,14 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".User_Guide_Activity"
+            android:name=".UserGuideActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!--<activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
-            android:name=".Login_Doctor"
+            android:name=".LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -98,11 +98,11 @@
             android:label="Medical Chechout" />
         <activity android:name=".Guide_Page" />
         <activity
-            android:name=".Patient_Portal_Data"
+            android:name=".PatientPortalActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Doctor_Portel_Data"
+            android:name=".DoctorPortalActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
 

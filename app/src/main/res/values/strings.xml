@@ -63,4 +63,99 @@
     <string name="i_would_to_renew_refill_a_prescription">I would to renew/refill a prescription : %1$s</string>
     <string name="label_i_would_to_obtain_sicknote">I would like to obtain a sick note</string>
     <string name="i_would_to_obtain_sicknote">I would like to obtain a sick note : %1$s</string>
+
+    <string name="join">Join</string>
+    <string name="cancel">Cancel</string>
+    <string name="pending">Pending</string>
+    <string name="paid">Paid</string>
+    <string name="label_payment_status">Payment Status</string>
+    <string name="payment_status">Payment Status: %1$s</string>
+    <string name="name">Name: %1$s</string>
+    <string name="reason">Reason: %1$s</string>
+    <string name="date">Date: %1$s</string>
+    <string name="time">Time: %1$s</string>
+    <string name="type">Type: %1$s</string>
+    <string name="label_paid">Paid</string>
+    <string name="label_pending">Pending</string>
+    <string name="label_about_us">About Us</string>
+    <string name="label_your_re_safe_with_us">You\'re Safe With Us</string>
+    <string name="label_about_one">MDLink is a secure online medical platform and service that allows patients to connect with the best doctors and receive treatment via video, audio or text messages.
+        \n\nOur digital platform helps to address the challenge of connecting with patients who are unable to reach their Doctors on time and at the same time delivering a personalized and convenient state-of-the-art service.
+        \n
+        \nOur infrastructure managed on the AWS Platform gives us the leverage to be HIPAA compliant. This means that we ensure your health data is very secure, by international standards.
+        \n
+        \nOur MDLink Doctors can provide patients with:
+        \n-Prescriptions
+        \n-X-Ray/Radiology Requests
+        \n-Blood Testing Requests
+        \n-Medical Leave Notes</string>
+    <string name="label_mission">Mission</string>
+
+    <string name="label_about_two">To improve affordable access to health care:\n
+        1. Throughout the Caribbean \n
+        2. One country/patient/day at a time</string>
+
+    <string name="label_who">WHO</string>
+    <string name="label_about_three">
+        Founded in 2017, MDLink is an innovative medical service fueled by a passionate team of medical practitioners across the Caribbean, who are dedicated to bringing exceptional healthcare services to your fingertips. Our focus is directed at seamless patient care, faster service and modern healthcare innovation.
+    </string>
+    <string name="label_what">WHAT</string>
+    <string name="label_about_four">
+        We believe that access to healthcare is essential to all patients and so we provide instant access to affordable healthcare at any given place or time. Our team of skilled professionals provide services in General Practice, Urgent Care, Dermatology and Psychiatry.
+    </string>
+
+    <string name="label_how">HOW</string>
+    <string name="label_about_five">
+        Get a medical opinion/second opinion from a doctor \n
+        Book an appointment at a time convenient to you \n
+        Connect with a certified doctor \n
+        Get treatment online!
+    </string>
+
+    <string name="label_guide">Guide</string>
+    <string name="label_guide_one">You can access MDLink in two convenient ways: \n
+            • Our Mobile App on your smartphone or tablet \n
+            • On your Computer/Laptop using Google Chrome or Firefox web browsers \n
+            Getting started with MDLink is fast and easy.</string>
+    <string name="label_guide_two">
+        1) Get registered quickly using the Patient Portal. This will help us connect you with an MDLink doctor wherever you are. \n
+        2) Login and schedule an appointment (it\&#39;s easy!). \n
+        3) Tell us whats\&#39;s wrong, then choose your preferred physician and pharmacy. \n
+        4) Next, simply ensure that you are in the \&#39;scheduled appointment\&#39; online chatroom/session at your selected appointment time. \n
+        5) If you would like to be seen immediately, simply schedule your appointment for the same time. \n
+        6) MDLink also provides convenient prescription refill services. \n
+        7) Once the doctor visit is complete, click &quot;End Consultation&quot;. That\&#39;s it!
+    </string>
+
+    <string name="label_guide_three">
+        • Ensure that you are logged in and waiting in the \'scheduled appointment\' chatroom at the time you selected. \n
+        • The doctor will initiate the conversation and guide you through your visit. Most medical visits last about 15 minutes.\n
+        • Your doctor may guide you through a physical self-examination based on your symptoms.\n
+        • The app has a photo feature, which allows you to share photos of your physical symptoms with the doctor, aiding in diagnosis.\n
+        • Lighting is very important when your doctor needs to inspect you. Well-lit areas work best. The flashlight function on a smartphone can also provide additional lighting for certain types of video inspection.\n
+        • If medically appropriate your doctor will prescribe medication, which will be sent to the pharmacy of your choice.
+ </string>
+
+    <string name="label_guide_four">
+        • Check your e-mail/ notifications.\n
+        • Head to your pharmacy, your medication is ready for pick-up!\n
+        • If a lab test was requested, head to the lab at your convenience and get tested.\n
+        • We will follow up on your lab test results and schedule a follow-up appointment, if necessary.\n
+        • A few days after your MDLink consult, we will contact you to find out how you are doing. In most cases, we have found patients are completely better.\n
+        • If your medical issue has not been resolved, we can recommend and help coordinate any necessary follow-up care.
+ </string>
+
+    <string name="label_guide_five">
+        • Get registered quickly using the Doctor Portal.\n
+        • Before approval, your registration credentials will be reviewed and an online interview will be conducted for verification purposes.\n
+        • MDLink patients will be assigned to you based on your availability. However, patients also have the option to select their preferred doctor.\n
+        • MDLink doctors can also use the platform to set online appointments for their personal patients.\n
+        • Once an appointment is scheduled, the doctor is expected to initiate contact at the scheduled time period.
+    </string>
+
+    <string name="label_for_patient">For Patient</string>
+    <string name="label_during_your_medical">During Your Online Medical Consult</string>
+    <string name="label_after_your_medical">After Your Medical Consult</string>
+    <string name="label_for_doctor">For Doctors</string>
+    <string name="label_user_guide">User Guide</string>
 </resources>

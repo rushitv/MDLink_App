@@ -3,18 +3,15 @@ package com.mdlink.splash;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
 import android.view.Window;
 import android.view.animation.AlphaAnimation;
-import android.widget.ImageView;
 
-import com.mdlink.Doctor_Portel_Data;
+import com.mdlink.DoctorPortalActivity;
 import com.mdlink.Guide_Page;
-import com.mdlink.MainActivity;
-import com.mdlink.Patient_Portal_Data;
+import com.mdlink.PatientPortalActivity;
 import com.mdlink.R;
 import com.mdlink.preferences.SharedPreferenceManager;
 import com.mdlink.util.Constants;
@@ -38,17 +35,17 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (TextUtils.isEmpty(preferenceManager.getStringData("UserId"))) {
+                if (TextUtils.isEmpty(preferenceManager.getStringData(Constants.USER_ID))) {
                     Intent intent = new Intent(SplashActivity.this, Guide_Page.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    if (preferenceManager.getStringData(Constants.ROLE_ID).equalsIgnoreCase("0")) {
-                        Intent intentd = new Intent(SplashActivity.this, Patient_Portal_Data.class);
+                    if (preferenceManager.getStringData(Constants.ROLE_ID).equalsIgnoreCase("1")) {
+                        Intent intentd = new Intent(SplashActivity.this, DoctorPortalActivity.class);
                         startActivity(intentd);
                         finish();
                     }else {
-                        Intent intentd = new Intent(SplashActivity.this, Doctor_Portel_Data.class);
+                        Intent intentd = new Intent(SplashActivity.this, PatientPortalActivity.class);
                         startActivity(intentd);
                         finish();
                     }

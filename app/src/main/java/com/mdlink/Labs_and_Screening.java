@@ -31,7 +31,7 @@ public class Labs_and_Screening extends AppCompatActivity {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(Labs_and_Screening.this,Patient_portal_Activity.class);
+                Intent intent=new Intent(Labs_and_Screening.this,PatientRegistrationActivity.class);
                 startActivity(intent);
             }
         });

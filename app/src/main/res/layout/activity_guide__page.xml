@@ -1,40 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Guide_Page">
 
-    <android.support.v4.view.ViewPager
-        android:layout_marginTop="@dimen/pad_30"
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:layout_marginBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/tvInfo"
-        android:layout_below="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorBlack"
-        style="@style/TextMedium"
-        android:gravity="center"
-        android:text="Enter your Symptoms And Choose Between Message ,Audio and Video Appointment"
-        android:textSize="16sp" />
-
     <LinearLayout
-        android:layout_marginTop="@dimen/pad_20"
-        android:id="@+id/SliderDots"
-        android:layout_below="@+id/tvInfo"
-        android:orientation="horizontal"
-        android:gravity="center_vertical|center_horizontal"
+        android:layout_above="@+id/bottomTextAndButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:layout_marginTop="@dimen/pad_30"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvInfo"
+            style="@style/TextMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewpager"
+            android:gravity="center"
+            android:text="Enter your Symptoms And Choose Between Message ,Audio and Video Appointment"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/SliderDots"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvInfo"
+            android:layout_marginTop="@dimen/pad_20"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/bottomTextAndButton"
@@ -46,16 +52,16 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_margin="08dp"
-            android:padding="04dp"
-            style="@style/TextMedium"
             android:id="@+id/view_finish_btn"
+            style="@style/TextMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textAllCaps="true"
+            android:layout_margin="08dp"
             android:background="@drawable/custom_btn"
+            android:gravity="center"
+            android:padding="04dp"
             android:text="continue"
+            android:textAllCaps="true"
             android:textColor="@color/colorWhite" />
 
     </LinearLayout>

@@ -28,8 +28,6 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.mdlink.api.APIService;
 import com.mdlink.api.RestAPIClent;
-import com.mdlink.model.AppointmentListResponse;
-import com.mdlink.model.AppointmentOptions;
 import com.mdlink.model.AppointmentOptionsResponse;
 import com.mdlink.model.BookAppointmentRequest;
 import com.mdlink.model.DoctorsListByDateAndTimeModel;
@@ -40,9 +38,6 @@ import com.mdlink.util.Constants;
 import com.mdlink.util.MdlinkProgressBar;
 import com.mdlink.util.ValidationsUtil;
 
-import org.json.JSONObject;
-
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -52,7 +47,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Book_Appoinment extends BaseActivity implements View.OnClickListener {
+public class BookAppointmentActivity extends BaseActivity implements View.OnClickListener {
 
     private String TAG = getClass().getSimpleName();
     int mYear, mMonth, mDay;
@@ -60,8 +55,6 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
     StringBuilder sb;
     CheckBox cbRenew, cbSickNote, cbCancerBookAppt, cbDiabetesBookAppt, cbHeartDiseasBookAppt, cbStrokeBookAppt, cbHighBPBookAppt, cbHighCholesterolBookAppt, cbHighAsthmaBookAppt, cbDepressionBookAppt, cbArthritisBookAppt, cbAbnormalThyroidBookAppt, cbAPregnantBookAppt, cbOtherBookAppt;
     TextView submitbook;
-    String[] pharmacy = {"Select pharmacy", "Liguanea Lane Pharmacy-liglanedidp@yahoo.com", "C-cheabowen@gmail.com", "B Pharmacy - unicoreshopping@gmail.com", "Manor Park Pharmacy", "new kingston Pharmacy-nkrxorders@gmail.com", "Musgrave Pharmacy - musgravepharmacyorders@gmail.com"};
-    String[] doctor = {"Select Doctor", "JOHN", "A", "b", "c", "d", "E", "F", "G"};
 
     EditText editPharmacyBookAppt, edtDoctorBookAppt, edtChooseTimeBookAppt, edtDateBookAppt, edtCouponCodeBookAppt,
             edtLocationBookAppt, edtPreviousVisitedHospitalBookAppt, edtAllergiesBookAppt,
@@ -188,7 +181,7 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
                 if (rbHowToConnectVal != null) {
                     Log.i(TAG, ">>>>>>>>" + rbHowToConnectVal.getText());
                     switch (rbHowToConnectVal.getText().toString()) {
-                        case "Audio ($12)":
+                        case "Audio Call ($12)":
                             type = "1";
                             break;
                         case "Instant Message ($12)":
@@ -290,10 +283,10 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.i(TAG, ">>>>>>>>>>>>>>>>>" + response.body());
                 if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
-                    Toast.makeText(Book_Appoinment.this, response.body().get("message").getAsString(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(BookAppointmentActivity.this, response.body().get("message").getAsString(), Toast.LENGTH_LONG).show();
 
                     JsonObject jsonObject = response.body().get("result").getAsJsonObject();
-                    Intent iConfirmAppt = new Intent(Book_Appoinment.this, ConfirmAppointmentActivity.class);
+                    Intent iConfirmAppt = new Intent(BookAppointmentActivity.this, ConfirmAppointmentActivity.class);
                     iConfirmAppt.putExtra("AppointmentId", jsonObject.get("id").getAsString());
                     iConfirmAppt.putExtra("BookAppointmentRequest", bookAppointmentRequest);
                     iConfirmAppt.putExtra("PreferredDoctorName", edtDoctorBookAppt.getText().toString());
@@ -457,13 +450,13 @@ public class Book_Appoinment extends BaseActivity implements View.OnClickListene
                         pharmacyList = response.body().getAppointmentOptions().getPharmacys();
                     }
                 }
-                MdlinkProgressBar.hideProgressBar(Book_Appoinment.this);
+                MdlinkProgressBar.hideProgressBar(BookAppointmentActivity.this);
             }
 
             @Override
             public void onFailure(retrofit2.Call<AppointmentOptionsResponse> call, Throwable t) {
                 t.fillInStackTrace();
-                MdlinkProgressBar.hideProgressBar(Book_Appoinment.this);
+                MdlinkProgressBar.hideProgressBar(BookAppointmentActivity.this);
             }
         });
     }

@@ -1,20 +1,15 @@
 package com.mdlink.asynctask;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.mdlink.Doctor_Portel_Data;
-import com.mdlink.Login_Doctor;
 import com.mdlink.MakeServiceCall;
-import com.mdlink.Patient_Portal_Data;
-import com.mdlink.Patient_portal_Activity;
+import com.mdlink.PatientPortalActivity;
 import com.mdlink.preferences.SharedPreferenceManager;
 import com.mdlink.util.Constants;
 
@@ -22,6 +17,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+
+import static com.mdlink.util.Constants.USER_NAME;
 
 public class PatientRegisterAsyncTask extends AsyncTask<Void,Void,String> {
     private String TAG = getClass().getSimpleName();
@@ -68,19 +65,19 @@ public class PatientRegisterAsyncTask extends AsyncTask<Void,Void,String> {
                     Log.i(TAG,"name>>"+jsonArray.getString("name"));
                     Log.i(TAG,"birthdate>>"+jsonArray.getString("birthdate"));
 
-                    Intent intent = new Intent(context, Patient_Portal_Data.class);
-                    intent.putExtra("UserName",hashMap.get("userID"));
+                    Intent intent = new Intent(context, PatientPortalActivity.class);
+                    intent.putExtra(Constants.USER_NAME,hashMap.get("userID"));
                     intent.putExtra(Constants.ROLE_ID,"2");
-                    intent.putExtra("UserId",jsonArray.getString("user_id"));
+                    intent.putExtra(Constants.USER_ID,jsonArray.getString("user_id"));
                     SharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(context);
-                    sharedPreferenceManager.saveString("UserName",hashMap.get("userID"));
+                    sharedPreferenceManager.saveString(Constants.USER_NAME,hashMap.get("userID"));
                     sharedPreferenceManager.saveString(Constants.ROLE_ID,"2");
-                    sharedPreferenceManager.saveString("UserId",jsonArray.getString("user_id"));
-                    sharedPreferenceManager.saveString("Name",jsonArray.getString("name"));
-                    sharedPreferenceManager.saveString("Birthdate",jsonArray.getString("birthdate"));
-                    sharedPreferenceManager.saveString("Address",jsonArray.getString("address"));
-                    sharedPreferenceManager.saveString("Age",jsonArray.getString("age"));
-                    sharedPreferenceManager.saveString("Location",jsonArray.getString("location"));
+                    sharedPreferenceManager.saveString(Constants.USER_ID,jsonArray.getString("user_id"));
+                    sharedPreferenceManager.saveString(Constants.NAME,jsonArray.getString("name"));
+                    sharedPreferenceManager.saveString(Constants.BIRTH_DATE,jsonArray.getString("birthdate"));
+                    sharedPreferenceManager.saveString(Constants.ADDRESS,jsonArray.getString("address"));
+                    sharedPreferenceManager.saveString(Constants.AGE,jsonArray.getString("age"));
+                    sharedPreferenceManager.saveString(Constants.LOCATION,jsonArray.getString("location"));
 
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     context.startActivity(intent);

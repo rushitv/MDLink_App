@@ -11,7 +11,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Patient_Portal_Data"
+    tools:context=".PatientPortalActivity"
     tools:showIn="@layout/app_bar_patient__portal__data">
 
     <ImageView

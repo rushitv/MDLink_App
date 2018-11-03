@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class Login_Doctor extends BaseActivity {
+public class LoginActivity extends BaseActivity {
 
     TextView tv;
     EditText email, password;
@@ -51,10 +51,10 @@ public class Login_Doctor extends BaseActivity {
                     password.requestFocus();
                 }
 
-                if (new ConnectionCall(Login_Doctor.this).connectiondetect()) {
+                if (new ConnectionCall(LoginActivity.this).connectiondetect()) {
                     new InserData().execute();
                 } else {
-                    new ConnectionCall(Login_Doctor.this).isConnectingToInternet();
+                    new ConnectionCall(LoginActivity.this).isConnectingToInternet();
                 }
 
             }
@@ -87,7 +87,7 @@ public class Login_Doctor extends BaseActivity {
         protected void onPreExecute() {
 
             super.onPreExecute();
-            pd = new ProgressDialog(Login_Doctor.this);
+            pd = new ProgressDialog(LoginActivity.this);
             pd.setMessage("Loading..Hold A Second..");
             pd.setCancelable(false);
             pd.show();
@@ -112,39 +112,39 @@ public class Login_Doctor extends BaseActivity {
                 JSONObject json = new JSONObject(s);
 
                 if (json.getString("status").equalsIgnoreCase("200")) {
-                    Toast.makeText(Login_Doctor.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
 
                     JSONObject jsonArray = json.getJSONObject("result");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         //JSONObject object = jsonArray.getJSONObject("i");
-                        //Toast.makeText(Login_Doctor.this,jsonArray.getString("role_id"),Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LoginActivity.this,jsonArray.getString("role_id"),Toast.LENGTH_SHORT).show();
 
-                        SharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(Login_Doctor.this);
-                        sharedPreferenceManager.saveString("UserName",email.getText().toString());
+                        SharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(LoginActivity.this);
+                        sharedPreferenceManager.saveString(Constants.USER_NAME,email.getText().toString());
                         sharedPreferenceManager.saveString(Constants.ROLE_ID,jsonArray.getString("role_id"));
                         sharedPreferenceManager.saveString(Constants.USER_ID,jsonArray.getString("id"));
                         if(jsonArray.has("age")){
-                            sharedPreferenceManager.saveString("Age",jsonArray.getString("age"));
+                            sharedPreferenceManager.saveString(Constants.AGE,jsonArray.getString("age"));
                         }
                         if(jsonArray.has("name")){
-                            sharedPreferenceManager.saveString("Name",jsonArray.getString("name"));
+                            sharedPreferenceManager.saveString(Constants.NAME,jsonArray.getString("name"));
                         }
                         if(jsonArray.has("location")){
-                            sharedPreferenceManager.saveString("Location",jsonArray.getString("location"));
+                            sharedPreferenceManager.saveString(Constants.LOCATION,jsonArray.getString("location"));
                         }
                         if(jsonArray.has("birthdate")){
-                            sharedPreferenceManager.saveString("Birthdate",jsonArray.getString("birthdate"));
+                            sharedPreferenceManager.saveString(Constants.BIRTH_DATE,jsonArray.getString("birthdate"));
                         }
 
                         if (jsonArray.getString("role_id").equalsIgnoreCase("1")) {
-                            Intent intent = new Intent(Login_Doctor.this, Doctor_Portel_Data.class);
-                            intent.putExtra("UserName",jsonArray.getString("name"));
+                            Intent intent = new Intent(LoginActivity.this, DoctorPortalActivity.class);
+                            intent.putExtra(Constants.USER_NAME,jsonArray.getString("name"));
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         } else {
-                            Intent intent = new Intent(Login_Doctor.this, Patient_Portal_Data.class);
+                            Intent intent = new Intent(LoginActivity.this, PatientPortalActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            intent.putExtra("UserName",jsonArray.getString("name"));
+                            intent.putExtra(Constants.USER_NAME,jsonArray.getString("name"));
                             startActivity(intent);
                         }
                     }
@@ -153,7 +153,7 @@ public class Login_Doctor extends BaseActivity {
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(Login_Doctor.this,"Oops...Something went wrong! Please try later...!",Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,"Oops...Something went wrong! Please try later...!",Toast.LENGTH_LONG).show();
             }
 
 

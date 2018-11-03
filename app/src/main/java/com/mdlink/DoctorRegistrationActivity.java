@@ -6,24 +6,19 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -31,17 +26,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
 import com.mdlink.api.APIService;
 import com.mdlink.api.RestAPIClent;
 import com.mdlink.drawing.MyDrawView;
-import com.mdlink.model.DoctorPortalRequest;
 import com.mdlink.model.DoctorPortalResponse;
 import com.mdlink.util.Constants;
 import com.mdlink.util.FileUtil;
 import com.mdlink.util.ValidationsUtil;
-
-import org.json.JSONException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -50,7 +41,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -58,9 +48,8 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Multipart;
 
-public class Doctor_portal_Activity extends BaseActivity implements View.OnClickListener {
+public class DoctorRegistrationActivity extends BaseActivity implements View.OnClickListener {
     private static final int READ_STORAGE_PERMISSION_REQUEST_CODE = 1;
     private static final int WRITE_STORAGE_PERMISSION_REQUEST_CODE = 3;
     private static final int ACTIVITY_CHOOSE_FILE = 2;
@@ -93,7 +82,7 @@ public class Doctor_portal_Activity extends BaseActivity implements View.OnClick
     private Toolbar toolbar;
 
     public static void start(Context context) {
-        Intent starter = new Intent(context, Doctor_portal_Activity.class);
+        Intent starter = new Intent(context, DoctorRegistrationActivity.class);
         context.startActivity(starter);
     }
 
@@ -144,7 +133,7 @@ public class Doctor_portal_Activity extends BaseActivity implements View.OnClick
         singup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Doctor_portal_Activity.this, Login_Doctor.class);
+                Intent intent = new Intent(DoctorRegistrationActivity.this, LoginActivity.class);
                 startActivity(intent);
 
             }
@@ -158,7 +147,7 @@ public class Doctor_portal_Activity extends BaseActivity implements View.OnClick
         singup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Doctor_portal_Activity.this, Login_Doctor.class);
+                Intent intent = new Intent(DoctorRegistrationActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -199,7 +188,7 @@ public class Doctor_portal_Activity extends BaseActivity implements View.OnClick
         if (requestCode == ACTIVITY_CHOOSE_FILE) {
             try {
                 InputStream inputStream = this.getContentResolver().openInputStream(data.getData());
-                Uri imageUri = FileUtil.writeInputSteamToCache(Doctor_portal_Activity.this, inputStream);
+                Uri imageUri = FileUtil.writeInputSteamToCache(DoctorRegistrationActivity.this, inputStream);
                 if (null != imageUri) {
                     Log.i(TAG, "filePath>>>>>>>>" + imageUri);
                     tvSelectedFilePath.setText(imageUri.toString());
@@ -219,11 +208,11 @@ public class Doctor_portal_Activity extends BaseActivity implements View.OnClick
                 OpenSignPad();
                 break;
             case R.id.doc_file:
-                if (checkPermissionForReadWriteExtertalStorage(Doctor_portal_Activity.this)) {
+                if (checkPermissionForReadWriteExtertalStorage(DoctorRegistrationActivity.this)) {
                     openFilesDirectory();
                 } else {
                     try {
-                        requestPermissionForReadWriteExtertalStorage(Doctor_portal_Activity.this);
+                        requestPermissionForReadWriteExtertalStorage(DoctorRegistrationActivity.this);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -364,7 +353,7 @@ public class Doctor_portal_Activity extends BaseActivity implements View.OnClick
                 Bitmap b = loadLargeBitmapFromView(rlSignPad);
                 rlSignPad.setDrawingCacheEnabled(false); // clear drawing cache
 
-                File pictureFile = FileUtil.getOutputMediaFile(Doctor_portal_Activity.this);
+                File pictureFile = FileUtil.getOutputMediaFile(DoctorRegistrationActivity.this);
                 if (pictureFile == null) {
                     Log.d(TAG, "Error creating media file, check storage permissions: ");// e.getMessage());
                     deleteDialog.dismiss();
@@ -465,10 +454,10 @@ public class Doctor_portal_Activity extends BaseActivity implements View.OnClick
                             Log.i(TAG, ">>>>>>>>>>>>>" + doctorPortalResponse.getResult().get(key));
                             message += doctorPortalResponse.getResult().get(key).toString().replaceAll("\\[", "").replaceAll("\\]","") + "\n";
                         }
-                        Toast.makeText(Doctor_portal_Activity.this, message, Toast.LENGTH_LONG).show();
+                        Toast.makeText(DoctorRegistrationActivity.this, message, Toast.LENGTH_LONG).show();
                     }else {
-                        Toast.makeText(Doctor_portal_Activity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(Doctor_portal_Activity.this, Login_Doctor.class);
+                        Toast.makeText(DoctorRegistrationActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(DoctorRegistrationActivity.this, LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }
@@ -488,7 +477,7 @@ public class Doctor_portal_Activity extends BaseActivity implements View.OnClick
         int CalendarHour, CalendarMinute;
         CalendarHour = calendarTime.get(Calendar.HOUR_OF_DAY);
         CalendarMinute = calendarTime.get(Calendar.MINUTE);
-        timepickerdialog = new TimePickerDialog(Doctor_portal_Activity.this,
+        timepickerdialog = new TimePickerDialog(DoctorRegistrationActivity.this,
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,

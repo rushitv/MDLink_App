@@ -67,6 +67,7 @@
                     card_view:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
+                    style="@style/TextSmall.Bold"
                     android:id="@+id/tvOne"
                     android:textColor="@color/colorWhite"
                     android:layout_width="wrap_content"
@@ -75,9 +76,10 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView2"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     card_view:layout_constraintStart_toStartOf="parent"
-                    android:textStyle="bold"/>
+                    />
 
                 <TextView
+                    style="@style/TextSmall"
                     android:id="@+id/tvTwo"
                     android:textAlignment="center"
                     android:layout_width="wrap_content"
@@ -131,6 +133,7 @@
                     card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
+                        style="@style/TextSmall.Bold"
                         android:id="@+id/tvOne2"
                         android:textStyle="bold"
                         android:layout_width="wrap_content"
@@ -143,6 +146,7 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
+                        style="@style/TextSmall"
                         android:id="@+id/tvTwo2"
                         android:textAlignment="center"
                         android:textColor="@color/colorWhite"
@@ -195,6 +199,7 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
+                        style="@style/TextSmall.Bold"
                         android:id="@+id/tvOne23"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -206,6 +211,7 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
+                        style="@style/TextSmall"
                         android:id="@+id/tvTwo23"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -258,6 +264,7 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
+                        style="@style/TextSmall.Bold"
                         android:id="@+id/tvOne234"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -269,6 +276,7 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
+                        style="@style/TextSmall"
                         android:id="@+id/tvTwo234"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -320,6 +328,7 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
+                        style="@style/TextSmall.Bold"
                         android:id="@+id/tvOne2345"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -331,6 +340,7 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
+                        style="@style/TextSmall"
                         android:id="@+id/tvTwo2345"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -382,6 +392,7 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
+                        style="@style/TextSmall.Bold"
                         android:id="@+id/tvOne23456"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -393,6 +404,7 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
+                        style="@style/TextSmall"
                         android:id="@+id/tvTwo23456"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -416,8 +428,6 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
-
-
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 

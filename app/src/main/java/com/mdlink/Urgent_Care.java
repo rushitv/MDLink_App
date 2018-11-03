@@ -27,7 +27,7 @@ public class Urgent_Care extends AppCompatActivity {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(Urgent_Care.this,Patient_portal_Activity.class);
+                Intent intent=new Intent(Urgent_Care.this,PatientRegistrationActivity.class);
                 startActivity(intent);
             }
         });

@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,12 +17,11 @@ import android.widget.Toast;
 
 import com.hbb20.CountryCodePicker;
 import com.mdlink.asynctask.PatientRegisterAsyncTask;
-import com.mdlink.util.ValidationsUtil;
 
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class Patient_portal_Activity extends BaseActivity implements View.OnClickListener {
+public class PatientRegistrationActivity extends BaseActivity implements View.OnClickListener {
     private String TAG = getClass().getSimpleName();
     TextView tvPatient_submit, tvSignIn;
     EditText editEmail,editFullName, editPhone, editAge, editBirthdate, editAddress, editPassword, editConfirmPassword;
@@ -67,7 +65,7 @@ public class Patient_portal_Activity extends BaseActivity implements View.OnClic
         tvSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Patient_portal_Activity.this,Login_Doctor.class);
+                Intent intent = new Intent(PatientRegistrationActivity.this,LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -94,7 +92,7 @@ public class Patient_portal_Activity extends BaseActivity implements View.OnClic
         switch (v.getId()){
             case R.id.patient_submit:
                 if(isFormValid().length()>0) {
-                    Toast.makeText(Patient_portal_Activity.this,"",Toast.LENGTH_LONG).show();
+                    Toast.makeText(PatientRegistrationActivity.this,"",Toast.LENGTH_LONG).show();
                 }else {
                     hashMap.clear();
                     Log.i(TAG,"CountryCode>>>>>"+CountryCode);
@@ -110,7 +108,7 @@ public class Patient_portal_Activity extends BaseActivity implements View.OnClic
                     hashMap.put("userID", editEmail.getText().toString());
                     hashMap.put("role_id", "0");
 
-                    new PatientRegisterAsyncTask(Patient_portal_Activity.this, hashMap).execute();
+                    new PatientRegisterAsyncTask(PatientRegistrationActivity.this, hashMap).execute();
                 }
                 break;
             case R.id.editBirthdate:
