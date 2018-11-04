@@ -34,22 +34,21 @@ public class ScheduleAppointmentActivity extends BaseActivity {
         initToolbar();
         initViews();
 
-        callToGetListScheduledAppointment(sharedPreferenceManager.getStringData(Constants.USER_ID));
+        callToGetListScheduledAppointment(sharedPreferenceManager.getStringData(Constants.USER_ID), sharedPreferenceManager.getStringData(Constants.ROLE_ID));
     }
 
     private void initToolbar() {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent_white_180));
         setUpToolbar(toolbar, R.color.colorAccent);
-        setToolbarTitle(getString(R.string.label_bookappointment), R.color.colorAccent);
+        setToolbarTitle(getString(R.string.label_scheduledappointment), R.color.colorAccent);
     }
     private void initViews(){
         rvScheduledApptList = findViewById(R.id.rvScheduledAppointmentList);
         ArrayList<AppointmentListResponseDetails> appointmentListResponses = new ArrayList<>();
-
     }
 
-    private void callToGetListScheduledAppointment(String UserId) {
+    private void callToGetListScheduledAppointment(String UserId,final String RoleId) {
         Log.i(TAG, "UserId>>>>>>" +UserId);
         MdlinkProgressBar.setProgressBar(this);
         Call<AppointmentListResponse> getPatientById = App.apiService.getScheduledAppointmentList("3");
@@ -59,7 +58,7 @@ public class ScheduleAppointmentActivity extends BaseActivity {
                 Log.i(TAG, "1>>>>>>>>>>>>" + response.body());
                 if (response.code() == 200) {
                     Log.i(TAG, "2>>>>>>size>>>>>>>" + response.body().getResult().size());
-                    bindRVList(response.body().getResult());
+                    bindRVList(response.body().getResult(), RoleId);
                 }
                 MdlinkProgressBar.hideProgressBar(ScheduleAppointmentActivity.this);
             }
@@ -72,9 +71,9 @@ public class ScheduleAppointmentActivity extends BaseActivity {
         });
     }
 
-    private void bindRVList(ArrayList<AppointmentListResponseDetails> appointmentListResponseDetailsList){
+    private void bindRVList(ArrayList<AppointmentListResponseDetails> appointmentListResponseDetailsList, String RoleId){
         appointmentListAdapter = new AppointmentListAdapter(this,
-                appointmentListResponseDetailsList, Constants.PATIENT, new AppointmentListAdapter.onItemClickListener() {
+                appointmentListResponseDetailsList, RoleId, new AppointmentListAdapter.onItemClickListener() {
             @Override
             public void onItemClick(AppointmentListResponseDetails appointmentListResponseDetails) {
 

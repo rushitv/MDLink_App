@@ -9,10 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mdlink.R;
 import com.mdlink.model.AppointmentListResponseDetails;
+import com.mdlink.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,8 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvName, tvReason, tvDate, tvTime, tvType,txtLabelStatus, tvPaymentStatus;
+        public RelativeLayout rlViewPatientFile;
+        public TextView tvName, tvReason, tvDate, tvTime, tvType,txtLabelStatus, tvPaymentStatus, txtViewPatientProfileSAL;
 
         public MyViewHolder(View view) {
             super(view);
@@ -56,6 +59,8 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             tvType = view.findViewById(R.id.txtTypeSAL);
             txtLabelStatus = view.findViewById(R.id.txtLabelStatusRSAL);
             tvPaymentStatus = view.findViewById(R.id.txtPaymentStatusRSAS);
+            rlViewPatientFile = view.findViewById(R.id.rlViewPatientFile);
+            txtViewPatientProfileSAL = view.findViewById(R.id.txtViewPatientProfileSAL);
 
         }
     }
@@ -67,12 +72,25 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         AppointmentListResponseDetails appointmentListResponseDetails = mAppointmentListResponseDetailsList.get(position);
         holder.tvName.setText(context.getString(R.string.name, appointmentListResponseDetails.getName()));
         holder.tvReason.setText(context.getString(R.string.reason, appointmentListResponseDetails.getVisitPurpose()));
         holder.tvDate.setText(context.getString(R.string.date,appointmentListResponseDetails.getScheduledDate()));
         holder.tvTime.setText(context.getString(R.string.time,appointmentListResponseDetails.getScheduledTime()));
+
+        if(mType.equalsIgnoreCase("1")){ // 1 = doctor // 2 = patient
+            holder.rlViewPatientFile.setVisibility(View.VISIBLE);
+            holder.txtViewPatientProfileSAL.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(mAppointmentListResponseDetailsList.get(position));
+                }
+            });
+        }else {
+            holder.rlViewPatientFile.setVisibility(View.GONE);
+        }
+
         String type="";
         if(appointmentListResponseDetails.getType()==1){
             type="Audio Call";

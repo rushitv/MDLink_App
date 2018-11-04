@@ -123,7 +123,7 @@ public class DoctorPortalActivity extends BaseActivity
             startActivity(intent);
 
         } else if (id == R.id.Scheduled_app) {
-            Intent intent=new Intent(DoctorPortalActivity.this,Scheduled_Appoinment_Doctor.class);
+            Intent intent=new Intent(DoctorPortalActivity.this,ScheduleAppointmentActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.medical_checkout) {
