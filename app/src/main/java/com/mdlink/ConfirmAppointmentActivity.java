@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -84,20 +85,36 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
             BookAppointmentRequest bookAppointmentRequest = (BookAppointmentRequest)getIntent().getSerializableExtra("BookAppointmentRequest");
             Log.i(TAG,"name>>>>>>>>>>>"+bookAppointmentRequest.getName());
             Log.i(TAG,"preferredDoctorName>>>>>>>>>>>"+preferredDoctorName);
-            txtSicknoteApptForCA.setText(getString(R.string.i_would_to_obtain_sicknote, bookAppointmentRequest.getSickNote() == "1" ? "Yes":"No"));
-            txtRenewApptForCA.setText(getString(R.string.i_would_to_renew_refill_a_prescription, bookAppointmentRequest.getIsRenew() == "1" ? "Yes":"No" ));
+            txtSicknoteApptForCA.setText(getString(R.string.i_would_to_obtain_sicknote, bookAppointmentRequest.getSickNote().equalsIgnoreCase("1") ? "Yes":"No"));
+            txtRenewApptForCA.setText(getString(R.string.i_would_to_renew_refill_a_prescription, bookAppointmentRequest.getIsRenew().equalsIgnoreCase("1") ? "Yes":"No" ));
             txtNameCA.setText(getString(R.string.colon, bookAppointmentRequest.getName()));
             txtAgeCA.setText(getString(R.string.colon,bookAppointmentRequest.getAge()));
             txtPurposeCA.setText(getString(R.string.colon,bookAppointmentRequest.getVisitPurpose()));
             txtPreviousHospitalCA.setText(getString(R.string.colon,bookAppointmentRequest.getPreviousHospital()));
-            txtMedicalConditionCA.setText(getString(R.string.colon,"\n"+bookAppointmentRequest.getMedicalConditions()));
+            if(!TextUtils.isEmpty(bookAppointmentRequest.getMedicalConditions())){
+                txtMedicalConditionCA.setText(getString(R.string.medicalcondition, bookAppointmentRequest.getMedicalConditions().substring(0, bookAppointmentRequest.getMedicalConditions().length() - 1)));
+            }else {
+                txtMedicalConditionCA.setText(getString(R.string.medicalcondition,""));
+            }
             txtPharmacyCA.setText(getString(R.string.colon,bookAppointmentRequest.getPharmacy()));
             txtLocationCA.setText(getString(R.string.colon,bookAppointmentRequest.getLocation()));
             txtDateCA.setText(getString(R.string.colon,bookAppointmentRequest.getScheduledDate()));
             txtTimeCA.setText(getString(R.string.colon,bookAppointmentRequest.getScheduledTime()));
             txtPreferredDoctorCA.setText(getString(R.string.colon,preferredDoctorName));
             txtAllergiesCA.setText(getString(R.string.colon,bookAppointmentRequest.getAllergy()));
-            txtApptTypeCA.setText(getString(R.string.colon,bookAppointmentRequest.getType()));
+            String type ="";
+            switch (bookAppointmentRequest.getType()) {
+                case "1":
+                    type = "Audio ($12)";
+                    break;
+                case "2":
+                    type = "Instant Message ($12)";
+                    break;
+                case "3":
+                    type = "Video Call ($15)";
+                    break;
+            }
+            txtApptTypeCA.setText(getString(R.string.colon,type));
         }
     }
 

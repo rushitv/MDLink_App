@@ -11,7 +11,6 @@ import com.mdlink.model.AppointmentListResponse;
 import com.mdlink.model.AppointmentListResponseDetails;
 import com.mdlink.preferences.SharedPreferenceManager;
 import com.mdlink.util.Constants;
-import com.mdlink.util.MdlinkProgressBar;
 
 import java.util.ArrayList;
 
@@ -50,23 +49,29 @@ public class ScheduleAppointmentActivity extends BaseActivity {
 
     private void callToGetListScheduledAppointment(String UserId,final String RoleId) {
         Log.i(TAG, "UserId>>>>>>" +UserId);
-        MdlinkProgressBar.setProgressBar(this);
-        Call<AppointmentListResponse> getPatientById = App.apiService.getScheduledAppointmentList("3");
-        getPatientById.enqueue(new Callback<AppointmentListResponse>() {
+        showProgressDialog();
+        Call<AppointmentListResponse> getById;
+        if(RoleId.equalsIgnoreCase("2")){
+            getById = App.apiService.getScheduledAppointmentListDoctorSide("7");
+        }else {
+            getById = App.apiService.getScheduledAppointmentListPatientSide("3");
+        }
+
+        getById.enqueue(new Callback<AppointmentListResponse>() {
             @Override
             public void onResponse(retrofit2.Call<AppointmentListResponse> call, Response<AppointmentListResponse> response) {
+                hideProgressDialog();
                 Log.i(TAG, "1>>>>>>>>>>>>" + response.body());
                 if (response.code() == 200) {
                     Log.i(TAG, "2>>>>>>size>>>>>>>" + response.body().getResult().size());
                     bindRVList(response.body().getResult(), RoleId);
                 }
-                MdlinkProgressBar.hideProgressBar(ScheduleAppointmentActivity.this);
             }
 
             @Override
             public void onFailure(retrofit2.Call<AppointmentListResponse> call, Throwable t) {
+                hideProgressDialog();
                 t.fillInStackTrace();
-                MdlinkProgressBar.hideProgressBar(ScheduleAppointmentActivity.this);
             }
         });
     }

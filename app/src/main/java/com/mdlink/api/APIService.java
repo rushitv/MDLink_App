@@ -71,8 +71,15 @@ public interface APIService {
     Call<JsonObject> createOreder(@Body CreateOrederRequest createOrederRequest);
 
     @GET("patientappointment/{id}")
-    Call<AppointmentListResponse> getScheduledAppointmentList(@Path("id") String id);
+    Call<AppointmentListResponse> getScheduledAppointmentListPatientSide(@Path("id") String id);
+
+    @GET("doctorappointment/{id}")
+    Call<AppointmentListResponse> getScheduledAppointmentListDoctorSide(@Path("id") String id);
 
     @GET("appointment-options")
     Call<AppointmentOptionsResponse> getAppointmentOptions();
+
+    @POST("contact")
+    Call<JsonObject> contactUs(@Body HashMap jsonObject);
+
 }

@@ -69,6 +69,7 @@
     <string name="pending">Pending</string>
     <string name="paid">Paid</string>
     <string name="label_payment_status">Payment Status</string>
+    <string name="medicalcondition">Medical Condition: %1$s</string>
     <string name="payment_status">Payment Status: %1$s</string>
     <string name="name">Name: %1$s</string>
     <string name="reason">Reason: %1$s</string>
@@ -158,4 +159,7 @@
     <string name="label_after_your_medical">After Your Medical Consult</string>
     <string name="label_for_doctor">For Doctors</string>
     <string name="label_user_guide">User Guide</string>
+    <string name="label_view_patient_profile">View Patient Profile</string>
+    <string name="label_view_patient_file">View Patient File</string>
+    <string name="label_contactus">Contact Us</string>
 </resources>

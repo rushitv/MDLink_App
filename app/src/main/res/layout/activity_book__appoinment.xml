@@ -412,8 +412,8 @@
                     </LinearLayout>-->
 
             <TextView
-                style="@style/TextMedium"
                 android:id="@+id/book_submit"
+                style="@style/TextMedium"
                 android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

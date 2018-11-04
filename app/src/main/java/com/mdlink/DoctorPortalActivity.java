@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -135,7 +134,7 @@ public class DoctorPortalActivity extends BaseActivity
             startActivity(intent);
 
         } else if (id == R.id.contact) {
-            Intent intent=new Intent(DoctorPortalActivity.this,ContactUs_Activity.class);
+            Intent intent=new Intent(DoctorPortalActivity.this,ContactUsActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.logout) {
@@ -151,30 +150,23 @@ public class DoctorPortalActivity extends BaseActivity
 
         switch(v.getId()){
             case R.id.tvThree:
-                Intent intent=new Intent(DoctorPortalActivity.this,Urgent_Care.class);
-                startActivity(intent);
+                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.URGENTCARE);
                 break;
             case R.id.tvThree2:
-                Intent intent2=new Intent(DoctorPortalActivity.this,Medical_Advice.class);
-                startActivity(intent2);
+                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.MEDICAL_ADVICE);
                 break;
             case R.id.tvThree23:
-                Intent intent3=new Intent(DoctorPortalActivity.this,Labs_and_Screening.class);
-                startActivity(intent3);
+                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABS_AND_SCREEN);
                 break;
             case R.id.tvThree234:
-                Intent intent4=new Intent(DoctorPortalActivity.this,Addiction_Activity.class);
-                startActivity(intent4);
+                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABEL_ADDICTION);
                 break;
             case R.id.tvThree2345:
-                Intent intent5=new Intent(DoctorPortalActivity.this,Addiction_Activity.class);
-                startActivity(intent5);
+                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABEL_DEPRESSION);
                 break;
             case R.id.tvThree23456:
-                Intent intent6=new Intent(DoctorPortalActivity.this,Mood_Activity.class);
-                startActivity(intent6);
+                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABEL_THERAPY);
                 break;
-
         }
     }
 }

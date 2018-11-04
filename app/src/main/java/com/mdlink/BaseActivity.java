@@ -2,6 +2,7 @@ package com.mdlink;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mdlink.helper.UiHelper;
+import com.mdlink.util.Constants;
 
 import static com.mdlink.util.Constants.INVALID;
 
@@ -24,7 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private String TAG = getClass().getSimpleName();
     public Toolbar mToolbar;
     private BaseActivity mActivity;
-     ProgressBar progress;
+    private ProgressDialog progressDialog;
 
     public BaseActivity getBaseActivity() {
         return mActivity;
@@ -119,5 +121,24 @@ public abstract class BaseActivity extends AppCompatActivity {
                 onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void OpenTreatmentListActivity(Activity activity, Class toActivity, String type){
+        Intent intent = new Intent(activity,toActivity);
+        intent.putExtra(Constants.TYPE,type);
+        startActivity(intent);
+    }
+    protected void showProgressDialog(){
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setProgress(0);
+        progressDialog.show();
+    }
+    protected void hideProgressDialog(){
+        if(progressDialog!=null&&progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
     }
 }

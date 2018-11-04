@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.mdlink.util.Constants;
+
 import static com.mdlink.util.Constants.INVALID;
 
 public class MainActivity extends BaseActivity
@@ -45,15 +47,15 @@ public class MainActivity extends BaseActivity
 
         tvThree = findViewById(R.id.tvThree);
         tvThree.setOnClickListener(this);
-        tvThree2 = findViewById(R.id.tvOne2);
+        tvThree2 = findViewById(R.id.tvThree2);
         tvThree2.setOnClickListener(this);
-        tvThree23 = findViewById(R.id.tvOne23);
+        tvThree23 = findViewById(R.id.tvThree23);
         tvThree23.setOnClickListener(this);
-        tvThree234 = findViewById(R.id.tvOne234);
+        tvThree234 = findViewById(R.id.tvThree234);
         tvThree234.setOnClickListener(this);
-        tvThree2345 = findViewById(R.id.tvOne2345);
+        tvThree2345 = findViewById(R.id.tvThree2345);
         tvThree2345.setOnClickListener(this);
-        tvThree23456 = findViewById(R.id.tvOne23456);
+        tvThree23456 = findViewById(R.id.tvThree23456);
         tvThree23456.setOnClickListener(this);
 
     }
@@ -98,7 +100,7 @@ public class MainActivity extends BaseActivity
             startActivity(intent);
 
         } else if (id == R.id.contactus) {
-            Intent intent = new Intent(MainActivity.this, ContactUs_Activity.class);
+            Intent intent = new Intent(MainActivity.this, ContactUsActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.aboutus) {
@@ -120,30 +122,24 @@ public class MainActivity extends BaseActivity
 
         switch(v.getId()){
             case R.id.tvThree:
-                Intent intent=new Intent(MainActivity.this,Urgent_Care.class);
-                startActivity(intent);
+                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.URGENTCARE);
                 break;
             case R.id.tvThree2:
-                Intent intent2=new Intent(MainActivity.this,Medical_Advice.class);
-                startActivity(intent2);
+                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.MEDICAL_ADVICE);
                 break;
             case R.id.tvThree23:
-                Intent intent3=new Intent(MainActivity.this,Labs_and_Screening.class);
-                startActivity(intent3);
+                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABS_AND_SCREEN);
                 break;
             case R.id.tvThree234:
-                Intent intent4=new Intent(MainActivity.this,Addiction_Activity.class);
-                startActivity(intent4);
+                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABEL_ADDICTION);
                 break;
             case R.id.tvThree2345:
-                Intent intent5=new Intent(MainActivity.this,Addiction_Activity.class);
-                startActivity(intent5);
+                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABEL_DEPRESSION);
                 break;
             case R.id.tvThree23456:
-                Intent intent6=new Intent(MainActivity.this,Mood_Activity.class);
-                startActivity(intent6);
+                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABEL_THERAPY);
                 break;
-
         }
     }
+
 }

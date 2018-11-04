@@ -16,7 +16,6 @@ import com.google.gson.JsonObject;
 import com.mdlink.model.PatientProfileRequest;
 import com.mdlink.preferences.SharedPreferenceManager;
 import com.mdlink.util.Constants;
-import com.mdlink.util.MdlinkProgressBar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -115,11 +114,12 @@ public class Patient_Profile extends BaseActivity implements View.OnClickListene
     }
 
     private void callGetPatientProfileAPI() {
-        MdlinkProgressBar.setProgressBar(this);
+        showProgressDialog();
         Call<JsonObject> getPatientById = App.apiService.getPatientProfile(sharedPreferenceManager.getStringData(Constants.USER_ID));
         getPatientById.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(retrofit2.Call<JsonObject> call, Response<JsonObject> response) {
+                hideProgressDialog();
                 Log.i(TAG, "1>>>>>>>>>>>>" + response.body());
                 if (response.code() == 200) {
                     Log.i(TAG, "2>>>>>>>>>>>>>" + response.body());
@@ -132,35 +132,34 @@ public class Patient_Profile extends BaseActivity implements View.OnClickListene
                     sharedPreferenceManager.saveString(Constants.AGE,jsonObject.get("age").getAsString());
                     setFetchedData();
                 }
-                MdlinkProgressBar.hideProgressBar(Patient_Profile.this);
             }
 
             @Override
             public void onFailure(retrofit2.Call<JsonObject> call, Throwable t) {
+                hideProgressDialog();
                 t.fillInStackTrace();
-                MdlinkProgressBar.hideProgressBar(Patient_Profile.this);
             }
         });
     }
 
     private void callSubmitProfileAPI(PatientProfileRequest patientProfileRequest) {
-        MdlinkProgressBar.setProgressBar(this);
+        showProgressDialog();
         Call<JsonObject> updatePatientProfile = App.apiService.updatePatientProfile(
                 patientProfileRequest);
         updatePatientProfile.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(retrofit2.Call<JsonObject> call, Response<JsonObject> response) {
+                hideProgressDialog();
                 Log.i(TAG, "1>>>>>>>>>>>>" + response.body());
                 if (response.code() == 200) {
                     Log.i(TAG, "2>>>>>>>>>>>>>" + response.body());
                 }
-                MdlinkProgressBar.hideProgressBar(Patient_Profile.this);
             }
 
             @Override
             public void onFailure(retrofit2.Call<JsonObject> call, Throwable t) {
+                hideProgressDialog();
                 t.fillInStackTrace();
-                MdlinkProgressBar.hideProgressBar(Patient_Profile.this);
             }
         });
     }

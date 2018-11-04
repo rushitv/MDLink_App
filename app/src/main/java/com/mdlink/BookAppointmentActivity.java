@@ -35,7 +35,6 @@ import com.mdlink.model.DoctorsListModel;
 import com.mdlink.model.OptionDetails;
 import com.mdlink.preferences.SharedPreferenceManager;
 import com.mdlink.util.Constants;
-import com.mdlink.util.MdlinkProgressBar;
 import com.mdlink.util.ValidationsUtil;
 
 import java.util.ArrayList;
@@ -181,7 +180,7 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
                 if (rbHowToConnectVal != null) {
                     Log.i(TAG, ">>>>>>>>" + rbHowToConnectVal.getText());
                     switch (rbHowToConnectVal.getText().toString()) {
-                        case "Audio Call ($12)":
+                        case "Audio ($12)":
                             type = "1";
                             break;
                         case "Instant Message ($12)":
@@ -434,11 +433,12 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
     }
 
     private void CallGetAppointmentOptions() {
-        MdlinkProgressBar.setProgressBar(this);
+        showProgressDialog();
         Call<AppointmentOptionsResponse> getPatientById = App.apiService.getAppointmentOptions();
         getPatientById.enqueue(new Callback<AppointmentOptionsResponse>() {
             @Override
             public void onResponse(retrofit2.Call<AppointmentOptionsResponse> call, Response<AppointmentOptionsResponse> response) {
+                hideProgressDialog();
                 Log.i(TAG, "1>>>>>>>>>>>>" + response.body());
                 if (response.code() == 200) {
                     Log.i(TAG, "Labs>>>size>>>>>>>" + response.body().getAppointmentOptions().getLabs().size());
@@ -450,13 +450,12 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
                         pharmacyList = response.body().getAppointmentOptions().getPharmacys();
                     }
                 }
-                MdlinkProgressBar.hideProgressBar(BookAppointmentActivity.this);
             }
 
             @Override
             public void onFailure(retrofit2.Call<AppointmentOptionsResponse> call, Throwable t) {
+                hideProgressDialog();
                 t.fillInStackTrace();
-                MdlinkProgressBar.hideProgressBar(BookAppointmentActivity.this);
             }
         });
     }

@@ -18,6 +18,13 @@ public class Constants {
     public static final String ADDRESS = "Address";
     public static final String LOCATION = "Location";
     public static final String USER_NAME = "UserName";
+    public static final String URGENTCARE = "Urgent Care";
+    public static final String LABEL_THERAPY = "Therapy";
+    public static final String LABEL_DEPRESSION = "Depression And Mood";
+    public static final String LABEL_ADDICTION = "Addiction";
+    public static final String LABS_AND_SCREEN = "Labs And Screening";
+    public static final String MEDICAL_ADVICE = "Medical Advice";
+
 
     public static String BASE_URL = "http://api.themdlink.com/api/v1/";
     public static final String SEPARATOR = ",";
@@ -106,4 +113,89 @@ public class Constants {
             "(ECG)",
             "(ECHOCARDIOGRAM)"
             );
+
+    public static final List<String> URGENT_LIST = Arrays.asList(
+            "Allergies",
+            "Back Pain",
+            "Bronchitis and Pneumonia",
+            "Cellulitis and Skin Infections",
+            "Colds, Coughs, Congestion",
+            "Conjunctivitis",
+            "Headache / Migraine",
+            "Influenza",
+            "Rashes and Skin Conditions",
+            "Sinus Infections",
+            "Allergy & Asthma",
+            "Obesity",
+            "High Blood Pressure",
+            "High Cholesterol",
+            "Metabolic Syndrome",
+            "Pre-Diabetes / Diabetes",
+            "Stress Management",
+            "Thyroid",
+            "Urinary Tract Infections",
+            "Vaginal and Yeast Infections",
+            "Sexually Transmitted Diseases",
+            "Vomiting and Diarrhea",
+            "Sport Injuries",
+            "Sprains and Bruises",
+            "Erectile Dysfunction",
+            "Acne",
+            "Prescription Renewal"
+    );
+
+    public static final List<String> MEDICAL_ADVICE_LIST = Arrays.asList(
+            "Am I experiencing a medical emergency?",
+            "Can I take these medications together?",
+            "Can you help me when my doctor is out of town?",
+            "Do I need a specialist?",
+            "Is this a side effect of a medication or another issue?",
+            "Night and Weekend Medical questions",
+            "Should I go to the ER or Urgent Care?",
+            "What can I expect with my new medication?"
+    );
+
+    public static final List<String> LABS_AND_SCREENING = Arrays.asList(
+            "STDs",
+            "Anemia",
+            "Cardiovascular",
+            "Chronic disease",
+            "Depression",
+            "Diabetes",
+            "Drug levels",
+            "Fatigue",
+            "Fertility",
+            "Thyroid disease",
+            "Vitamin deficiencies"
+    );
+
+    public static final List<String> ADDICTION = Arrays.asList(
+            "Weight loss counseling",
+            "Behavioral Pain Management",
+            "Drug and Alcohol Dependence",
+            "Food Addiction",
+            "Medication Addiction",
+            "Opioid Addiction",
+            "Smoking Cessation"
+    );
+    public static final List<String> DEPRESSION_AND_MOOD = Arrays.asList(
+            "Bipolar Disorder",
+            "Chronic Depression",
+            "Dysthymia",
+            "Fatigue",
+            "Major Depression",
+            "Mood Swings",
+            "Postpartum Depression"
+    );
+    public static final List<String> THERAPY = Arrays.asList(
+            "Stress and Anxiety",
+            "Trauma and Loss",
+            "Anger Management",
+            "Behavioral Therapy",
+            "Cognitive Behavioral Therapy",
+            "Dialectical Behavioral Therapy",
+            "Emotional Focused Therapy",
+            "Post Cardiac Event Counseling",
+            "Psychodynamic Therapy"
+    );
 }

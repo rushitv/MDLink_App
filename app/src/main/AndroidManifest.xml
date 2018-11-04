@@ -40,7 +40,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ContactUs_Activity"
+            android:name=".ContactUsActivity"
             android:label="Contact Us" />
         <activity
             android:name=".AboutUsActivity"
@@ -48,6 +48,9 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".UserGuideActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".TreatmentListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!--<activity
@@ -58,19 +61,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Urgent_Care"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity
             android:name=".Medical_Advice"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".Labs_and_Screening"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".Addiction_Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -79,10 +70,6 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Therapy_Activity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".Mood_Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
