@@ -51,7 +51,7 @@ public class ScheduleAppointmentActivity extends BaseActivity {
         Log.i(TAG, "UserId>>>>>>" +UserId);
         showProgressDialog();
         Call<AppointmentListResponse> getById;
-        if(RoleId.equalsIgnoreCase("2")){
+        if(RoleId.equalsIgnoreCase("1")){
             getById = App.apiService.getScheduledAppointmentListDoctorSide("7");
         }else {
             getById = App.apiService.getScheduledAppointmentListPatientSide("3");

@@ -82,4 +82,7 @@ public interface APIService {
     @POST("contact")
     Call<JsonObject> contactUs(@Body HashMap jsonObject);
 
+    @GET("chat-token")
+    Call<JsonObject> getChatToken(@Query("identity") String identity, @Query("room_name") String room_name);
+
 }
