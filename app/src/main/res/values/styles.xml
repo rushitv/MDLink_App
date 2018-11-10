@@ -86,4 +86,20 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AlertDialogCustom" parent="@android:style/Theme.Dialog">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+
+    <style name="MenuHeaderItem">
+        <item name="android:layout_height">40dp</item>
+    </style>
+
+    <style name="MenuHeader" parent="MenuHeaderItem">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
 </resources>
