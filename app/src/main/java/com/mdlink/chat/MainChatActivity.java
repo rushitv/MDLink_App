@@ -32,6 +32,7 @@ import com.mdlink.chat.channels.LoadChannelListener;
 import com.mdlink.chat.listeners.InputOnClickListener;
 import com.mdlink.chat.listeners.TaskCompletionListener;
 import com.mdlink.splash.SplashActivity;
+import com.mdlink.util.Constants;
 import com.twilio.chat.Channel;
 import com.twilio.chat.ChatClient;
 import com.twilio.chat.ChatClientListener;
@@ -205,7 +206,7 @@ public class MainChatActivity extends AppCompatActivity implements ChatClientLis
                   public void run() {
                     channelAdapter.notifyDataSetChanged();
                     stopActivityIndicator();
-                    setChannel(0);
+                    setChannel(Constants.CHANNEL_UNIQUE_NAME);
                   }
                 });
               }
@@ -219,17 +220,79 @@ public class MainChatActivity extends AppCompatActivity implements ChatClientLis
     });
   }
 
-  private void setChannel(final int position) {
+  private void setChannel(String byName){
     List<Channel> channels = channelManager.getChannels();
-    for(Channel channel: channels){
-      System.out.println(">>>>"+channel.getUniqueName()+">>>>"+channel.getFriendlyName());
-      Log.i(TAG, ">>>>>>>>>>>>>>"+channel.getUniqueName());
-    }
     if (channels == null) {
       return;
     }
+    int pos = -1;
+    for(Channel channel: channels){
+      pos++;
+      System.out.println(">>>>"+channel.getUniqueName()+">>>>"+channel.getFriendlyName());
+      System.out.println("pos>>>>>>>"+pos+">>>>>>>>>>>>>>"+channel.getUniqueName());
+      if(channel.getUniqueName().equalsIgnoreCase(channelManager.getDefaultChannelUniqueName())) {
+        break;
+      }
+    }
+
+
+
+    final Channel currentChannel = chatFragment.getCurrentChannel();
+    final Channel selectedChannel = channels.get(pos);
+
+    System.out.println("selectedChannel>>>>>>"+pos+">>>>>>>"+ channels.get(pos).getUniqueName());
+
+    if (currentChannel != null && currentChannel.getSid().contentEquals(selectedChannel.getSid())) {
+      drawer.closeDrawer(GravityCompat.START);
+      return;
+    }
+    hideMenuItems(pos);
+    if (selectedChannel != null) {
+      showActivityIndicator("Joining " + selectedChannel.getFriendlyName() + " channel");
+      if (currentChannel != null && currentChannel.getStatus() == Channel.ChannelStatus.JOINED) {
+        this.channelManager.leaveChannelWithHandler(currentChannel, new StatusListener() {
+          @Override
+          public void onSuccess() {
+            joinChannel(selectedChannel);
+          }
+
+          @Override
+          public void onError(ErrorInfo errorInfo) {
+            stopActivityIndicator();
+          }
+        });
+        return;
+      }
+      joinChannel(selectedChannel);
+      stopActivityIndicator();
+    } else {
+      stopActivityIndicator();
+      showAlertWithMessage(getStringResource(R.string.generic_error));
+      System.out.println("Selected channel out of range");
+    }
+  }
+
+  private void setChannel(final int position) {
+    List<Channel> channels = channelManager.getChannels();
+    int pos = -1;
+    for(Channel channel: channels){
+      pos++;
+      System.out.println(">>>>"+channel.getUniqueName()+">>>>"+channel.getFriendlyName());
+      System.out.println("pos>>>>>>>"+pos+">>>>>>>>>>>>>>"+channel.getUniqueName());
+      if(channel.getUniqueName().equalsIgnoreCase(channelManager.getDefaultChannelUniqueName())) {
+        break;
+      }
+    }
+
+    if (channels == null) {
+      return;
+    }
+
     final Channel currentChannel = chatFragment.getCurrentChannel();
     final Channel selectedChannel = channels.get(position);
+
+    System.out.println("selectedChannel>>>>>>"+pos+">>>>>>>"+ channels.get(pos).getUniqueName());
+
     if (currentChannel != null && currentChannel.getSid().contentEquals(selectedChannel.getSid())) {
       drawer.closeDrawer(GravityCompat.START);
       return;
@@ -261,6 +324,7 @@ public class MainChatActivity extends AppCompatActivity implements ChatClientLis
   }
 
   private void joinChannel(final Channel selectedChannel) {
+    System.out.println("joining>>>>>channel>>"+selectedChannel.getUniqueName()+"-------"+selectedChannel.getFriendlyName());
     runOnUiThread(new Runnable() {
       @Override
       public void run() {

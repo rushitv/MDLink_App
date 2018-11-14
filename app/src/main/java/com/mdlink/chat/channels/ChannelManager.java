@@ -7,6 +7,7 @@ import android.os.Looper;
 import com.mdlink.App;
 import com.mdlink.chat.ChatClientManager;
 import com.mdlink.chat.listeners.TaskCompletionListener;
+import com.mdlink.util.Constants;
 import com.twilio.chat.CallbackListener;
 import com.twilio.chat.Channel;
 import com.twilio.chat.Channel.ChannelType;
@@ -31,8 +32,8 @@ public class ChannelManager implements ChatClientListener {
   private List<Channel> channels;
   private Channels channelsObject;
   private ChatClientListener listener;
-  private String defaultChannelName = "appo_room";
-  private String defaultChannelUniqueName = "appo_room_137";
+  private String defaultChannelName = Constants.CHANNEL_DEFAULT_NAME;
+  private String defaultChannelUniqueName = Constants.CHANNEL_UNIQUE_NAME;
   private Handler handler;
   private Boolean isRefreshingChannels = false;
 
@@ -53,6 +54,9 @@ public class ChannelManager implements ChatClientListener {
 
   public String getDefaultChannelName() {
     return this.defaultChannelName;
+  }
+  public String getDefaultChannelUniqueName() {
+    return this.defaultChannelUniqueName;
   }
 
   public void leaveChannelWithHandler(Channel channel, StatusListener handler) {

@@ -25,6 +25,7 @@ import com.mdlink.chat.SessionManager;
 import com.mdlink.chat.listeners.TaskCompletionListener;
 import com.mdlink.preferences.SharedPreferenceManager;
 import com.mdlink.util.Constants;
+import com.mdlink.voice.VoiceActivity;
 
 public class SplashActivity extends BaseActivity {
     private String TAG = getClass().getSimpleName();
@@ -47,7 +48,7 @@ public class SplashActivity extends BaseActivity {
 
         SessionManager.getInstance().logoutUser();
         clientManager = App.getInstance().getChatClientManager();
-        SessionManager.getInstance().createLoginSession("rushit@gmail.com");
+      /*  SessionManager.getInstance().createLoginSession("rushit@gmail.com");
 
 
         new AsyncTask<Void, Void, String>(
@@ -58,37 +59,30 @@ public class SplashActivity extends BaseActivity {
                 initializeChatClient();
                 return null;
             }
-        }.execute();
-        /*new Handler().postDelayed(new Runnable() {
+        }.execute();*/
+
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                Intent intentd = new Intent(SplashActivity.this, MessageActivity.class);
-                startActivity(intentd);
-                finish();
-
-                *//*if (TextUtils.isEmpty(preferenceManager.getStringData(Constants.USER_ID))) {
-                    Intent intent = new Intent(SplashActivity.this, Guide_Page.class);
+                if (TextUtils.isEmpty(preferenceManager.getStringData(Constants.USER_ID))) {
+                    Intent intent = new Intent(SplashActivity.this, VoiceActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-
-                  *//*
-
-
-         *//*if (preferenceManager.getStringData(Constants.ROLE_ID).equalsIgnoreCase("1")) {
-                        Intent intentd = new Intent(SplashActivity.this, DoctorPortalActivity.class);
+                    Intent intentd;
+                    if (preferenceManager.getStringData(Constants.ROLE_ID).equalsIgnoreCase("1")) {
+                        intentd = new Intent(SplashActivity.this, DoctorPortalActivity.class);
                         startActivity(intentd);
                         finish();
-                    }else {
-                        Intent intentd = new Intent(SplashActivity.this, PatientPortalActivity.class);
+                    } else {
+                        intentd = new Intent(SplashActivity.this, PatientPortalActivity.class);
                         startActivity(intentd);
                         finish();
-                    }*//*
-                //}
+                    }
+                }
             }
-        }, 3000);*/
-
+        }, 3000);
     }
 
     private void initializeChatClient() {

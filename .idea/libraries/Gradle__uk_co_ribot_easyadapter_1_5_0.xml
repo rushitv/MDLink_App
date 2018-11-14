@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: uk.co.ribot:easyadapter-1.5.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/easyadapter-1.5.0.aar/9afb772687e4e14773de7d9b1e1f8eb6/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/easyadapter-1.5.0.aar/9afb772687e4e14773de7d9b1e1f8eb6/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/uk.co.ribot/easyadapter/1.5.0/6d5dd271f9a6409fdb0a47f2657319311c0055a1/easyadapter-1.5.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

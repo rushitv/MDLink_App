@@ -8,6 +8,7 @@ import android.util.Log;
 import com.google.gson.JsonObject;
 import com.mdlink.App;
 import com.mdlink.chat.listeners.TaskCompletionListener;
+import com.mdlink.util.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +33,7 @@ public class AccessTokenFetcher {
 
     try {
 
-      Call<JsonObject> getChatToken = App.apiService.getChatToken("RushitV-19000","appo_room_137");
+      Call<JsonObject> getChatToken = App.apiService.getChatToken(Constants.TWILIO_USER,Constants.CHANNEL_UNIQUE_NAME);
       JsonObject jsonObject = getChatToken.execute().body();
       identity = jsonObject.get("identity").getAsString();
       accessToken = jsonObject.get("token").getAsString();

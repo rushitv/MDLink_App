@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="Gradle: com.twilio:video-android-2.0.0-preview5">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/video-android-2.0.0-preview5.aar/deaf96167155c9ab15adf3629aaeb30f/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/video-android-2.0.0-preview5.aar/deaf96167155c9ab15adf3629aaeb30f/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/video-android-2.0.0-preview5.aar/deaf96167155c9ab15adf3629aaeb30f/jars/libs/libjingle_peerconnection_java.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/video-android-2.0.0-preview5.aar/deaf96167155c9ab15adf3629aaeb30f/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.twilio/video-android/2.0.0-preview5/303e1d7babd9bbffccf92c81b2c29ae15fc0192a/video-android-2.0.0-preview5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

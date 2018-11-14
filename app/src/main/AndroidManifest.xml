@@ -32,6 +32,14 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
         <activity
+            android:name=".ChatActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".chat.MessageActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
             android:name=".DoctorRegistrationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
@@ -41,6 +49,9 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ContactUsActivity"
+            android:label="Contact Us" />
+        <activity
+            android:name=".chat.MainChatActivity"
             android:label="Contact Us" />
         <activity
             android:name=".AboutUsActivity"
@@ -58,10 +69,6 @@
             android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".Medical_Advice"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -89,6 +96,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:name=".voice.VoiceActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".DoctorPortalActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
@@ -101,6 +112,22 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"></activity>
 
+        <!-- [START fcm_listener] -->
+        <service
+            android:name=".fcm.VoiceFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- [END fcm_listener] -->
+        <!-- [START instanceId_listener] -->
+        <service
+            android:name=".fcm.VoiceFirebaseInstanceIDService" >
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- [END instanceId_listener] -->
     </application>
 
 </manifest>

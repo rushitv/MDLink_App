@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.twilio:voice-android-2.0.9">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/voice-android-2.0.9.aar/1085cacdaccddfa945973b5934975aa2/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/voice-android-2.0.9.aar/1085cacdaccddfa945973b5934975aa2/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

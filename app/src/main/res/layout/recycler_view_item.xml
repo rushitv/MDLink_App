@@ -1,158 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/pad_5"
     android:layout_marginRight="@dimen/pad_5"
-    android:layout_marginBottom="@dimen/pad_5"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_marginBottom="@dimen/pad_5">
 
-  <android.support.v7.widget.CardView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:padding="@dimen/pad_5"
-      app:cardBackgroundColor="@color/colorSkyBlue"
-      app:cardCornerRadius="@dimen/pad_5"
-      app:cardElevation="5dp"
-      app:cardUseCompatPadding="true">
-
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="@dimen/pad_5"
-        >
-      <TextView
-          android:padding="@dimen/pad_5"
-          style="@style/TextSmall"
-          android:textColor="@color/colorWhite"
-          android:id="@+id/txtNameSAL"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@string/app_name"/>
-      <TextView
-          android:padding="@dimen/pad_5"
-          style="@style/TextSmall"
-          android:textColor="@color/colorWhite"
-          android:id="@+id/txtReasonSAL"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@string/app_name"/>
-      <TextView
-          android:padding="@dimen/pad_5"
-          style="@style/TextSmall"
-          android:textColor="@color/colorWhite"
-          android:id="@+id/txtDateSAL"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@string/app_name"/>
+        app:cardBackgroundColor="@color/colorSkyBlue"
+        app:cardCornerRadius="@dimen/pad_5"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true">
 
-      <TextView
-          android:padding="@dimen/pad_5"
-          style="@style/TextSmall"
-          android:textColor="@color/colorWhite"
-          android:id="@+id/txtTimeSAL"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@string/app_name"/>
-
-      <TextView
-          android:padding="@dimen/pad_5"
-          style="@style/TextSmall"
-          android:textColor="@color/colorWhite"
-          android:id="@+id/txtTypeSAL"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@string/app_name"/>
-
-      <RelativeLayout
-          android:padding="@dimen/pad_5"
-          android:layout_marginBottom="@dimen/pad_5"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/txtLabelStatusRSAL"
-            style="@style/TextSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_centerInParent="true"
-            android:layout_alignParentLeft="true"
-            android:layout_toStartOf="@+id/txtPaymentStatusRSAS"
-            android:text="@string/app_name"
-            android:textColor="@color/colorWhite" />
-
-        <TextView
-            style="@style/TextMedium.Bold"
-            android:padding="@dimen/pad_5"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/colorWhite"
-            android:id="@+id/txtPaymentStatusRSAS"
-            android:layout_centerInParent="true"
-            android:gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/corner_low"
-            android:text="@string/join"/>
-
-      </RelativeLayout>
-
-      <RelativeLayout
-          android:layout_marginTop="@dimen/pad_5"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-        <TextView
-            style="@style/TextMedium.Bold"
-            android:padding="@dimen/pad_3"
-            android:textColor="@color/colorWhite"
-            android:id="@+id/txtJoinCallSAL"
-            android:gravity="center_horizontal"
-            android:layout_width="@dimen/pad_100"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:background="@drawable/corner_low"
-            android:backgroundTint="@color/colorDarkGrey500"
-            android:text="@string/join"/>
-
-        <TextView
-            style="@style/TextMedium.Bold"
-            android:padding="@dimen/pad_3"
-            android:gravity="center_horizontal"
-            android:textColor="@color/colorWhite"
-            android:id="@+id/txtCallCallSAL"
-            android:layout_alignParentRight="true"
-            android:layout_width="@dimen/pad_100"
-            android:layout_height="wrap_content"
-            android:background="@drawable/corner_low"
-            android:backgroundTint="@color/colorDarkGrey500"
-            android:text="@string/cancel"/>
-      </RelativeLayout>
-
-      <RelativeLayout
-          android:id="@+id/rlViewPatientFile"
-          android:padding="@dimen/pad_3"
-          android:layout_marginTop="@dimen/pad_5"
-          android:layout_width="match_parent"
-          android:layout_marginLeft="@dimen/pad_80"
-          android:layout_marginRight="@dimen/pad_80"
-          android:layout_height="wrap_content"
-          android:visibility="visible">
-
-        <TextView
-            style="@style/TextMedium.Bold"
-            android:id="@+id/txtViewPatientProfileSAL"
-            android:padding="@dimen/pad_3"
-            android:gravity="center_horizontal"
-            android:textColor="@color/colorWhite"
-            android:layout_alignParentRight="true"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/corner_low"
-            android:backgroundTint="@color/colorDarkGrey500"
-            android:text="@string/label_view_patient_file"/>
+            android:orientation="vertical"
+            android:padding="@dimen/pad_5">
 
-      </RelativeLayout>
-    </LinearLayout>
-  </android.support.v7.widget.CardView>
+            <TextView
+                android:id="@+id/txtNameSAL"
+                style="@style/TextSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_5"
+                android:text="@string/app_name"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/txtReasonSAL"
+                style="@style/TextSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_5"
+                android:text="@string/app_name"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/txtDateSAL"
+                style="@style/TextSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_5"
+                android:text="@string/app_name"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/txtTimeSAL"
+                style="@style/TextSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_5"
+                android:text="@string/app_name"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/txtTypeSAL"
+                style="@style/TextSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_5"
+                android:text="@string/app_name"
+                android:textColor="@color/colorWhite" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_5">
+
+                <TextView
+                    android:id="@+id/txtLabelStatusRSAL"
+                    style="@style/TextSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:layout_toStartOf="@+id/txtPaymentStatusRSAS"
+                    android:gravity="center_vertical"
+                    android:text="@string/app_name"
+                    android:textColor="@color/colorWhite" />
+
+                <TextView
+                    android:id="@+id/txtPaymentStatusRSAS"
+                    style="@style/TextMedium.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/corner_low"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="@dimen/pad_10"
+                    android:paddingRight="@dimen/pad_10"
+                    android:text="@string/join"
+                    android:textColor="@color/colorWhite" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:weightSum="12"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtJoinCallSAL"
+                    style="@style/TextMedium.Bold"
+                    android:layout_weight="5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/corner_low"
+                    android:backgroundTint="@color/colorDarkGrey500"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/pad_3"
+                    android:text="@string/join"
+                    android:textColor="@color/colorWhite" />
+
+                <Space
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/txtJoinCallSAL" />
+
+                <TextView
+                    android:layout_weight="5"
+                    android:id="@+id/txtCallCallSAL"
+                    style="@style/TextMedium.Bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/corner_low"
+                    android:backgroundTint="@color/colorDarkGrey500"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/pad_3"
+                    android:text="@string/cancel"
+                    android:textColor="@color/colorWhite" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlViewPatientFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pad_80"
+                android:layout_marginTop="@dimen/pad_5"
+                android:layout_marginRight="@dimen/pad_80"
+                android:padding="@dimen/pad_3"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/txtViewPatientProfileSAL"
+                    style="@style/TextMedium.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/corner_low"
+                    android:backgroundTint="@color/colorDarkGrey500"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/pad_3"
+                    android:text="@string/label_view_patient_file"
+                    android:textColor="@color/colorWhite" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

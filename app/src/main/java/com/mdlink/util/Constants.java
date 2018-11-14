@@ -202,4 +202,8 @@ public class Constants {
     public static final String EXTRA_CHANNEL = "com.twilio.chat.Channel";
     /** Key into an Intent's extras data that contains Channel SID. */
     public static final String EXTRA_CHANNEL_SID = "C_SID";
+
+    public static final String CHANNEL_DEFAULT_NAME = "appo_room_213";
+    public static final String CHANNEL_UNIQUE_NAME = "appo_room_213";
+    public static final String TWILIO_USER = "RushitV-19000";
 }
