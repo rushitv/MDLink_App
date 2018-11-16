@@ -6,9 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -25,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mdlink.App;
+import com.mdlink.BaseActivity;
 import com.mdlink.R;
 import com.mdlink.chat.channels.ChannelAdapter;
 import com.mdlink.chat.channels.ChannelManager;
@@ -42,7 +45,7 @@ import com.twilio.chat.User;
 
 import java.util.List;
 
-public class MainChatActivity extends AppCompatActivity implements ChatClientListener {
+public class MainChatActivity extends BaseActivity implements ChatClientListener {
   private String TAG = getClass().getSimpleName();
   private Context context;
   private Activity mainActivity;
@@ -59,6 +62,8 @@ public class MainChatActivity extends AppCompatActivity implements ChatClientLis
   private MenuItem leaveChannelMenuItem;
   private MenuItem deleteChannelMenuItem;
   private SwipeRefreshLayout refreshLayout;
+  private Toolbar toolbar;
+  private String AppointmentId, RoleId,Name,DoctorName;
 
   @Override
   protected void onDestroy() {
@@ -67,17 +72,29 @@ public class MainChatActivity extends AppCompatActivity implements ChatClientLis
       @Override
       public void run() {
         chatClientManager.shutdown();
-        App.getInstance().getChatClientManager().setChatClient(null);
+        //App.getInstance().getChatClientManager().setChatClient(null);
+        getChatClientManager().setChatClient(null);
       }
     });
+  }
+
+  public ChatClientManager getChatClientManager() {
+    return this.chatClientManager;
   }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main_chat);
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
+    if(getIntent()!=null){
+      AppointmentId = getIntent().getStringExtra(Constants.APPOINTMENT_ID);
+      RoleId = getIntent().getStringExtra(Constants.ROLE_ID);
+      Name = getIntent().getStringExtra(Constants.NAME);
+      DoctorName = getIntent().getStringExtra(Constants.DOCTOR_NAME);
+    }
+
+    chatClientManager = new ChatClientManager(getApplicationContext());
+    initToolbar();
 
     drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -100,11 +117,23 @@ public class MainChatActivity extends AppCompatActivity implements ChatClientLis
     usernameTextView = (TextView) findViewById(R.id.textViewUsername);
     channelsListView = (ListView) findViewById(R.id.listViewChannels);
 
-    channelManager = ChannelManager.getInstance();
+
+    channelManager = new ChannelManager(Constants.CHANNEL_DEFAULT_NAME+AppointmentId);
     setUsernameTextView();
 
     setUpListeners();
     checkTwilioClient();
+  }
+
+  private void initToolbar() {
+    toolbar = findViewById(R.id.toolbar);
+    toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite));
+    setUpToolbar(toolbar, R.color.colorAccent);
+    if(RoleId.equalsIgnoreCase("1")) {
+      setToolbarTitle(Name, R.color.colorAccent);
+    }else {
+      setToolbarTitle(DoctorName, R.color.colorAccent);
+    }
   }
 
   private void setUpListeners() {
@@ -147,24 +176,30 @@ public class MainChatActivity extends AppCompatActivity implements ChatClientLis
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.main_chat, menu);
-    this.leaveChannelMenuItem = menu.findItem(R.id.action_leave_channel);
-    this.leaveChannelMenuItem.setVisible(false);
-    this.deleteChannelMenuItem = menu.findItem(R.id.action_delete_channel);
-    this.deleteChannelMenuItem.setVisible(false);
+    //this.leaveChannelMenuItem = menu.findItem(R.id.action_leave_channel);
+    //this.leaveChannelMenuItem.setVisible(false);
+    //this.deleteChannelMenuItem = menu.findItem(R.id.action_delete_channel);
+    //this.deleteChannelMenuItem.setVisible(false);
+
     return true;
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     int id = item.getItemId();
-
-    if (id == R.id.action_leave_channel) {
+    if (id == R.id.action_close) {
+      leaveCurrentChannel();
+      Log.i(TAG,"go to medical checkout screen");
+      finish();
+      return true;
+    }
+    /*if (id == R.id.action_leave_channel) {
       leaveCurrentChannel();
       return true;
     }
     if (id == R.id.action_delete_channel) {
       promptChannelDeletion();
-    }
+    }*/
 
     return super.onOptionsItemSelected(item);
   }
@@ -206,7 +241,7 @@ public class MainChatActivity extends AppCompatActivity implements ChatClientLis
                   public void run() {
                     channelAdapter.notifyDataSetChanged();
                     stopActivityIndicator();
-                    setChannel(Constants.CHANNEL_UNIQUE_NAME);
+                    setChannel(Constants.CHANNEL_DEFAULT_NAME+Constants.APPOINTMENT_ID);
                   }
                 });
               }
@@ -246,7 +281,7 @@ public class MainChatActivity extends AppCompatActivity implements ChatClientLis
       drawer.closeDrawer(GravityCompat.START);
       return;
     }
-    hideMenuItems(pos);
+    //hideMenuItems(pos);
     if (selectedChannel != null) {
       showActivityIndicator("Joining " + selectedChannel.getFriendlyName() + " channel");
       if (currentChannel != null && currentChannel.getStatus() == Channel.ChannelStatus.JOINED) {
@@ -289,15 +324,15 @@ public class MainChatActivity extends AppCompatActivity implements ChatClientLis
     }
 
     final Channel currentChannel = chatFragment.getCurrentChannel();
-    final Channel selectedChannel = channels.get(position);
+    final Channel selectedChannel = channels.get(pos);
 
-    System.out.println("selectedChannel>>>>>>"+pos+">>>>>>>"+ channels.get(pos).getUniqueName());
+    Log.i("selected>>",pos+">>>>>>>"+ channels.get(pos).getUniqueName());
 
     if (currentChannel != null && currentChannel.getSid().contentEquals(selectedChannel.getSid())) {
       drawer.closeDrawer(GravityCompat.START);
       return;
     }
-    hideMenuItems(position);
+    //hideMenuItems(position);
     if (selectedChannel != null) {
       showActivityIndicator("Joining " + selectedChannel.getFriendlyName() + " channel");
       if (currentChannel != null && currentChannel.getStatus() == Channel.ChannelStatus.JOINED) {
@@ -434,9 +469,19 @@ public class MainChatActivity extends AppCompatActivity implements ChatClientLis
 
   private void checkTwilioClient() {
     showActivityIndicator(getStringResource(R.string.loading_channels_message));
-    chatClientManager = App.getInstance().getChatClientManager();
+    //chatClientManager = getChatClientManager();
     if (chatClientManager.getChatClient() == null) {
-      initializeClient();
+
+        new AsyncTask<Void, Void, String>(
+        ) {
+            @Override
+            protected String doInBackground(Void... voids) {
+                chatClientManager = App.getInstance().getChatClientManager();
+                initializeClient();
+                return null;
+            }
+        }.execute();
+      //initializeClient();
     } else {
       populateChannels();
     }

@@ -11,13 +11,15 @@ import com.mdlink.api.APIService;
 import com.mdlink.api.RestAPIClent;
 import com.mdlink.chat.BasicChatClient;
 import com.mdlink.chat.ChatClientManager;
+import com.mdlink.preferences.SharedPreferenceManager;
+import com.mdlink.util.Constants;
 import com.twilio.chat.ErrorInfo;
 
 public class App extends Application {
 
     private static App mAppInstance;
     private ChatClientManager basicClient;
-
+    private SharedPreferenceManager sharedPreferenceManager;
     public static APIService apiService =
             RestAPIClent.getClient().create(APIService.class);
 
@@ -30,6 +32,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mAppInstance = this;
+        sharedPreferenceManager = new SharedPreferenceManager(this);
         basicClient = new ChatClientManager(getApplicationContext());
     }
 
@@ -52,6 +55,14 @@ public class App extends Application {
                 toast.show();
             }
         });
+    }
+
+    public String GetChannelName(){
+        return sharedPreferenceManager.getStringData(Constants.APPOINTMENT_ID);
+    }
+
+    public String GetUserName(){
+        return sharedPreferenceManager.getStringData(Constants.USER_NAME);
     }
 
     public void showError(final ErrorInfo error)

@@ -238,4 +238,6 @@
     <string name="max_video_bitrate">Max Video Bitrate (bits per second)</string>
     <string name="turn_speaker_on">Speaker ON</string>
 
+    <string name="label_chat">Chat</string>
+    <string name="end_chat">End Chat</string>
 </resources>

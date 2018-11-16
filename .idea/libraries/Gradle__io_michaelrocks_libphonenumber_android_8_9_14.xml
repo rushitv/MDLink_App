@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: io.michaelrocks:libphonenumber-android-8.9.14">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/libphonenumber-android-8.9.14.aar/92dca1afa92e7ea831d1fd8bc21ca4aa/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/libphonenumber-android-8.9.14.aar/92dca1afa92e7ea831d1fd8bc21ca4aa/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/libphonenumber-android-8.9.14.aar/af23209069abe2a2497ebd0da27d760b/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/libphonenumber-android-8.9.14.aar/af23209069abe2a2497ebd0da27d760b/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

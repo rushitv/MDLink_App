@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,8 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         public RelativeLayout rlViewPatientFile;
-        public TextView tvName, tvReason, tvDate, tvTime, tvType,txtLabelStatus, tvPaymentStatus, txtViewPatientProfileSAL;
+        public TextView tvName, tvReason, tvDate, tvTime, tvType,tvJoin,
+                txtLabelStatus, tvPaymentStatus, txtViewPatientProfileSAL;
 
         public MyViewHolder(View view) {
             super(view);
@@ -57,6 +59,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             tvDate = view.findViewById(R.id.txtDateSAL);
             tvTime = view.findViewById(R.id.txtTimeSAL);
             tvType = view.findViewById(R.id.txtTypeSAL);
+            tvJoin = view.findViewById(R.id.txtJoinCallSAL);
             txtLabelStatus = view.findViewById(R.id.txtLabelStatusRSAL);
             tvPaymentStatus = view.findViewById(R.id.txtPaymentStatusRSAS);
             rlViewPatientFile = view.findViewById(R.id.rlViewPatientFile);
@@ -74,6 +77,9 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         AppointmentListResponseDetails appointmentListResponseDetails = mAppointmentListResponseDetailsList.get(position);
+
+        Log.i("Adapter","Name>>>>"+appointmentListResponseDetails.getName());
+
         holder.tvName.setText(context.getString(R.string.name, appointmentListResponseDetails.getName()));
         holder.tvReason.setText(context.getString(R.string.reason, appointmentListResponseDetails.getVisitPurpose()));
         holder.tvDate.setText(context.getString(R.string.date,appointmentListResponseDetails.getScheduledDate()));
@@ -119,6 +125,13 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             DrawableCompat.setTint(drawable,context.getResources().getColor(R.color.colorOrange100));
             holder.tvPaymentStatus.setBackground(drawable);
         }
+
+        holder.tvJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onItemClick(mAppointmentListResponseDetailsList.get(position));
+            }
+        });
 
     }
 

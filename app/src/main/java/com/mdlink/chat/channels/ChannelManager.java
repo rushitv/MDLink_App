@@ -32,15 +32,19 @@ public class ChannelManager implements ChatClientListener {
   private List<Channel> channels;
   private Channels channelsObject;
   private ChatClientListener listener;
-  private String defaultChannelName = Constants.CHANNEL_DEFAULT_NAME;
-  private String defaultChannelUniqueName = Constants.CHANNEL_UNIQUE_NAME;
+  private String defaultChannelUniqueName;
   private Handler handler;
   private Boolean isRefreshingChannels = false;
 
   private ChannelManager() {
+
+  }
+
+  public ChannelManager(String defaultChannelUniqueName) {
     this.chatClientManager = App.getInstance().getChatClientManager();
     this.channelExtractor = new ChannelExtractor();
     this.listener = this;
+    this.defaultChannelUniqueName = defaultChannelUniqueName;
     handler = setupListenerHandler();
   }
 
@@ -52,8 +56,12 @@ public class ChannelManager implements ChatClientListener {
     return channels;
   }
 
+  public void setDefaultChannelUniqueName(String defaultChannelUniqueName) {
+    this.defaultChannelUniqueName = defaultChannelUniqueName;
+  }
+
   public String getDefaultChannelName() {
-    return this.defaultChannelName;
+    return this.defaultChannelUniqueName;
   }
   public String getDefaultChannelUniqueName() {
     return this.defaultChannelUniqueName;
@@ -176,7 +184,7 @@ public class ChannelManager implements ChatClientListener {
   private void createGeneralChannelWithCompletion(final StatusListener listener) {
     this.channelsObject
         .channelBuilder()
-        .withFriendlyName(defaultChannelName)
+        .withFriendlyName(defaultChannelUniqueName)
         .withUniqueName(defaultChannelUniqueName)
         .withType(ChannelType.PUBLIC)
         .build(new CallbackListener<Channel>() {

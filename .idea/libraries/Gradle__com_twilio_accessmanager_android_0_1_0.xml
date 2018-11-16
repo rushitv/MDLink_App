@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.twilio:accessmanager-android-0.1.0">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/accessmanager-android-0.1.0.aar/8478f92a06c75d9d28b7aa0249205e34/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/accessmanager-android-0.1.0.aar/8478f92a06c75d9d28b7aa0249205e34/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/accessmanager-android-0.1.0.aar/26845abfa7b4476c8439e5bfc12659fb/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/accessmanager-android-0.1.0.aar/26845abfa7b4476c8439e5bfc12659fb/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

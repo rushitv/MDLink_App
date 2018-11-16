@@ -44,13 +44,9 @@ public class SplashActivity extends BaseActivity {
         AlphaAnimation animation = new AlphaAnimation(0, 1);
         animation.setDuration(2500);
         appCompatImageView.startAnimation(animation);
-
-
         SessionManager.getInstance().logoutUser();
-        clientManager = App.getInstance().getChatClientManager();
+        //clientManager = App.getInstance().getChatClientManager();
       /*  SessionManager.getInstance().createLoginSession("rushit@gmail.com");
-
-
         new AsyncTask<Void, Void, String>(
         ) {
             @Override
@@ -66,7 +62,8 @@ public class SplashActivity extends BaseActivity {
             public void run() {
 
                 if (TextUtils.isEmpty(preferenceManager.getStringData(Constants.USER_ID))) {
-                    Intent intent = new Intent(SplashActivity.this, VoiceActivity.class);
+                    //Intent intent = new Intent(SplashActivity.this, VoiceActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, Guide_Page.class);
                     startActivity(intent);
                     finish();
                 } else {
@@ -85,29 +82,6 @@ public class SplashActivity extends BaseActivity {
         }, 3000);
     }
 
-    private void initializeChatClient() {
 
-        clientManager.connectClient(new TaskCompletionListener<Void, String>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                showMainChatActivity();
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-
-                Log.i(TAG, ">>>>>>>>>>>>>>" + errorMessage);
-            }
-        });
-    }
-
-
-    private void showMainChatActivity() {
-        Intent launchIntent = new Intent();
-        launchIntent.setClass(getApplicationContext(), MainChatActivity.class);
-        startActivity(launchIntent);
-
-        finish();
-    }
 
 }

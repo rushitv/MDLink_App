@@ -24,6 +24,8 @@ public class Constants {
     public static final String LABEL_ADDICTION = "Addiction";
     public static final String LABS_AND_SCREEN = "Labs And Screening";
     public static final String MEDICAL_ADVICE = "Medical Advice";
+    public static final String APPOINTMENT_ID = "AppointmentId";
+    public static final String DOCTOR_NAME = "DoctorName";
 
 
     public static String BASE_URL = "http://api.themdlink.com/api/v1/";
@@ -203,7 +205,6 @@ public class Constants {
     /** Key into an Intent's extras data that contains Channel SID. */
     public static final String EXTRA_CHANNEL_SID = "C_SID";
 
-    public static final String CHANNEL_DEFAULT_NAME = "appo_room_213";
-    public static final String CHANNEL_UNIQUE_NAME = "appo_room_213";
+    public static final String CHANNEL_DEFAULT_NAME = "appo_room_";
     public static final String TWILIO_USER = "RushitV-19000";
 }

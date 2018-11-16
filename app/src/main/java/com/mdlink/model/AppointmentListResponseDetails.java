@@ -117,7 +117,7 @@ public class AppointmentListResponseDetails {
     private Integer minuteLeft;
     @SerializedName("amount")
     @Expose
-    private Integer amount;
+    private Double amount;
     @SerializedName("doc_name")
     @Expose
     private String docName;
@@ -418,11 +418,11 @@ public class AppointmentListResponseDetails {
         this.minuteLeft = minuteLeft;
     }
 
-    public Integer getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
