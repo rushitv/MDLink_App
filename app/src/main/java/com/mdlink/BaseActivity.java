@@ -129,7 +129,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
     protected void showProgressDialog(){
-        progressDialog = new ProgressDialog(this);
+        if(progressDialog==null){
+            progressDialog = new ProgressDialog(this);
+        }
         progressDialog.setMessage("Loading...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);

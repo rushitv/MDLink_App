@@ -1,15 +1,15 @@
 package com.mdlink.api;
 
 import com.google.gson.JsonObject;
+import com.mdlink.model.AddPrescriptionDoctorSide;
 import com.mdlink.model.AppointmentListResponse;
-import com.mdlink.model.AppointmentOptions;
 import com.mdlink.model.AppointmentOptionsResponse;
 import com.mdlink.model.BookAppointmentRequest;
-import com.mdlink.model.CreateOrederRequest;
-import com.mdlink.model.DoctorPortalRequest;
+import com.mdlink.model.CreateOrderRequest;
 import com.mdlink.model.DoctorPortalResponse;
 import com.mdlink.model.DoctorsListModel;
 import com.mdlink.model.PatientProfileRequest;
+import com.mdlink.model.PharmacyResponse;
 
 import java.util.HashMap;
 
@@ -68,7 +68,7 @@ public interface APIService {
     Call<JsonObject> updatePatientProfile(@Body PatientProfileRequest patientProfileRequest);
 
     @POST("createorder")
-    Call<JsonObject> createOreder(@Body CreateOrederRequest createOrederRequest);
+    Call<JsonObject> createOrder(@Body CreateOrderRequest createOrderRequest);
 
     @GET("patientappointment/{id}")
     Call<AppointmentListResponse> getScheduledAppointmentListPatientSide(@Path("id") String id);
@@ -85,4 +85,9 @@ public interface APIService {
     @GET("chat-token")
     Call<JsonObject> getChatToken(@Query("identity") String identity, @Query("room_name") String room_name);
 
+    @GET("getpharmacy/{id}")
+    Call<PharmacyResponse> getPharmacyById(@Path("id") int id);
+
+    @POST("prescription")
+    Call<JsonObject> prescription(@Body AddPrescriptionDoctorSide addPrescriptionDoctorSide);
 }

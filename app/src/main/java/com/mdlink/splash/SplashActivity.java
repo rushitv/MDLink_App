@@ -1,28 +1,21 @@
 package com.mdlink.splash;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Window;
 import android.view.animation.AlphaAnimation;
 
-import com.mdlink.App;
 import com.mdlink.BaseActivity;
 import com.mdlink.DoctorPortalActivity;
 import com.mdlink.Guide_Page;
-import com.mdlink.MainActivity;
+import com.mdlink.Medical_CheckOut_Doctor;
 import com.mdlink.PatientPortalActivity;
 import com.mdlink.R;
 import com.mdlink.chat.ChatClientManager;
-import com.mdlink.chat.MainChatActivity;
-import com.mdlink.chat.MessageActivity;
 import com.mdlink.chat.SessionManager;
-import com.mdlink.chat.listeners.TaskCompletionListener;
 import com.mdlink.preferences.SharedPreferenceManager;
 import com.mdlink.util.Constants;
 import com.mdlink.voice.VoiceActivity;
@@ -63,9 +56,11 @@ public class SplashActivity extends BaseActivity {
 
                 if (TextUtils.isEmpty(preferenceManager.getStringData(Constants.USER_ID))) {
                     //Intent intent = new Intent(SplashActivity.this, VoiceActivity.class);
+                    //Intent intent = new Intent(SplashActivity.this, Medical_CheckOut_Doctor.class);
                     Intent intent = new Intent(SplashActivity.this, Guide_Page.class);
-                    startActivity(intent);
+                    //intent.putExtra(Constants.PATIENT_ID,"3");
                     finish();
+                    startActivity(intent);
                 } else {
                     Intent intentd;
                     if (preferenceManager.getStringData(Constants.ROLE_ID).equalsIgnoreCase("1")) {

@@ -26,6 +26,7 @@ public class Constants {
     public static final String MEDICAL_ADVICE = "Medical Advice";
     public static final String APPOINTMENT_ID = "AppointmentId";
     public static final String DOCTOR_NAME = "DoctorName";
+    public static final String PATIENT_ID = "PatientId";
 
 
     public static String BASE_URL = "http://api.themdlink.com/api/v1/";
@@ -33,7 +34,49 @@ public class Constants {
     public static int INVALID = -1;
 
     public static final String USER_ID = "UserId";
+
+    public static final List<String> listLabList = Arrays.asList(
+            "ANA",
+            "PTT (Partial Thromboplastin Time)",
+            "Glycohemoglobin (Hemoglobin A1C)",
+            "Acid Phos",
+            "CBC (Complete Blood Count)",
+            "CMP (Comprehensive Metabolic Panel)",
+            "ESR (Sedimentation Rate)",
+            "Flu (Influenza A and B Screen)",
+            "Glucose Level",
+            "hCG",
+            "HIV Antibody (HIV 1/2 Ag/Ab 4th Generation with Reflex)",
+            "Lipid Panel (or Lipid Profile)",
+            "Liver Function Panel (LFT)",
+            "Calcium",
+            "Microalbumin, Urine",
+            "Mono",
+            "Rheumatoid Factor",
+            "PSA (Prostate Specific Antigen)",
+            "PT (Protime)",
+            "Semen Analysis",
+            "Stool Culture",
+            "TSH, High Sensitivity (Thyroid Stimulating Hormone)",
+            "Uric Acid",
+            "Urinalysis",
+            "Herpes 1 & 2",
+            "H. Pylori",
+            "Wound Swab",
+            "FSH",
+            "LH",
+            "Prolactin",
+            "Testosterone",
+            "Oestradiol",
+            "TFTs (Thyroid Function Tests)",
+            "AFP",
+            "CEA",
+            "CA125",
+            "Other"
+    );
+
     public static final List<String> radiology_type = Arrays.asList(
+            "None",
             "(X-RAY) HEAD - Sinuses",
             "(X-RAY) HEAD - Skull",
             "(X-RAY) HEAD - Mastoids",

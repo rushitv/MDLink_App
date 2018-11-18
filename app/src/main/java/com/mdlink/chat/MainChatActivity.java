@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.mdlink.App;
 import com.mdlink.BaseActivity;
+import com.mdlink.Medical_CheckOut_Doctor;
 import com.mdlink.R;
 import com.mdlink.chat.channels.ChannelAdapter;
 import com.mdlink.chat.channels.ChannelManager;
@@ -63,7 +64,25 @@ public class MainChatActivity extends BaseActivity implements ChatClientListener
   private MenuItem deleteChannelMenuItem;
   private SwipeRefreshLayout refreshLayout;
   private Toolbar toolbar;
-  private String AppointmentId, RoleId,Name,DoctorName;
+  private String AppointmentId, RoleId,Name,DoctorName, PatientId;
+
+  @Override
+  public void onBackPressed() {
+    Log.i(TAG,"----------onBackPressed---------");
+    super.onBackPressed();
+    try{
+      //leaveCurrentChannel();
+      finish();
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+
+    /*if (drawer.isDrawerOpen(GravityCompat.START)) {
+      drawer.closeDrawer(GravityCompat.START);
+    } else {
+      super.onBackPressed();
+    }*/
+  }
 
   @Override
   protected void onDestroy() {
@@ -71,7 +90,9 @@ public class MainChatActivity extends BaseActivity implements ChatClientListener
     new Handler().post(new Runnable() {
       @Override
       public void run() {
-        chatClientManager.shutdown();
+        if(null != chatClientManager) {
+          chatClientManager.shutdown();
+        }
         //App.getInstance().getChatClientManager().setChatClient(null);
         getChatClientManager().setChatClient(null);
       }
@@ -86,7 +107,9 @@ public class MainChatActivity extends BaseActivity implements ChatClientListener
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main_chat);
+
     if(getIntent()!=null){
+      PatientId = getIntent().getStringExtra(Constants.PATIENT_ID);
       AppointmentId = getIntent().getStringExtra(Constants.APPOINTMENT_ID);
       RoleId = getIntent().getStringExtra(Constants.ROLE_ID);
       Name = getIntent().getStringExtra(Constants.NAME);
@@ -96,11 +119,11 @@ public class MainChatActivity extends BaseActivity implements ChatClientListener
     chatClientManager = new ChatClientManager(getApplicationContext());
     initToolbar();
 
-    drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    /*drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
         R.string.navigation_drawer_open, R.string.navigation_drawer_close);
     drawer.setDrawerListener(toggle);
-    toggle.syncState();
+    toggle.syncState();*/
 
     refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
 
@@ -164,14 +187,6 @@ public class MainChatActivity extends BaseActivity implements ChatClientListener
     });
   }
 
-  @Override
-  public void onBackPressed() {
-    if (drawer.isDrawerOpen(GravityCompat.START)) {
-      drawer.closeDrawer(GravityCompat.START);
-    } else {
-      super.onBackPressed();
-    }
-  }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -180,7 +195,6 @@ public class MainChatActivity extends BaseActivity implements ChatClientListener
     //this.leaveChannelMenuItem.setVisible(false);
     //this.deleteChannelMenuItem = menu.findItem(R.id.action_delete_channel);
     //this.deleteChannelMenuItem.setVisible(false);
-
     return true;
   }
 
@@ -190,9 +204,17 @@ public class MainChatActivity extends BaseActivity implements ChatClientListener
     if (id == R.id.action_close) {
       leaveCurrentChannel();
       Log.i(TAG,"go to medical checkout screen");
-      finish();
+      if(RoleId.equalsIgnoreCase("1")) {
+        Intent iMedicalCheckout = new Intent(MainChatActivity.this, Medical_CheckOut_Doctor.class);
+        iMedicalCheckout.putExtra(Constants.PATIENT_ID, PatientId);
+        iMedicalCheckout.putExtra(Constants.APPOINTMENT_ID, AppointmentId);
+        startActivity(iMedicalCheckout);
+      }else {
+        finish();
+      }
       return true;
     }
+
     /*if (id == R.id.action_leave_channel) {
       leaveCurrentChannel();
       return true;
@@ -278,7 +300,7 @@ public class MainChatActivity extends BaseActivity implements ChatClientListener
     System.out.println("selectedChannel>>>>>>"+pos+">>>>>>>"+ channels.get(pos).getUniqueName());
 
     if (currentChannel != null && currentChannel.getSid().contentEquals(selectedChannel.getSid())) {
-      drawer.closeDrawer(GravityCompat.START);
+      //drawer.closeDrawer(GravityCompat.START);
       return;
     }
     //hideMenuItems(pos);
@@ -329,7 +351,7 @@ public class MainChatActivity extends BaseActivity implements ChatClientListener
     Log.i("selected>>",pos+">>>>>>>"+ channels.get(pos).getUniqueName());
 
     if (currentChannel != null && currentChannel.getSid().contentEquals(selectedChannel.getSid())) {
-      drawer.closeDrawer(GravityCompat.START);
+      //drawer.closeDrawer(GravityCompat.START);
       return;
     }
     //hideMenuItems(position);
@@ -374,7 +396,7 @@ public class MainChatActivity extends BaseActivity implements ChatClientListener
           }
         });
         setTitle(selectedChannel.getFriendlyName());
-        drawer.closeDrawer(GravityCompat.START);
+        //drawer.closeDrawer(GravityCompat.START);
       }
     });
   }
@@ -457,7 +479,6 @@ public class MainChatActivity extends BaseActivity implements ChatClientListener
     channelManager.leaveChannelWithHandler(currentChannel, new StatusListener() {
       @Override
       public void onSuccess() {
-        setChannel(0);
       }
 
       @Override

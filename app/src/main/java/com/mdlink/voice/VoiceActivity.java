@@ -39,7 +39,11 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.mdlink.Medical_CheckOut_Doctor;
 import com.mdlink.R;
+import com.mdlink.chat.MainChatActivity;
+import com.mdlink.preferences.SharedPreferenceManager;
+import com.mdlink.util.Constants;
 import com.twilio.voice.Call;
 import com.twilio.voice.CallException;
 import com.twilio.voice.CallInvite;
@@ -52,7 +56,7 @@ import java.util.HashMap;
 public class VoiceActivity extends AppCompatActivity {
 
     private static final String TAG = "VoiceActivity";
-    private static String identity = "Pravin";
+    private String identity = "MDLink";
     /*
      * You must provide the URL to the publicly accessible Twilio access token server route
      *
@@ -94,21 +98,31 @@ public class VoiceActivity extends AppCompatActivity {
     private CallInvite activeCallInvite;
     private Call activeCall;
     private int activeCallNotificationId;
+    private String AppointmentId, RoleId,Name,DoctorName, PatientId;
 
     RegistrationListener registrationListener = registrationListener();
     Call.Listener callListener = callListener();
+    SharedPreferenceManager sharedPreferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voice);
+        sharedPreferenceManager = new SharedPreferenceManager(this);
+        if(getIntent()!=null){
+            PatientId = getIntent().getStringExtra(Constants.PATIENT_ID);
+            AppointmentId = getIntent().getStringExtra(Constants.APPOINTMENT_ID);
+            RoleId = getIntent().getStringExtra(Constants.ROLE_ID);
+            Name = getIntent().getStringExtra(Constants.NAME);
+            DoctorName = getIntent().getStringExtra(Constants.DOCTOR_NAME);
+        }
+        identity = sharedPreferenceManager.getStringData(Constants.NAME).substring(0,6);
 
         // These flags ensure that the activity can be launched when the screen is locked.
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                 | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
                 | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
 
         coordinatorLayout = findViewById(R.id.coordinator_layout);
         callActionFab = findViewById(R.id.call_action_fab);
@@ -206,7 +220,9 @@ public class VoiceActivity extends AppCompatActivity {
             @Override
             public void onDisconnected(Call call, CallException error) {
                 setAudioFocus(false);
-                Log.d(TAG, "Disconnected");
+                Log.d(TAG, "Disconnected"+call.getState());
+                Log.d(TAG, "Disconnected"+call.getSid());
+                Log.d(TAG, "Disconnected"+call.getTo());
                 if (error != null) {
                     Log.d(TAG,">>>>>>>>>>"+error.getExplanation());
                     String message = String.format("Call Error: %d, %s", error.getErrorCode(), error.getMessage());
@@ -335,7 +351,8 @@ public class VoiceActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 // Place a call
                 EditText contact = (EditText) ((AlertDialog) dialog).findViewById(R.id.contact);
-                twiMLParams.put("to", contact.getText().toString());
+                //twiMLParams.put("to", contact.getText().toString());
+                twiMLParams.put("phoneNumber", contact.getText().toString());
                 activeCall = Voice.call(VoiceActivity.this, accessToken, twiMLParams, callListener);
                 setCallUI();
                 alertDialog.dismiss();
@@ -419,6 +436,15 @@ public class VoiceActivity extends AppCompatActivity {
                 soundPoolManager.playDisconnect();
                 resetUI();
                 disconnect();
+
+                if(RoleId.equalsIgnoreCase("1")) {
+                    Intent iMedicalCheckout = new Intent(VoiceActivity.this, Medical_CheckOut_Doctor.class);
+                    iMedicalCheckout.putExtra(Constants.PATIENT_ID, PatientId);
+                    iMedicalCheckout.putExtra(Constants.APPOINTMENT_ID, AppointmentId);
+                    startActivity(iMedicalCheckout);
+                }else {
+                    finish();
+                }
             }
         };
     }
@@ -582,7 +608,7 @@ public class VoiceActivity extends AppCompatActivity {
      * Get an access token from your Twilio access token server
      */
     private void retrieveAccessToken() {
-        Ion.with(this).load(TWILIO_ACCESS_TOKEN_SERVER_URL + "?identity=" + identity).asString().setCallback(new FutureCallback<String>() {
+        Ion.with(this).load(TWILIO_ACCESS_TOKEN_SERVER_URL + "?identity=" + identity +"&device=android").asString().setCallback(new FutureCallback<String>() {
             @Override
             public void onCompleted(Exception e, String accessToken) {
                 if (e == null) {

@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.mdlink.model.BookAppointmentRequest;
-import com.mdlink.model.CreateOrederRequest;
+import com.mdlink.model.CreateOrderRequest;
 import com.paypal.android.sdk.payments.PayPalAuthorization;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -201,18 +201,18 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
                          * For sample mobile backend interactions, see
                          * https://github.com/paypal/rest-api-sdk-python/tree/master/samples/mobile_backend
                          */
-                        CreateOrederRequest createOrederRequest = new CreateOrederRequest();
+                        CreateOrderRequest createOrderRequest = new CreateOrderRequest();
 
                         JSONObject jsonObject = new JSONObject(confirm.toJSONObject().toString(4));
                         String transactionId = jsonObject.getJSONObject("response").getString("id");
                         String state = jsonObject.getJSONObject("response").getString("state");
-                        createOrederRequest.setAppId(Integer.parseInt(AppointmentId));
-                        createOrederRequest.setCouponCode("NOCODE");
-                        createOrederRequest.setTransactionId(transactionId);
-                        createOrederRequest.setTransactionStatus(state);
-                        createOrederRequest.setTransactionResponse(state);
+                        createOrderRequest.setAppId(Integer.parseInt(AppointmentId));
+                        createOrderRequest.setCouponCode("NOCODE");
+                        createOrderRequest.setTransactionId(transactionId);
+                        createOrderRequest.setTransactionStatus(state);
+                        createOrderRequest.setTransactionResponse(state);
 
-                        callCreatOrderAPI(createOrederRequest);
+                        callCreatOrderAPI(createOrderRequest);
                         displayResultText("PaymentConfirmation info received from PayPal");
 
                     } catch (JSONException e) {
@@ -245,14 +245,14 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
 
     }
 
-    private void callCreatOrderAPI(final CreateOrederRequest createOrederRequest) {
-        Call<JsonObject> callToGetUserProfile = App.apiService.createOreder(createOrederRequest);
+    private void callCreatOrderAPI(final CreateOrderRequest createOrderRequest) {
+        Call<JsonObject> callToGetUserProfile = App.apiService.createOrder(createOrderRequest);
         callToGetUserProfile.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.i(TAG, ">>>>>>>>>>>>>>>>>" + response.body());
                 if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
-                    Toast.makeText(ConfirmAppointmentActivity.this,createOrederRequest.getTransactionStatus().equalsIgnoreCase("approved") ?"Thank You!! " : " Oops " +response.body().get("message").getAsString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(ConfirmAppointmentActivity.this, createOrderRequest.getTransactionStatus().equalsIgnoreCase("approved") ?"Thank You!! " : " Oops " +response.body().get("message").getAsString(),Toast.LENGTH_LONG).show();
                     finish();
                     Intent intent = new Intent(ConfirmAppointmentActivity.this, PatientPortalActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

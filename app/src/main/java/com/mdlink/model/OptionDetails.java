@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class OptionDetails {
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private int id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -26,11 +26,11 @@ public class OptionDetails {
     @Expose
     private String updatedAt;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
