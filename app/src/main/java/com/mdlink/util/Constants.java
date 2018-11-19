@@ -27,6 +27,7 @@ public class Constants {
     public static final String APPOINTMENT_ID = "AppointmentId";
     public static final String DOCTOR_NAME = "DoctorName";
     public static final String PATIENT_ID = "PatientId";
+    public static final String DOCTOR_PROFILE = "DoctorProfile";
 
 
     public static String BASE_URL = "http://api.themdlink.com/api/v1/";

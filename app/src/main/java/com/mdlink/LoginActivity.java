@@ -6,12 +6,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.mdlink.model.DoctorProfile;
 import com.mdlink.preferences.SharedPreferenceManager;
 import com.mdlink.util.Constants;
 
@@ -20,8 +24,12 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class LoginActivity extends BaseActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+public class LoginActivity extends BaseActivity {
+    private String TAG = getClass().getSimpleName();
     TextView tv;
     EditText email, password;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -52,7 +60,11 @@ public class LoginActivity extends BaseActivity {
                 }
 
                 if (new ConnectionCall(LoginActivity.this).connectiondetect()) {
-                    new InserData().execute();
+                    //new InserData().execute();
+                    HashMap<String, String> loginRequestHashmap = new HashMap<>();
+                    loginRequestHashmap.put("email", email.getText().toString());
+                    loginRequestHashmap.put("password", password.getText().toString());
+                    callLoginAPI(loginRequestHashmap);
                 } else {
                     new ConnectionCall(LoginActivity.this).isConnectingToInternet();
                 }
@@ -79,84 +91,67 @@ public class LoginActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class InserData extends AsyncTask<String, String, String> {
-
-        ProgressDialog pd;
-
-        @Override
-        protected void onPreExecute() {
-
-            super.onPreExecute();
-            pd = new ProgressDialog(LoginActivity.this);
-            pd.setMessage("Loading..Hold A Second..");
-            pd.setCancelable(false);
-            pd.show();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("email", email.getText().toString());
-            hashMap.put("password", password.getText().toString());
-            return new MakeServiceCall().MakeServiceCall("http://api.themdlink.com/api/v1/login", MakeServiceCall.POST, hashMap);
-        }
-
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            if (pd.isShowing()) {
-                pd.dismiss();
-            }
-            try {
-                JSONObject json = new JSONObject(s);
-
-                if (json.getString("status").equalsIgnoreCase("200")) {
-                    Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-
-                    JSONObject jsonArray = json.getJSONObject("result");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        //JSONObject object = jsonArray.getJSONObject("i");
-                        //Toast.makeText(LoginActivity.this,jsonArray.getString("role_id"),Toast.LENGTH_SHORT).show();
-
-                        SharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(LoginActivity.this);
-                        sharedPreferenceManager.saveString(Constants.USER_NAME,email.getText().toString());
-                        sharedPreferenceManager.saveString(Constants.ROLE_ID,jsonArray.getString("role_id"));
-                        sharedPreferenceManager.saveString(Constants.USER_ID,jsonArray.getString("id"));
-                        if(jsonArray.has("age")){
-                            sharedPreferenceManager.saveString(Constants.AGE,jsonArray.getString("age"));
-                        }
-                        if(jsonArray.has("name")){
-                            sharedPreferenceManager.saveString(Constants.NAME,jsonArray.getString("name"));
-                        }
-                        if(jsonArray.has("location")){
-                            sharedPreferenceManager.saveString(Constants.LOCATION,jsonArray.getString("location"));
-                        }
-                        if(jsonArray.has("birthdate")){
-                            sharedPreferenceManager.saveString(Constants.BIRTH_DATE,jsonArray.getString("birthdate"));
-                        }
-
-                        if (jsonArray.getString("role_id").equalsIgnoreCase("1")) {
-                            Intent intent = new Intent(LoginActivity.this, DoctorPortalActivity.class);
-                            intent.putExtra(Constants.USER_NAME,jsonArray.getString("name"));
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        } else {
-                            Intent intent = new Intent(LoginActivity.this, PatientPortalActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            intent.putExtra(Constants.USER_NAME,jsonArray.getString("name"));
-                            startActivity(intent);
-                        }
-                    }
-
+    private void callLoginAPI(HashMap<String, String> hashMapLoginRequest) {
+        showProgressDialog();
+        Call<JsonObject> getPatientById = App.apiService.login(hashMapLoginRequest);
+        getPatientById.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(retrofit2.Call<JsonObject> call, Response<JsonObject> response) {
+                hideProgressDialog();
+                Log.i(TAG, "1>>>>>>>>>>>>" + response.body());
+                if (response.code() == 200) {
+                    Log.i(TAG, "2>>>>>>>>>>>>>" + response.body());
+                    JsonObject jsonObject = response.body().getAsJsonObject("result");
+                    Log.i(TAG, "2>>name>>>>>>>>>>>" + jsonObject.get("name"));
+                    Log.i(TAG, "2>>email>>>>>>>>>>>" + jsonObject.get("email"));
+                    setDataToPreference(jsonObject);
                 }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Toast.makeText(LoginActivity.this,"Oops...Something went wrong! Please try later...!",Toast.LENGTH_LONG).show();
             }
 
+            @Override
+            public void onFailure(retrofit2.Call<JsonObject> call, Throwable t) {
+                hideProgressDialog();
+                t.fillInStackTrace();
+            }
+        });
+    }
 
+    private void setDataToPreference(JsonObject jsonObject) {
+        SharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(LoginActivity.this);
+        sharedPreferenceManager.saveString(Constants.USER_NAME, email.getText().toString());
+        sharedPreferenceManager.saveString(Constants.ROLE_ID, jsonObject.get("role_id").getAsString());
+        if (jsonObject.get("role_id").getAsString().equalsIgnoreCase("1")) {
+            Gson gson = new Gson();
+            DoctorProfile doctorProfile = gson.fromJson(jsonObject.toString(), DoctorProfile.class);
+            Log.i(TAG,"age>>>>>"+doctorProfile.getAge());
+            String json = gson.toJson(doctorProfile);
+            sharedPreferenceManager.saveString(Constants.DOCTOR_PROFILE, json);
+        }
+        sharedPreferenceManager.saveString(Constants.USER_ID, jsonObject.get("id").getAsString());
+        if (jsonObject.has("age")) {
+            sharedPreferenceManager.saveString(Constants.AGE, jsonObject.get("age").getAsString());
+        }
+        if (jsonObject.has("name")) {
+            sharedPreferenceManager.saveString(Constants.NAME, jsonObject.get("name").getAsString());
+        }
+        if (jsonObject.has("location")) {
+            sharedPreferenceManager.saveString(Constants.LOCATION, jsonObject.get("location").getAsString());
+        }
+        if (jsonObject.has("birthdate")) {
+            sharedPreferenceManager.saveString(Constants.BIRTH_DATE, jsonObject.get("birthdate").getAsString());
+        }
+
+        if (jsonObject.get("role_id").getAsString().equalsIgnoreCase("1")) {
+            Intent intent = new Intent(LoginActivity.this, DoctorPortalActivity.class);
+            intent.putExtra(Constants.USER_NAME, jsonObject.get("name").getAsString());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(LoginActivity.this, PatientPortalActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra(Constants.USER_NAME, jsonObject.get("name").getAsString());
+            startActivity(intent);
         }
     }
+
 }

@@ -90,4 +90,7 @@ public interface APIService {
 
     @POST("prescription")
     Call<JsonObject> prescription(@Body AddPrescriptionDoctorSide addPrescriptionDoctorSide);
+
+    @POST("login")
+    Call<JsonObject> login(@Body HashMap jsonObject);
 }

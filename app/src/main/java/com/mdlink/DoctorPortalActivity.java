@@ -119,26 +119,20 @@ public class DoctorPortalActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.profile) {
-
-            //Intent intent = new Intent(DoctorPortalActivity.this, Doctor_Profile.class);
-            //startActivity(intent);
-
+            Intent intent = new Intent(DoctorPortalActivity.this, DoctorProfileActivity.class);
+            startActivity(intent);
         } else if (id == R.id.Scheduled_app) {
             Intent intent = new Intent(DoctorPortalActivity.this, ScheduleAppointmentActivity.class);
             startActivity(intent);
-
         } else if (id == R.id.medical_checkout) {
             Intent intent = new Intent(DoctorPortalActivity.this, Medical_CheckOut_Doctor.class);
             startActivity(intent);
-
         } else if (id == R.id.about) {
             Intent intent = new Intent(DoctorPortalActivity.this, AboutUsActivity.class);
             startActivity(intent);
-
         } else if (id == R.id.contact) {
             Intent intent = new Intent(DoctorPortalActivity.this, ContactUsActivity.class);
             startActivity(intent);
-
         } else if (id == R.id.logout) {
             sharedPreferenceManager.ClearData();
             Intent intent = new Intent(DoctorPortalActivity.this, SplashActivity.class);
