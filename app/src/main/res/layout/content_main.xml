@@ -12,7 +12,7 @@
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/appCompatImageView2"
-        android:layout_width="148dp"
+        android:layout_width="140dp"
         android:layout_height="56dp"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
@@ -81,6 +81,8 @@
                 <TextView
                     style="@style/TextSmall"
                     android:id="@+id/tvTwo"
+                    android:paddingLeft="@dimen/pad_5"
+                    android:paddingRight="@dimen/pad_5"
                     android:textAlignment="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -146,6 +148,8 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
+                        android:paddingLeft="@dimen/pad_5"
+                        android:paddingRight="@dimen/pad_5"
                         style="@style/TextSmall"
                         android:id="@+id/tvTwo2"
                         android:textAlignment="center"
@@ -213,6 +217,8 @@
                     <TextView
                         style="@style/TextSmall"
                         android:id="@+id/tvTwo23"
+                        android:paddingLeft="@dimen/pad_5"
+                        android:paddingRight="@dimen/pad_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/labs"
@@ -278,6 +284,8 @@
                     <TextView
                         style="@style/TextSmall"
                         android:id="@+id/tvTwo234"
+                        android:paddingLeft="@dimen/pad_5"
+                        android:paddingRight="@dimen/pad_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/addction"
@@ -340,6 +348,8 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
+                        android:paddingLeft="@dimen/pad_5"
+                        android:paddingRight="@dimen/pad_5"
                         style="@style/TextSmall"
                         android:id="@+id/tvTwo2345"
                         android:layout_width="wrap_content"
@@ -404,6 +414,8 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
+                        android:paddingLeft="@dimen/pad_5"
+                        android:paddingRight="@dimen/pad_5"
                         style="@style/TextSmall"
                         android:id="@+id/tvTwo23456"
                         android:layout_width="wrap_content"

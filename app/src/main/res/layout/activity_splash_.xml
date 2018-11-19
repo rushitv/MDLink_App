@@ -9,8 +9,8 @@
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/logo"
-        android:layout_width="320dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/pad_250"
+        android:layout_height="@dimen/pad_100"
         android:background="@drawable/mdlinklogo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

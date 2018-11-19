@@ -44,6 +44,7 @@
     <dimen name="pad_80">80dp</dimen>
     <dimen name="size_80">80dp</dimen>
     <dimen name="pad_200">200dp</dimen>
+    <dimen name="pad_250">250dp</dimen>
     <dimen name="channel_list_left_margin">20dp</dimen>
 
 </resources>

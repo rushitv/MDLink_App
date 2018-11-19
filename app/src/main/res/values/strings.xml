@@ -5,17 +5,17 @@
 
 
     <string name="action_settings">Settings</string>
-    <string name="urgentcare">MDlink doctor see and treat seeveral medical issuse incuding 90% of the top issues seen by Urgent Care and the E.R. </string>
+    <string name="urgentcare">MDlink doctor see and treat several medical issue including 90% of the top issues seen by Urgent Care and the E.R. </string>
     <string name="medicaladvice">Not sare to de? Get Medical advice from our MDLink doctors when you send us youe question </string>
-    <string name="labs">if further investigation is required,our doctor can send a Lab Request to you / your nearest laboratory </string>
-    <string name="addction">If you have fallen into a pattern of misusing, alcohol , drugs, cigret</string>
-    <string name="mood">There are several tretment approches for depressions and mood issues that can help yoy start to feel better </string>
+    <string name="labs"> if further investigation is required, our doctor can send \n a Lab Request to you / your nearest laboratory </string>
+    <string name="addction">If you have fallen into a pattern of misusing, alcohol , drugs, cigarette</string>
+    <string name="mood">There are several treatment approaches for depressions and mood issues that can help yoy start to feel better </string>
     <string name="therapy"> Our therapists can provide a safe, confidential space for you to get the treatment you</string>
     <string name="title_activity_depression__and__mood">Depression_And_Mood</string>
     <string name="title_activity_patient__portal__data">Patient_Portal_Data</string>
     <string name="title_activity_doctor__portel__data">Doctor_Portel_Data</string>tes,medications or
     food ,our provide can help
-    <string name="addc">MDLink is a Secure onlime medical \n platform and service that allows \n patients to connect with the best \n doctors and receive trement best \n video , audio or text messages. \n\n\n\n\n Our digital platform helps to address \n the challenges of connecting with \n patients who are unable to reach their \n deliverring a personalized and \n convenient state-of-the-art service</string>
+    <string name="addc">MDLink is a Secure online medical \n platform and service that allows \n patients to connect with the best \n doctors and receive treatment best \n video , audio or text messages. \n\n\n\n\n Our digital platform helps to address \n the challenges of connecting with \n patients who are unable to reach their \n delivering a personalized and \n convenient state-of-the-art service</string>
     <string name="label_login">Login</string>
     <string name="label_urgentcare">Urgent Care</string>
     <string name="label_learnmore">Learn More</string>
@@ -35,6 +35,7 @@
     <string name="loading">Loading...</string>
     <string name="ok">Ok</string>
     <string name="label_doctorregistration">Doctor Registration</string>
+    <string name="label_doctorprofile">Doctor Profile</string>
     <string name="label_register">Register</string>
     <string name="label_submit">Submit</string>
     <string name="label_howconnect">How would you like to connect?</string>
@@ -43,6 +44,7 @@
     <string name="video_call_15">Video Call ($15)</string>
     <string name="label_coupon_code">Coupon Code</string>
     <string name="label_bookappointment">Book Appointment</string>
+    <string name="label_medical_checkout">Medical Checkout</string>
     <string name="label_updateprofile">Update Profile</string>
     <string name="label_profile">Profile</string>
     <string name="label_welcome">Welcome</string>
@@ -240,4 +242,53 @@
 
     <string name="label_chat">Chat</string>
     <string name="end_chat">End Chat</string>
+
+
+    <string name="ana">ANA</string>
+    <string name="ptt">PTT (Partial Thromboplastin Time) </string>
+    <string name="glycoh">Glycohemoglobin (Hemoglobin A1C) </string>
+    <string name="acid_phos">Acid Phos</string>
+    <string name="cbc">CBC (Complete Blood Count)</string>
+    <string name="cmp">CMP (Comprehensive Metabolic Panel)</string>
+    <string name="esr">ESR (Sedimentation Rate)</string>
+    <string name="fly">Flu (Influenza A and B Screen)</string>
+    <string name="glucose_level">Glucose Level</string>
+    <string name="hcg">hCG</string>
+    <string name="hiv_anti">HIV Antibody (HIV 1/2 Ag/Ab 4th Generation with Reflex)</string>
+    <string name="lipid">Lipid Panel (or Lipid Profile)</string>
+    <string name="liver">Liver Function Panel (LFT)</string>
+    <string name="calc">Calcium</string>
+    <string name="micro">Microalbumin, Urine </string>
+    <string name="mono">Mono </string>
+    <string name="rheumat">Rheumatoid Factor</string>
+    <string name="psa">PSA (Prostate Specific Antigen)</string>
+    <string name="pt_pro">PT (Protime)</string>
+    <string name="semen_analysis">Semen Analysis</string>
+    <string name="stool">Stool Culture</string>
+    <string name="tsh">TSH, High Sensitivity (Thyroid Stimulating Hormone)</string>
+    <string name="uric">Uric Acid </string>
+    <string name="urin">Urinalysis </string>
+    <string name="herpes">Herpes 1 &amp; 2</string>
+    <string name="hpylori">H. Pylori</string>
+    <string name="wound">Wound Swab</string>
+    <string name="fsh">FSH</string>
+    <string name="lh">LH</string>
+    <string name="prolactin">Prolactin</string>
+    <string name="testosterone">Testosterone</string>
+    <string name="oestradiol">Oestradiol</string>
+    <string name="tft">TFTs (Thyroid Function Tests)</string>
+    <string name="afp">AFP</string>
+    <string name="cea">CEA</string>
+    <string name="ca125">CA125</string>
+    <string name="other">Other</string>
+
+    <string-array name="array_gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="array_recommendation">
+        <item>No</item>
+        <item>Yes</item>
+    </string-array>
 </resources>

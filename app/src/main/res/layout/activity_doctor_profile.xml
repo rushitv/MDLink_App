@@ -31,70 +31,45 @@
             android:paddingBottom="@dimen/activity_vertical_margin"
             tools:context="com.example.mrprashant_patel.mdlink.Doctor_portal_Activity">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/pad_5"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_already_have_account"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/singup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/pad_5"
-                    android:clickable="true"
-                    android:text="@string/label_signin"
-                    android:textColor="@color/colorButtonBackground"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/edtEmailDP"
+                    style="@style/TextSmall"
+                    android:id="@+id/edtEmailDPUpdate"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="08dp"
-                    android:hint="Email Address"
-                    android:textSize="16sp" />
+                    android:hint="Email Address" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="@dimen/pad_10">
 
                 <EditText
-                    android:id="@+id/edtFullNameDP"
+                    style="@style/TextSmall"
+                    android:id="@+id/edtFullNameDPUpdate"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="08dp"
-                    android:hint="Full Name"
-                    android:textSize="16sp" />
+                    android:hint="Full Name" />
             </android.support.design.widget.TextInputLayout>
 
             <TextView
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="08dp"
                 android:text="@string/label_phone_number"
-                android:textSize="16sp" />
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/pad_10"
                 android:orientation="horizontal">
 
                 <Spinner
@@ -106,160 +81,123 @@
                 </Spinner>
 
                 <com.hbb20.CountryCodePicker
-                    android:id="@+id/ccpDoc"
+                    style="@style/TextSmall"
+                    android:id="@+id/ccpDocUpdate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <EditText
-                    android:id="@+id/edtPhoneDP"
+                    style="@style/TextSmall"
+                    android:id="@+id/edtPhoneDPUpdate"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:hint="@string/label_phone_number"
-                    android:inputType="number"
-                    android:textSize="14sp" />
+                    android:inputType="number" />
             </LinearLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="@dimen/pad_10">
 
                 <EditText
-                    android:id="@+id/edtAgeDP"
+                    style="@style/TextSmall"
+                    android:id="@+id/edtAgeDPUpdate"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="08dp"
+                    android:layout_height="wrap_content"
                     android:hint="Age"
-                    android:inputType="number"
-                    android:textSize="16sp" />
+                    android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
-
-
+                android:layout_marginTop="@dimen/pad_10">
                 <EditText
-                    android:id="@+id/edtQualificationDP"
+                    style="@style/TextSmall"
+                    android:id="@+id/edtQualificationDPUpdate"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="08dp"
-                    android:hint="Qualifcation"
-                    android:textSize="16sp" />
+                    android:layout_height="wrap_content"
+                    android:hint="Qualification" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
-
+                android:layout_marginTop="@dimen/pad_10">
                 <EditText
-                    android:id="@+id/edtSpecialityDP"
+                    style="@style/TextSmall"
+                    android:id="@+id/edtSpecialityDPUpdate"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="08dp"
-                    android:hint="Specialty"
-                    android:textSize="16sp" />
+                    android:layout_height="wrap_content"
+                    android:hint="Specialty" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="@dimen/pad_10">
 
                 <EditText
-                    android:id="@+id/edtMedicalSchoolDP"
+                    style="@style/TextSmall"
+                    android:id="@+id/edtMedicalSchoolDPUpdate"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="08dp"
-                    android:hint="Medical School"
-                    android:textSize="16sp" />
+                    android:layout_height="wrap_content"
+                    android:hint="Medical School" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="@dimen/pad_10">
 
                 <EditText
-                    android:id="@+id/edtMedicalCouncilDP"
+                    style="@style/TextSmall"
+                    android:id="@+id/edtMedicalCouncilDPUpdate"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="08dp"
-                    android:hint="Medical Council"
-                    android:textSize="16sp" />
+                    android:layout_height="wrap_content"
+                    android:hint="Medical Council" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="@dimen/pad_10">
 
                 <EditText
-                    android:id="@+id/edtMedicalYearOfGraduationDP"
+                    style="@style/TextSmall"
+                    android:id="@+id/edtMedicalYearOfGraduationDPUpdate"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="08dp"
+                    android:layout_height="wrap_content"
                     android:hint="Year Of Graduation"
-                    android:inputType="number"
-                    android:textSize="16sp" />
+                    android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="@dimen/pad_10">
 
                 <EditText
-                    android:id="@+id/edtRegistrationNumberDP"
+                    style="@style/TextSmall"
+                    android:id="@+id/edtRegistrationNumberDPUpdate"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="08dp"
-                    android:hint="Registration Number"
-                    android:textSize="16sp" />
+                    android:layout_height="wrap_content"
+                    android:hint="Registration Number" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="@dimen/pad_10">
 
                 <EditText
-                    android:id="@+id/edtLocationCountryDP"
+                    style="@style/TextSmall"
+                    android:id="@+id/edtLocationCountryDPUpdate"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="08dp"
+                    android:layout_height="wrap_content"
                     android:hint="Location/Country"
-                    android:textSize="16sp" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
-
-                <EditText
-                    android:id="@+id/edtPasswordDP"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="08dp"
-                    android:hint="Password"
-                    android:textSize="16sp" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
-
-                <EditText
-                    android:id="@+id/edtConfirmPasswordDP"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="08dp"
-                    android:hint="Confirm Password"
-                    android:textSize="16sp" />
+                     />
             </android.support.design.widget.TextInputLayout>
 
             <TextView
@@ -269,43 +207,43 @@
                 android:text="Available Days" />
 
             <CheckBox
-                android:id="@+id/checkboxSunday"
+                android:id="@+id/checkboxSundayUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Sunday" />
 
             <CheckBox
-                android:id="@+id/checkboxMonday"
+                android:id="@+id/checkboxMondayUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Monday" />
 
             <CheckBox
-                android:id="@+id/checkboxTuesday"
+                android:id="@+id/checkboxTuesdayUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tuesday" />
 
             <CheckBox
-                android:id="@+id/checkboxWednesday"
+                android:id="@+id/checkboxWednesdayUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Wednesday" />
 
             <CheckBox
-                android:id="@+id/checkboxThursday"
+                android:id="@+id/checkboxThursdayUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Thursday" />
 
             <CheckBox
-                android:id="@+id/checkboxFriday"
+                android:id="@+id/checkboxFridayUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Friday" />
 
             <CheckBox
-                android:id="@+id/checkboxSaturday"
+                android:id="@+id/checkboxSaturdayUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Saturday" />
@@ -315,7 +253,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Available Morning Time" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -328,15 +265,19 @@
                     android:layout_weight="1">
 
                     <EditText
-                        android:id="@+id/edtAvailMorningTime"
+                        style="@style/TextSmall"
+                        android:id="@+id/edtAvailMorningTimeUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
                         android:clickable="true"
                         android:focusableInTouchMode="false"
                         android:hint="From(12:00 AM)"
                         android:onClick="onClick" />
                 </android.support.design.widget.TextInputLayout>
+
+                <View
+                    android:layout_width="@dimen/pad_20"
+                    android:layout_height="wrap_content"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -344,10 +285,10 @@
                     android:layout_weight="1">
 
                     <EditText
-                        android:id="@+id/edtAvailMorningTimeTO"
+                        style="@style/TextSmall"
+                        android:id="@+id/edtAvailMorningTimeTOUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
                         android:focusableInTouchMode="false"
                         android:hint="To (12:00 PM)" />
                 </android.support.design.widget.TextInputLayout>
@@ -359,7 +300,6 @@
                 android:layout_marginTop="08dp"
                 android:text="Available Evening Time" />
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -371,13 +311,17 @@
                     android:layout_weight="1">
 
                     <EditText
-                        android:id="@+id/edtAvailEveningTime"
+                        style="@style/TextSmall"
+                        android:id="@+id/edtAvailEveningTimeUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
                         android:focusableInTouchMode="false"
                         android:hint="From(12:00 AM)" />
                 </android.support.design.widget.TextInputLayout>
+
+                <View
+                    android:layout_width="@dimen/pad_20"
+                    android:layout_height="wrap_content"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -385,83 +329,17 @@
                     android:layout_weight="1">
 
                     <EditText
-                        android:id="@+id/edtAvailEveningTimeTO"
+                        style="@style/TextSmall"
+                        android:id="@+id/edtAvailEveningTimeTOUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
                         android:focusableInTouchMode="false"
                         android:hint="To (12:00 PM)" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <TextView
-                android:id="@+id/signcture"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="08dp"
-                android:text="Signature" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="10dp">
-
-                <EditText
-                    android:id="@+id/doc_selectfile"
-                    android:layout_width="150dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/custom_btn"
-                    android:clickable="true"
-                    android:focusableInTouchMode="false"
-                    android:hint="@string/label_tap_to_sign"
-                    android:paddingLeft="4dp"
-                    android:textColorHint="@color/colorWhite" />
-
-                <TextView
-                    android:id="@+id/tvSignaturePath"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/doc_selectfile"
-                    android:padding="8dp"
-                    android:textSize="14sp" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="08dp"
-                android:text="@string/label_medical_certificate" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="10dp">
-
-                <EditText
-                    android:id="@+id/doc_file"
-                    android:layout_width="150dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/custom_btn"
-                    android:clickable="true"
-                    android:focusableInTouchMode="false"
-                    android:hint="@string/label_attach_file"
-                    android:paddingLeft="4dp"
-                    android:textColorHint="@color/colorWhite" />
-
-                <TextView
-                    android:id="@+id/tvSelectedFilePath"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/doc_file"
-                    android:padding="8dp"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/btnSubmit"
+                android:id="@+id/btnSubmitUpdate"
                 style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -470,7 +348,7 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:padding="04dp"
-                android:text="REGISTER"
+                android:text="Register"
                 android:textAllCaps="true"
                 android:textColor="@color/colorWhite" />
 

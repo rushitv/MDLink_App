@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,10 +13,10 @@
 
     </LinearLayout>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,6 +37,7 @@
                     android:text="Date" />
 
                 <EditText
+                    android:id="@+id/edtDateCheckout"
                     style="@style/TextSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -51,6 +53,7 @@
                 android:padding="@dimen/pad_10">
 
                 <EditText
+                    android:id="@+id/edtMedicalHistoryCheckout"
                     style="@style/TextSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -63,6 +66,7 @@
                 android:padding="@dimen/pad_10">
 
                 <EditText
+                    android:id="@+id/edtDiagnosis"
                     style="@style/TextSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -75,10 +79,13 @@
                 android:padding="@dimen/pad_10">
 
                 <EditText
+                    android:id="@+id/editPharmacyCheckout"
+                    android:inputType="none"
+                    android:focusableInTouchMode="false"
                     style="@style/TextSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Select Pharmacy Email" />
+                    android:hint="Select Pharmacy" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -88,9 +95,11 @@
                 android:padding="@dimen/pad_10">
 
                 <EditText
+                    android:id="@+id/editFaxCheckout"
                     style="@style/TextSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
                     android:hint="Pharmacy Fax Number" />
             </android.support.design.widget.TextInputLayout>
 
@@ -101,14 +110,274 @@
                 android:padding="@dimen/pad_10">
 
                 <EditText
+                    android:id="@+id/edtLabCheckout"
+                    android:inputType="none"
+                    android:focusableInTouchMode="false"
                     style="@style/TextSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Se" />
+                    android:hint="Select Lab" />
             </android.support.design.widget.TextInputLayout>
 
 
-        </LinearLayout>
-    </ScrollView>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_10">
 
+                <EditText
+                    android:id="@+id/edtRadiologyLab"
+                    android:inputType="none"
+                    android:focusableInTouchMode="false"
+                    style="@style/TextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Select Radiology Lab" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_10">
+
+                <EditText
+                    android:id="@+id/edtRadiologyType"
+                    android:inputType="none"
+                    android:focusableInTouchMode="false"
+                    style="@style/TextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Radiology Type" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_10">
+
+                <EditText
+                    android:id="@+id/edtRadiologyRequest"
+                    style="@style/TextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Radiology Request" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_10">
+
+                <EditText
+                    android:id="@+id/edtPatientNameCheckout"
+                    style="@style/TextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Patient Name" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_10">
+
+                <EditText
+                    android:id="@+id/edtPatientEmailCheckout"
+                    style="@style/TextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Patient Email" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_10">
+
+                <EditText
+                    android:id="@+id/edtPatientPhoneNumberCheckout"
+                    style="@style/TextSmall"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Patient Phone Number" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_10">
+
+                <EditText
+                    android:id="@+id/edtPatientAddressCheckout"
+                    style="@style/TextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Patient Address"
+                    android:lines="2" />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/pad_10">
+
+                <TextView
+                    style="@style/TextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Gender" />
+
+                <Spinner
+                    android:id="@+id/spnGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawSelectorOnTop="true"
+                    android:entries="@array/array_gender"></Spinner>
+
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_10">
+
+                <EditText
+                    android:id="@+id/edtBirthdateCheckout"
+                    style="@style/TextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Birthdate"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_10">
+
+                <EditText
+                    android:id="@+id/edtAgeCheckout"
+                    style="@style/TextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Age" />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/pad_10">
+
+                <TextView
+                    style="@style/TextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lab Test" />
+            </LinearLayout>
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:padding="@dimen/pad_5"
+                android:layout_height="@dimen/pad_200">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvCheckboxList"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_margin="@dimen/pad_5"
+                        android:layout_weight="0.6"
+                        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_10">
+
+                <EditText
+                    android:id="@+id/edtOtherLabTest"
+                    style="@style/TextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Other Lab Test" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_10">
+
+                <EditText
+                    android:id="@+id/edtPrescriptionRequest"
+                    style="@style/TextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Prescription Request" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/pad_10">
+
+                <EditText
+                    android:id="@+id/edtSickRequestDate"
+                    style="@style/TextSmall"
+                    android:focusableInTouchMode="false"
+                    android:onClick="onClick"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Sick Leave Return To Work Date" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/pad_10"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/TextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Do you want a Medical Recommendation to Epican?" />
+
+                <Spinner
+                    android:id="@+id/spnMedicalRecomm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawSelectorOnTop="true"
+                    android:entries="@array/array_recommendation"></Spinner>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvSubmitMedicalCheckout"
+                style="@style/TextMedium"
+                android:layout_marginBottom="@dimen/pad_20"
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_btn"
+                android:padding="04dp"
+                android:textColor="@color/colorWhite"
+                android:gravity="center"
+                android:text="@string/label_submit" />
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
 </android.support.constraint.ConstraintLayout>
