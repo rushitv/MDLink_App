@@ -32,10 +32,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name=".chat.MessageActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity
             android:name=".DoctorRegistrationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
@@ -76,7 +72,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Doctor_Profile"
+            android:name=".DoctorProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -85,7 +81,7 @@
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".Medical_CheckOut_Doctor"
-            android:label="Medical Chechout" />
+            android:label="Medical Checkout" />
         <activity android:name=".Guide_Page" />
         <activity
             android:name=".PatientPortalActivity"
