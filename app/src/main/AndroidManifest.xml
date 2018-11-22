@@ -96,6 +96,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
+        <activity android:name=".ViewPatientFileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".DoctorPortalActivity"
             android:screenOrientation="portrait"
