@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.hbb20.CountryCodePicker;
 import com.mdlink.api.APIService;
 import com.mdlink.api.RestAPIClent;
 import com.mdlink.drawing.MyDrawView;
@@ -80,6 +81,8 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
             edtAgeDP, edtPhoneDP, edtFullNameDP, edtEmailDP;
     String format;
     private Toolbar toolbar;
+    CountryCodePicker ccpDoc;
+    String CountryCode="";
 
     public static void start(Context context) {
         Intent starter = new Intent(context, DoctorRegistrationActivity.class);
@@ -92,6 +95,17 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_portal_);
         initToolbar();
+
+        ccpDoc = findViewById(R.id.ccpDoc);
+        CountryCode = ccpDoc.getSelectedCountryCode();
+        ccpDoc.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                CountryCode = "";
+                // Toast.makeText(getContext(), "Updated " + ccp.getSelectedCountryName(), Toast.LENGTH_SHORT).show();
+                CountryCode = ccpDoc.getSelectedCountryCode();
+            }
+        });
         edtAvailMorningTime = findViewById(R.id.edtAvailMorningTime);
         edtAvailMorningTime.setOnClickListener(this);
         edtAvailMorningTimeTO = findViewById(R.id.edtAvailMorningTimeTO);
@@ -284,7 +298,7 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
                 RequestBody email =
                         RequestBody.create(MediaType.parse("form-data"), edtEmailDP.getText().toString());
                 RequestBody phone =
-                        RequestBody.create(MediaType.parse("form-data"), edtPhoneDP.getText().toString());
+                        RequestBody.create(MediaType.parse("form-data"), CountryCode + edtPhoneDP.getText().toString());
                 RequestBody name =
                         RequestBody.create(MediaType.parse("form-data"), edtFullNameDP.getText().toString());
                 RequestBody age =

@@ -43,7 +43,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
     }
 
     public interface onItemClickListener {
-        void onItemClick(AppointmentListResponseDetails appointmentListResponseDetails);
+        void onItemClick(String type, AppointmentListResponseDetails appointmentListResponseDetails);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -90,7 +90,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             holder.txtViewPatientProfileSAL.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onItemClick(mAppointmentListResponseDetailsList.get(position));
+                    listener.onItemClick( Constants.PATIENT_FILE ,mAppointmentListResponseDetailsList.get(position));
                 }
             });
         }else {
@@ -129,7 +129,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         holder.tvJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onItemClick(mAppointmentListResponseDetailsList.get(position));
+                listener.onItemClick(Constants.JOIN,mAppointmentListResponseDetailsList.get(position));
             }
         });
 

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.mdlink.helper.UiHelper;
 import com.mdlink.model.DoctorProfile;
 import com.mdlink.preferences.SharedPreferenceManager;
 import com.mdlink.util.Constants;
@@ -60,7 +61,6 @@ public class LoginActivity extends BaseActivity {
                 }
 
                 if (new ConnectionCall(LoginActivity.this).connectiondetect()) {
-                    //new InserData().execute();
                     HashMap<String, String> loginRequestHashmap = new HashMap<>();
                     loginRequestHashmap.put("email", email.getText().toString());
                     loginRequestHashmap.put("password", password.getText().toString());
@@ -92,6 +92,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void callLoginAPI(HashMap<String, String> hashMapLoginRequest) {
+        hideKeyboard(getBaseActivity());
         showProgressDialog();
         Call<JsonObject> getPatientById = App.apiService.login(hashMapLoginRequest);
         getPatientById.enqueue(new Callback<JsonObject>() {
@@ -101,10 +102,14 @@ public class LoginActivity extends BaseActivity {
                 Log.i(TAG, "1>>>>>>>>>>>>" + response.body());
                 if (response.code() == 200) {
                     Log.i(TAG, "2>>>>>>>>>>>>>" + response.body());
-                    JsonObject jsonObject = response.body().getAsJsonObject("result");
-                    Log.i(TAG, "2>>name>>>>>>>>>>>" + jsonObject.get("name"));
-                    Log.i(TAG, "2>>email>>>>>>>>>>>" + jsonObject.get("email"));
-                    setDataToPreference(jsonObject);
+                    if(response.body().get("status").getAsInt()==200) {
+                        JsonObject jsonObject = response.body().getAsJsonObject("result");
+                        setDataToPreference(jsonObject);
+                    }else {
+                        Toast.makeText(LoginActivity.this,
+                                response.body().get("message").getAsString(),
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 
@@ -153,5 +158,4 @@ public class LoginActivity extends BaseActivity {
             startActivity(intent);
         }
     }
-
 }

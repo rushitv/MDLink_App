@@ -7,6 +7,7 @@ import com.mdlink.model.AppointmentOptionsResponse;
 import com.mdlink.model.BookAppointmentRequest;
 import com.mdlink.model.CreateOrderRequest;
 import com.mdlink.model.DoctorPortalResponse;
+import com.mdlink.model.DoctorProfile;
 import com.mdlink.model.DoctorsListModel;
 import com.mdlink.model.PatientProfileRequest;
 import com.mdlink.model.PharmacyResponse;
@@ -93,4 +94,10 @@ public interface APIService {
 
     @POST("login")
     Call<JsonObject> login(@Body HashMap jsonObject);
+
+    @POST("profile")
+    Call<JsonObject> doctorProfile(@Body DoctorProfile doctorProfile);
+
+    @GET("appointment/{id}")
+    Call<JsonObject> getAppointmentById(@Path("id") int id);
 }

@@ -88,59 +88,63 @@ public class ScheduleAppointmentActivity extends BaseActivity {
         appointmentListAdapter = new AppointmentListAdapter(this,
                 appointmentListResponseDetailsList, RoleId, new AppointmentListAdapter.onItemClickListener() {
             @Override
-            public void onItemClick(final AppointmentListResponseDetails appointmentListResponseDetails) {
+            public void onItemClick(final String type, final AppointmentListResponseDetails appointmentListResponseDetails) {
                 sharedPreferenceManager.saveString(Constants.APPOINTMENT_ID, "" + appointmentListResponseDetails.getId());
+                if(type.equalsIgnoreCase(Constants.PATIENT_FILE)){
+                   if(sharedPreferenceManager.getStringData(Constants.ROLE_ID).equalsIgnoreCase("1")){
+                       Intent iViewPatientProfile = new Intent(ScheduleAppointmentActivity.this, ViewPatientFileActivity.class);
+                       iViewPatientProfile.putExtra(Constants.APPOINTMENT_ID, appointmentListResponseDetails.getId());
+                       startActivity(iViewPatientProfile);
+                   }
+                }else {
+                    switch (sharedPreferenceManager.getStringData(Constants.ROLE_ID)) {
+                        case "1": // Doctor
+                            if (appointmentListResponseDetails.getIsPayed() == 1) {
+                                if (appointmentListResponseDetails.getType() == 1) {
+                                    // open audio call activity
+                                    showMainVoiceActivity(sharedPreferenceManager.getStringData(Constants.ROLE_ID),
+                                            "" + appointmentListResponseDetails.getId(),
+                                            appointmentListResponseDetails.getName(),
+                                            appointmentListResponseDetails.getDocName(),
+                                            "" + appointmentListResponseDetails.getUserId());
+                                }
+                                if (appointmentListResponseDetails.getType() == 2) {
+                                    // open chat  activity
+                                    showMainChatActivity(sharedPreferenceManager.getStringData(Constants.ROLE_ID),
+                                            "" + appointmentListResponseDetails.getId(),
+                                            appointmentListResponseDetails.getName(),
+                                            appointmentListResponseDetails.getDocName(),
+                                            "" + appointmentListResponseDetails.getUserId());
 
-                switch (sharedPreferenceManager.getStringData(Constants.ROLE_ID)) {
-                    case "1": // Doctor
-                        if (appointmentListResponseDetails.getIsPayed() == 1) {
-                            if (appointmentListResponseDetails.getType() == 1) {
-                                // open audio call activity
-                                showMainVoiceActivity(sharedPreferenceManager.getStringData(Constants.ROLE_ID),
-                                        "" + appointmentListResponseDetails.getId(),
-                                        appointmentListResponseDetails.getName(),
-                                        appointmentListResponseDetails.getDocName(),
-                                        "" + appointmentListResponseDetails.getUserId());
+                                }
+                                if (appointmentListResponseDetails.getType() == 3) {
+                                    // open chat activity
+                                    Intent intent = new Intent(ScheduleAppointmentActivity.this, VideoActivity.class);
+                                    startActivity(intent);
+                                }
                             }
+                            break;
+                        case "2": // Patient
+                            if (appointmentListResponseDetails.getIsPayed() == 1) {
 
-                            if (appointmentListResponseDetails.getType() == 2) {
-                                // open chat  activity
-                                showMainChatActivity(sharedPreferenceManager.getStringData(Constants.ROLE_ID),
-                                        "" + appointmentListResponseDetails.getId(),
-                                        appointmentListResponseDetails.getName(),
-                                        appointmentListResponseDetails.getDocName(),
-                                        "" + appointmentListResponseDetails.getUserId());
+                                if (appointmentListResponseDetails.getType() == 2) {
+                                    // open chat call activity
+                                    showMainChatActivity(sharedPreferenceManager.getStringData(Constants.ROLE_ID),
+                                            "" + appointmentListResponseDetails.getId(),
+                                            appointmentListResponseDetails.getName(),
+                                            appointmentListResponseDetails.getDocName(),
+                                            "" + appointmentListResponseDetails.getUserId());
 
+                                }
+                                if (appointmentListResponseDetails.getType() == 3) {
+                                    // open video activity
+                                }
                             }
-                            if (appointmentListResponseDetails.getType() == 3) {
-                                // open chat activity
-                                Intent intent = new Intent(ScheduleAppointmentActivity.this, VideoActivity.class);
-                                startActivity(intent);
-                            }
-                        }
-                        break;
-                    case "2": // Patient
-                        if (appointmentListResponseDetails.getIsPayed() == 1) {
-
-                            if (appointmentListResponseDetails.getType() == 2) {
-                                // open chat call activity
-                                showMainChatActivity(sharedPreferenceManager.getStringData(Constants.ROLE_ID),
-                                        "" + appointmentListResponseDetails.getId(),
-                                        appointmentListResponseDetails.getName(),
-                                        appointmentListResponseDetails.getDocName(),
-                                        "" + appointmentListResponseDetails.getUserId());
-
-                            }
-
-                            if (appointmentListResponseDetails.getType() == 3) {
-                                // open video activity
-                            }
-                        }
-                        break;
+                            break;
+                    }
                 }
             }
         });
-
         rvScheduledApptList.setAdapter(appointmentListAdapter);
     }
 

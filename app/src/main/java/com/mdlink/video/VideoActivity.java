@@ -18,7 +18,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,10 +31,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.mdlink.BuildConfig;
+import com.mdlink.BaseActivity;
+import com.mdlink.Medical_CheckOut_Doctor;
 import com.mdlink.R;
+import com.mdlink.preferences.SharedPreferenceManager;
+import com.mdlink.util.Constants;
 import com.mdlink.video.dialog.Dialog;
 import com.mdlink.video.util.CameraCapturerCompat;
+import com.mdlink.voice.VoiceActivity;
 import com.twilio.video.AudioCodec;
 import com.twilio.video.CameraCapturer;
 import com.twilio.video.CameraCapturer.CameraSource;
@@ -66,7 +69,7 @@ import java.util.UUID;
 import static com.mdlink.R.drawable.ic_phonelink_ring_white_24dp;
 import static com.mdlink.R.drawable.ic_volume_up_white_24dp;
 
-public class VideoActivity extends AppCompatActivity {
+public class VideoActivity extends BaseActivity {
     private static final int CAMERA_MIC_PERMISSION_REQUEST_CODE = 1;
     private static final String TAG = "VideoActivity";
 
@@ -141,11 +144,24 @@ public class VideoActivity extends AppCompatActivity {
     private boolean previousMicrophoneMute;
     private VideoRenderer localVideoView;
     private boolean disconnectedFromOnDestroy;
+    private SharedPreferenceManager sharedPreferenceManager;
+    private String PatientId;
+    private String AppointmentId,RoleId,Name,DoctorName,identity = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
+
+        sharedPreferenceManager = new SharedPreferenceManager(this);
+        if(getIntent()!=null){
+            PatientId = getIntent().getStringExtra(Constants.PATIENT_ID);
+            AppointmentId = getIntent().getStringExtra(Constants.APPOINTMENT_ID);
+            RoleId = getIntent().getStringExtra(Constants.ROLE_ID);
+            Name = getIntent().getStringExtra(Constants.NAME);
+            DoctorName = getIntent().getStringExtra(Constants.DOCTOR_NAME);
+        }
+        identity = sharedPreferenceManager.getStringData(Constants.NAME).substring(0,6);
 
         primaryVideoView = findViewById(R.id.primary_video_view);
         thumbnailVideoView = findViewById(R.id.thumbnail_video_view);
@@ -381,7 +397,7 @@ public class VideoActivity extends AppCompatActivity {
 
     private void setAccessToken() {
 
-        retrieveAccessTokenfromServer();
+        retrieveAccessTokenFromServer();
 
         /*if (!BuildConfig.USE_TOKEN_SERVER) {
             /*
@@ -398,7 +414,7 @@ public class VideoActivity extends AppCompatActivity {
              * token server and the variable USE_TOKEN_SERVER=true to your
              * local.properties file.
              */
-            retrieveAccessTokenfromServer();
+            retrieveAccessTokenFromServer();
         //}*/
     }
 
@@ -490,6 +506,8 @@ public class VideoActivity extends AppCompatActivity {
      */
     private void showConnectDialog() {
         EditText roomEditText = new EditText(this);
+        roomEditText.setText(Constants.APPO_ROOM+AppointmentId);
+        roomEditText.setEnabled(false);
         connectDialog = Dialog.createConnectDialog(roomEditText,
                 connectClickListener(roomEditText),
                 cancelConnectDialogClickListener(),
@@ -910,6 +928,15 @@ public class VideoActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 intializeUI();
                 connectDialog.dismiss();
+
+                if(RoleId.equalsIgnoreCase("1")) {
+                    Intent iMedicalCheckout = new Intent(VideoActivity.this, Medical_CheckOut_Doctor.class);
+                    iMedicalCheckout.putExtra(Constants.PATIENT_ID, PatientId);
+                    iMedicalCheckout.putExtra(Constants.APPOINTMENT_ID, AppointmentId);
+                    startActivity(iMedicalCheckout);
+                }else {
+                    finish();
+                }
             }
         };
     }
@@ -977,10 +1004,10 @@ public class VideoActivity extends AppCompatActivity {
         };
     }
 
-    private void retrieveAccessTokenfromServer() {
+    private void retrieveAccessTokenFromServer() {
 
         Ion.with(this)
-                .load(String.format("%s?identity=RushitV-19000", ACCESS_TOKEN_SERVER,
+                .load(String.format("%s?identity="+identity, ACCESS_TOKEN_SERVER,
                         UUID.randomUUID().toString()))
                 .asString()
                 .setCallback(new FutureCallback<String>() {

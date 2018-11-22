@@ -28,7 +28,9 @@ public class Constants {
     public static final String DOCTOR_NAME = "DoctorName";
     public static final String PATIENT_ID = "PatientId";
     public static final String DOCTOR_PROFILE = "DoctorProfile";
-
+    public static final String APPO_ROOM = "appo_room_";
+    public static final String PATIENT_FILE = "PatientFile";
+    public static final String JOIN = "Join";
 
     public static String BASE_URL = "http://api.themdlink.com/api/v1/";
     public static final String SEPARATOR = ",";

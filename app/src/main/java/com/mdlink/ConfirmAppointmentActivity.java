@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,8 +40,10 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
     private Toolbar toolbar;
     private TextView txtRenewApptForCA,txtSicknoteApptForCA,txtApptTypeCA, txtNameCA, txtAgeCA, txtPurposeCA, txtPreviousHospitalCA,
             txtAllergiesCA, txtMedicalConditionCA, txtPharmacyCA, txtLocationCA, txtDateCA, txtTimeCA,
-            txtPreferredDoctorCA, txtPayByPaypalCA;
+            txtPreferredDoctorCA, txtPayByPaypalCA,txtApptPaymentStatusCA;
     private String AppointmentId;
+    private BookAppointmentRequest bookAppointmentRequest;
+    private LinearLayout llPaymentStatus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,10 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
     }
 
     private void initViews() {
+        llPaymentStatus = findViewById(R.id.llPaymentStatus);
+        llPaymentStatus.setVisibility(View.GONE);
+
+        txtApptPaymentStatusCA = findViewById(R.id.txtApptPaymentStatusCA);
 
         txtRenewApptForCA = findViewById(R.id.txtRenewApptForCA);
         txtSicknoteApptForCA = findViewById(R.id.txtSicknoteApptForCA);
@@ -82,7 +89,7 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
         if(null != getIntent()){
             AppointmentId = getIntent().getStringExtra("AppointmentId");
             String preferredDoctorName = getIntent().getStringExtra("PreferredDoctorName");
-            BookAppointmentRequest bookAppointmentRequest = (BookAppointmentRequest)getIntent().getSerializableExtra("BookAppointmentRequest");
+            bookAppointmentRequest = (BookAppointmentRequest)getIntent().getSerializableExtra("BookAppointmentRequest");
             Log.i(TAG,"name>>>>>>>>>>>"+bookAppointmentRequest.getName());
             Log.i(TAG,"preferredDoctorName>>>>>>>>>>>"+preferredDoctorName);
             txtSicknoteApptForCA.setText(getString(R.string.i_would_to_obtain_sicknote, bookAppointmentRequest.getSickNote().equalsIgnoreCase("1") ? "Yes":"No"));
@@ -170,7 +177,23 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
     }
 
     private PayPalPayment getThingToBuy(String paymentIntent) {
-        return new PayPalPayment(new BigDecimal("0.01"), "USD", "sample item",
+        String amount ="", item="";
+        switch (bookAppointmentRequest.getType()) {
+            case "1":
+                amount = "12";
+                item = "Audio ($12)";
+                break;
+            case "2":
+                amount = "12";
+                item = "Instant Message ($12)";
+                break;
+            case "3":
+                amount = "15";
+                item = "Video Call ($15)";
+                break;
+        }
+        return new PayPalPayment(
+                new BigDecimal(amount), "USD", item,
                 paymentIntent);
     }
 
@@ -212,7 +235,7 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
                         createOrderRequest.setTransactionStatus(state);
                         createOrderRequest.setTransactionResponse(state);
 
-                        callCreatOrderAPI(createOrderRequest);
+                        callCreateOrderAPI(createOrderRequest);
                         displayResultText("PaymentConfirmation info received from PayPal");
 
                     } catch (JSONException e) {
@@ -245,7 +268,7 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
 
     }
 
-    private void callCreatOrderAPI(final CreateOrderRequest createOrderRequest) {
+    private void callCreateOrderAPI(final CreateOrderRequest createOrderRequest) {
         Call<JsonObject> callToGetUserProfile = App.apiService.createOrder(createOrderRequest);
         callToGetUserProfile.enqueue(new Callback<JsonObject>() {
             @Override
