@@ -41,6 +41,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="08dp"
+                    android:focusable="false"
+                    android:enabled="false"
+                    android:inputType="none"
                     android:hint="Email Address" />
             </android.support.design.widget.TextInputLayout>
 
@@ -289,6 +292,8 @@
                         android:id="@+id/edtAvailMorningTimeTOUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:onClick="onClick"
+                        android:clickable="true"
                         android:focusableInTouchMode="false"
                         android:hint="To (12:00 PM)" />
                 </android.support.design.widget.TextInputLayout>
@@ -316,6 +321,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:focusableInTouchMode="false"
+                        android:onClick="onClick"
+                        android:clickable="true"
                         android:hint="From(12:00 AM)" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -334,6 +341,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:focusableInTouchMode="false"
+                        android:clickable="true"
+                        android:onClick="onClick"
                         android:hint="To (12:00 PM)" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -350,6 +359,7 @@
                 android:padding="04dp"
                 android:text="Register"
                 android:textAllCaps="true"
+                android:onClick="onClick"
                 android:textColor="@color/colorWhite" />
 
         </LinearLayout>
