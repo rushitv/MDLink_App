@@ -13,7 +13,9 @@ public class PaypalConfigManager {
                 production: 'ASInx3EhrrvGCw8_KPMdCQbROVvWJKSHPKMxCi2GC1E7Y0GsKIcvDRHh0q_1vFWU34D4dwa0SFrPjzU-'
     },*/
 
-    public static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_NO_NETWORK;
+    // NO_NETWORK test transaction
+    //public static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_NO_NETWORK;
+    public static final String CONFIG_ENVIRONMENT = production;
 
     // note that these credentials will differ between live & sandbox environments.
     public static final String CONFIG_CLIENT_ID = "ASInx3EhrrvGCw8_KPMdCQbROVvWJKSHPKMxCi2GC1E7Y0GsKIcvDRHh0q_1vFWU34D4dwa0SFrPjzU-";
@@ -26,7 +28,7 @@ public class PaypalConfigManager {
             .environment(CONFIG_ENVIRONMENT)
             .clientId(CONFIG_CLIENT_ID)
             // The following are only used in PayPalFuturePaymentActivity.
-            .merchantName("Example Merchant")
+            .merchantName(Constants.APP_NAME)
             .merchantPrivacyPolicyUri(Uri.parse("https://www.example.com/privacy"))
             .merchantUserAgreementUri(Uri.parse("https://www.example.com/legal"));
 
