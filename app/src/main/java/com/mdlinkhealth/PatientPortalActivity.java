@@ -135,7 +135,10 @@ public class PatientPortalActivity extends BaseActivity
             Intent intent=new Intent(PatientPortalActivity.this,ContactUsActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.logout) {
+        } else if (id == R.id.userguide) {
+            Intent intent = new Intent(PatientPortalActivity.this, UserGuideActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.logout) {
             //clear data
             sharedPreferenceManager.ClearData();
             Intent intent=new Intent(PatientPortalActivity.this,SplashActivity.class);

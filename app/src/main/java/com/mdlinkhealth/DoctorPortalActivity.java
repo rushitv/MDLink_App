@@ -125,6 +125,9 @@ public class DoctorPortalActivity extends BaseActivity
         } else if (id == R.id.contact) {
             Intent intent = new Intent(DoctorPortalActivity.this, ContactUsActivity.class);
             startActivity(intent);
+        } else if (id == R.id.userguide) {
+            Intent intent = new Intent(DoctorPortalActivity.this, UserGuideActivity.class);
+            startActivity(intent);
         } else if (id == R.id.logout) {
             sharedPreferenceManager.ClearData();
             Intent intent = new Intent(DoctorPortalActivity.this, SplashActivity.class);

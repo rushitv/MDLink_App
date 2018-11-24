@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:341186123943:android:d1740413edd5ee12",
+        "mobilesdk_app_id": "1:341186123943:android:c1715bbcce4f3c99",
         "android_client_info": {
-          "package_name": "com.mdlink"
+          "package_name": "com.mdlinkhealth"
         }
       },
       "oauth_client": [
