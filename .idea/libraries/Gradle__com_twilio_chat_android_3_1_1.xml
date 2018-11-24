@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.twilio:chat-android-3.1.1">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/chat-android-3.1.1.aar/d91c580cba8aa05bbb28d54f68a70aaa/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/chat-android-3.1.1.aar/d91c580cba8aa05bbb28d54f68a70aaa/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.twilio/chat-android/3.1.1/f032b241cc36aea645c9587c9eea844c71c87092/chat-android-3.1.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
