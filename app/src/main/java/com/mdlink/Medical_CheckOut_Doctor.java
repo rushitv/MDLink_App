@@ -610,6 +610,29 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
                 hideProgressDialog();
                 Log.i(TAG, ">>>>>>>>>>>>>>>>>" + response.body());
                 if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
+                    callCompleteAPI();
+                }else {
+                    Toast.makeText(Medical_CheckOut_Doctor.this, response.body().get("message").getAsString(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                hideProgressDialog();
+                Log.i(TAG, ">>>>>>>>>onFailure>>>>>>>>");
+            }
+        });
+    }
+
+    private void callCompleteAPI(){
+        showProgressDialog();
+        Call<JsonObject> callToGetUserProfile = App.apiService.completeAppointment(Integer.parseInt(AppointmentId));
+        callToGetUserProfile.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                hideProgressDialog();
+                Log.i(TAG, ">>>>>>>>>>>>>>>>>" + response.body());
+                if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
                     Toast.makeText(Medical_CheckOut_Doctor.this, response.body().get("message").getAsString(), Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(Medical_CheckOut_Doctor.this, DoctorPortalActivity.class);
                     finish();

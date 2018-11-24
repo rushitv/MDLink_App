@@ -100,4 +100,7 @@ public interface APIService {
 
     @GET("appointment/{id}")
     Call<JsonObject> getAppointmentById(@Path("id") int id);
+
+    @GET("completeappointment/{id}")
+    Call<JsonObject> completeAppointment(@Path("id") int id);
 }
