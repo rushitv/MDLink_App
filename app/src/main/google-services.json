@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "341186123943",
+    "firebase_url": "https://mdlink-9572f.firebaseio.com",
+    "project_id": "mdlink-9572f",
+    "storage_bucket": "mdlink-9572f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341186123943:android:d1740413edd5ee12",
+        "android_client_info": {
+          "package_name": "com.mdlink"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "341186123943-o1ivtu16pnn7ehh49lr9rsuq5bt1qpac.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOiBIqL4Cxmi6q_X4VYy4CjmXR99jQBvI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
