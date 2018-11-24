@@ -4,7 +4,7 @@ def ACCESS_TOKEN_SERVICE_URL = project.hasProperty('ACCESS_TOKEN_SERVICE_URL') ?
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.mdlink"
+        applicationId "com.mdlinkhealth"
         minSdkVersion 21
         targetSdkVersion 28
         compileSdkVersion 28
