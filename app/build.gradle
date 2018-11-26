@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 def ACCESS_TOKEN_SERVICE_URL = project.hasProperty('ACCESS_TOKEN_SERVICE_URL') ? "\""+project.getProperty('ACCESS_TOKEN_SERVICE_URL')+"\"" : "\"http://api.themdlink.com/api/v1/chat-token\""
-
+import com.android.build.OutputFile
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -14,6 +14,7 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     signingConfigs {
         release {
             final String alias = "mdlink"
@@ -31,7 +32,6 @@ android {
 
         release {
             println "Creating the debug version..."
-            debuggable true
             signingConfig defaultSignConfig
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt')
@@ -39,7 +39,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        debug {
+        /*debug {
             println "Creating the debug version..."
             debuggable true
             signingConfig defaultSignConfig
@@ -49,7 +49,7 @@ android {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
             //buildConfigField "String", "ACCESS_TOKEN_SERVICE_URL", ACCESS_TOKEN_SERVICE_URL
-        }
+        }*/
     }
     // Specify that we want to split up the APK based on ABI
     splits {
@@ -61,10 +61,20 @@ android {
             reset()
 
             // Specify each architecture currently supported by the Video SDK
-            //include "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
-            include "arm64-v8a"
+            include "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+            //include "arm64-v8a"
             // Specify that we do not want an additional universal SDK
             universalApk true
+        }
+    }
+
+// For each APK output variant, override versionCode with a combination of
+// ABI APK value * 1000 + defaultConfig.versionCode
+    android.applicationVariants.all { variant ->
+        // assign different version code for each output
+        variant.outputs.each { output ->
+            output.versionCodeOverride =
+                    rootProject.versionCodes.get(output.getFilter(com.android.build.OutputFile.ABI), 0) * 1000000 + android.defaultConfig.versionCode
         }
     }
 }

@@ -31,6 +31,7 @@ ext{
     supportLibraryVersion = '28.0.0'
     constraintLayoutVersion = '1.1.3'
     videoAndroid ='2.0.0-preview5'
+    versionCodes = ['armeabi': 3, 'armeabi-v7a': 4, 'arm64-v8a': 5, 'mips': 6, 'x86': 7, 'x86_64': 8]
 }
 
 task clean(type: Delete) {
