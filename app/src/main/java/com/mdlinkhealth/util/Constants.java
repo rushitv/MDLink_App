@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Constants {
-    public static final String APP_NAME = "MDLink";
+    public static final String APP_NAME = "MDLink Health";
 
     public static final String TYPE = "Type";
     public static final String PATIENT = "Patient";
