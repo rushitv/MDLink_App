@@ -118,15 +118,20 @@ public class ScheduleAppointmentActivity extends BaseActivity {
 
                                 }
                                 if (appointmentListResponseDetails.getType() == 3) {
-                                    // open chat activity
-                                    Intent intent = new Intent(ScheduleAppointmentActivity.this, VideoActivity.class);
-                                    startActivity(intent);
+                                    // open video activity
+                                    showVideoActivity(sharedPreferenceManager.getStringData(Constants.ROLE_ID),
+                                            "" + appointmentListResponseDetails.getId(),
+                                            appointmentListResponseDetails.getName(),
+                                            appointmentListResponseDetails.getDocName(),
+                                            "" + appointmentListResponseDetails.getUserId());
                                 }
                             }
                             break;
                         case "2": // Patient
                             if (appointmentListResponseDetails.getIsPayed() == 1) {
-
+                                if (appointmentListResponseDetails.getType() == 1) {
+                                    Toast.makeText(ScheduleAppointmentActivity.this,"Doctor will call you.",Toast.LENGTH_LONG).show();
+                                }
                                 if (appointmentListResponseDetails.getType() == 2) {
                                     // open chat call activity
                                     showMainChatActivity(sharedPreferenceManager.getStringData(Constants.ROLE_ID),
@@ -138,6 +143,11 @@ public class ScheduleAppointmentActivity extends BaseActivity {
                                 }
                                 if (appointmentListResponseDetails.getType() == 3) {
                                     // open video activity
+                                    showVideoActivity(sharedPreferenceManager.getStringData(Constants.ROLE_ID),
+                                            "" + appointmentListResponseDetails.getId(),
+                                            appointmentListResponseDetails.getName(),
+                                            appointmentListResponseDetails.getDocName(),
+                                            "" + appointmentListResponseDetails.getUserId());
                                 }
                             }
                             break;
@@ -180,6 +190,17 @@ public class ScheduleAppointmentActivity extends BaseActivity {
     private void showMainVoiceActivity(String RoleId, String AppointmentId, String Name, String DoctorName, String PatientId) {
         Intent launchIntent = new Intent();
         launchIntent.setClass(getApplicationContext(), VoiceActivity.class);
+        launchIntent.putExtra(Constants.ROLE_ID, RoleId);
+        launchIntent.putExtra(Constants.NAME, Name);
+        launchIntent.putExtra(Constants.DOCTOR_NAME, DoctorName);
+        launchIntent.putExtra(Constants.APPOINTMENT_ID, AppointmentId);
+        launchIntent.putExtra(Constants.PATIENT_ID, PatientId);
+        startActivity(launchIntent);
+    }
+
+    private void showVideoActivity(String RoleId, String AppointmentId, String Name, String DoctorName, String PatientId) {
+        Intent launchIntent = new Intent();
+        launchIntent.setClass(getApplicationContext(), VideoActivity.class);
         launchIntent.putExtra(Constants.ROLE_ID, RoleId);
         launchIntent.putExtra(Constants.NAME, Name);
         launchIntent.putExtra(Constants.DOCTOR_NAME, DoctorName);

@@ -906,6 +906,14 @@ public class VideoActivity extends BaseActivity {
                  */
                 if (room != null) {
                     room.disconnect();
+                    if(RoleId.equalsIgnoreCase("1")) {
+                        Intent iMedicalCheckout = new Intent(VideoActivity.this, Medical_CheckOut_Doctor.class);
+                        iMedicalCheckout.putExtra(Constants.PATIENT_ID, PatientId);
+                        iMedicalCheckout.putExtra(Constants.APPOINTMENT_ID, AppointmentId);
+                        startActivity(iMedicalCheckout);
+                    }else {
+                        finish();
+                    }
                 }
                 intializeUI();
             }
@@ -927,15 +935,6 @@ public class VideoActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int which) {
                 intializeUI();
                 connectDialog.dismiss();
-
-                if(RoleId.equalsIgnoreCase("1")) {
-                    Intent iMedicalCheckout = new Intent(VideoActivity.this, Medical_CheckOut_Doctor.class);
-                    iMedicalCheckout.putExtra(Constants.PATIENT_ID, PatientId);
-                    iMedicalCheckout.putExtra(Constants.APPOINTMENT_ID, AppointmentId);
-                    startActivity(iMedicalCheckout);
-                }else {
-                    finish();
-                }
             }
         };
     }
