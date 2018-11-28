@@ -103,4 +103,7 @@ public interface APIService {
 
     @GET("completeappointment/{id}")
     Call<JsonObject> completeAppointment(@Path("id") int id);
+
+    @POST("actionappointment")
+    Call<JsonObject> actionappointment(@Body HashMap jsonObject);
 }

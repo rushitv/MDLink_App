@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class Guide_Page extends AppCompatActivity {
-
+    private String TAG = getClass().getSimpleName();
     ViewPager viewPager;
     int[] imgdata = {R.drawable.doct, R.drawable.wom, R.drawable.computer};
     int i_position;
@@ -19,25 +20,23 @@ public class Guide_Page extends AppCompatActivity {
     private int dotscount;
     private ImageView[] dots;
     LinearLayout sliderDotspanel;
-
+    TextView tvInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide__page);
-
+        tvInfo = findViewById(R.id.tvInfo);
+        tvInfo.setText(getString(R.string.doctor_at_desk));
         viewPager = findViewById(R.id.viewpager);
         CustomView customView = new CustomView(Guide_Page.this, imgdata);
         viewPager.setAdapter(customView);
-        btn_finish =  findViewById(R.id.view_finish_btn);
-
+        btn_finish = findViewById(R.id.view_finish_btn);
         sliderDotspanel = findViewById(R.id.SliderDots);
-
-
         dotscount = customView.getCount();
         dots = new ImageView[dotscount];
 
-        for(int i = 0; i < dotscount; i++){
+        for (int i = 0; i < dotscount; i++) {
 
             dots[i] = new ImageView(this);
             dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.no_active_dot));
@@ -61,8 +60,17 @@ public class Guide_Page extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+                Log.i(TAG, "position>>>>>>" + position);
+                if (position == 1) {
+                    tvInfo.setText(getString(R.string.pregnant_lady));
+                } else if (position == 2) {
+                    tvInfo.setText(getString(R.string.laptop_image));
+                } else {
+                    tvInfo.setText(getString(R.string.doctor_at_desk));
+                }
 
-                for(int i = 0; i< dotscount; i++){
+
+                for (int i = 0; i < dotscount; i++) {
                     dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.no_active_dot));
                 }
                 dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
@@ -96,7 +104,7 @@ public class Guide_Page extends AppCompatActivity {
                     startActivity(intent);
                 } else {
                     btn_finish.setText("Next");
-                    viewPager.setCurrentItem(i_position + 1,true);
+                    viewPager.setCurrentItem(i_position + 1, true);
                 }
 
 

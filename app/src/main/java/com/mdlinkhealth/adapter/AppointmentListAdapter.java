@@ -34,10 +34,20 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         this.listener = listener;
     }
 
-    public void updateData(ArrayList<AppointmentListResponseDetails> dataset) {
-        mAppointmentListResponseDetailsList.clear();
-        mAppointmentListResponseDetailsList.addAll(dataset);
-        notifyDataSetChanged();
+    public void update(AppointmentListResponseDetails item) {
+        int position = mAppointmentListResponseDetailsList.indexOf(item);
+        if (position > -1) {
+            mAppointmentListResponseDetailsList.set(position, item);
+            notifyItemChanged(position);
+        }
+    }
+
+    public void remove(AppointmentListResponseDetails item) {
+        int position = mAppointmentListResponseDetailsList.indexOf(item);
+        if (position > -1) {
+            mAppointmentListResponseDetailsList.remove(position);
+            notifyItemRemoved(position);
+        }
     }
 
     public interface onItemClickListener {
@@ -47,7 +57,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         public RelativeLayout rlViewPatientFile;
-        public TextView tvName, tvReason, tvDate, tvTime, tvType,tvJoin,
+        public TextView tvName, tvReason, tvDate, tvTime, tvType, tvJoin, txtCancelSAL,
                 txtLabelStatus, tvPaymentStatus, txtViewPatientProfileSAL;
 
         public MyViewHolder(View view) {
@@ -58,6 +68,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             tvTime = view.findViewById(R.id.txtTimeSAL);
             tvType = view.findViewById(R.id.txtTypeSAL);
             tvJoin = view.findViewById(R.id.txtJoinCallSAL);
+            txtCancelSAL = view.findViewById(R.id.txtCancelSAL);
             txtLabelStatus = view.findViewById(R.id.txtLabelStatusRSAL);
             tvPaymentStatus = view.findViewById(R.id.txtPaymentStatusRSAS);
             rlViewPatientFile = view.findViewById(R.id.rlViewPatientFile);
@@ -65,6 +76,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
         }
     }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -73,38 +85,55 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
-        AppointmentListResponseDetails appointmentListResponseDetails = mAppointmentListResponseDetailsList.get(position);
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        final AppointmentListResponseDetails appointmentListResponseDetails = mAppointmentListResponseDetailsList.get(position);
 
-        Log.i("Adapter","Name>>>>"+appointmentListResponseDetails.getName());
+        Log.i("Adapter", "Name>>>>" + appointmentListResponseDetails.getName());
 
         holder.tvName.setText(context.getString(R.string.name, appointmentListResponseDetails.getName()));
         holder.tvReason.setText(context.getString(R.string.reason, appointmentListResponseDetails.getVisitPurpose()));
-        holder.tvDate.setText(context.getString(R.string.date,appointmentListResponseDetails.getScheduledDate()));
-        holder.tvTime.setText(context.getString(R.string.time,appointmentListResponseDetails.getScheduledTime()));
+        holder.tvDate.setText(context.getString(R.string.date, appointmentListResponseDetails.getScheduledDate()));
+        holder.tvTime.setText(context.getString(R.string.time, appointmentListResponseDetails.getScheduledTime()));
 
-        if(mType.equalsIgnoreCase("1")){ // 1 = doctor // 2 = patient
+        if (mType.equalsIgnoreCase("1")) { // 1 = doctor // 2 = patient
             holder.rlViewPatientFile.setVisibility(View.VISIBLE);
             holder.txtViewPatientProfileSAL.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onItemClick( Constants.PATIENT_FILE ,mAppointmentListResponseDetailsList.get(position));
+                    listener.onItemClick(Constants.PATIENT_FILE, mAppointmentListResponseDetailsList.get(position));
                 }
             });
-        }else {
+
+            if (appointmentListResponseDetails.getStatusId() == 0 && appointmentListResponseDetails.getIsCompleted() == 0) {
+                holder.tvJoin.setText(Constants.APPROVE);
+                holder.tvJoin.setTag(Constants.APPROVE);
+            } else if (appointmentListResponseDetails.getStatusId() == 1) {
+                holder.tvJoin.setText(Constants.JOIN);
+                holder.tvJoin.setTag(Constants.JOIN);
+            }
+
+            if (appointmentListResponseDetails.getIsCompleted() == 1) {
+                holder.txtCancelSAL.setVisibility(View.GONE);
+                holder.tvJoin.setText("Consultation Completed");
+            } else {
+                holder.txtCancelSAL.setVisibility(View.VISIBLE);
+            }
+        } else {
             holder.rlViewPatientFile.setVisibility(View.GONE);
+            holder.tvJoin.setText(Constants.JOIN);
+            holder.tvJoin.setTag(Constants.JOIN);
         }
 
-        String type="";
-        if(appointmentListResponseDetails.getType()==1){
-            type="Audio Call";
-        }else if(appointmentListResponseDetails.getType()==2){
-            type="Instant Message";
-        }else if(appointmentListResponseDetails.getType()==3){
-            type="Video Call";
+        String type = "";
+        if (appointmentListResponseDetails.getType() == 1) {
+            type = "Audio Call";
+        } else if (appointmentListResponseDetails.getType() == 2) {
+            type = "Instant Message";
+        } else if (appointmentListResponseDetails.getType() == 3) {
+            type = "Video Call";
         }
-        holder.tvType.setText(context.getString(R.string.type,type));
-        holder.txtLabelStatus.setText(context.getString(R.string.payment_status,""));
+        holder.tvType.setText(context.getString(R.string.type, type));
+        holder.txtLabelStatus.setText(context.getString(R.string.payment_status, ""));
 
 
         // Wrap the drawable so that future tinting calls work
@@ -114,20 +143,33 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             drawable = DrawableCompat.wrap(context.getDrawable(R.drawable.corner_low));
         }
 
-        if(appointmentListResponseDetails.getIsPayed() == 1){
+        if (appointmentListResponseDetails.getIsPayed() == 1) {
             holder.tvPaymentStatus.setText(context.getString(R.string.label_paid));
-            DrawableCompat.setTint(drawable,context.getResources().getColor(R.color.colorGreenCard));
+            DrawableCompat.setTint(drawable, context.getResources().getColor(R.color.colorGreenCard));
             holder.tvPaymentStatus.setBackground(drawable);
-        }else {
+        } else {
             holder.tvPaymentStatus.setText(context.getString(R.string.label_pending));
-            DrawableCompat.setTint(drawable,context.getResources().getColor(R.color.colorOrange100));
+            DrawableCompat.setTint(drawable, context.getResources().getColor(R.color.colorOrange100));
             holder.tvPaymentStatus.setBackground(drawable);
         }
 
         holder.tvJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onItemClick(Constants.JOIN,mAppointmentListResponseDetailsList.get(position));
+                if (mType.equalsIgnoreCase("1")) {
+                    listener.onItemClick("" + holder.tvJoin.getTag(), mAppointmentListResponseDetailsList.get(position));
+                }
+            }
+        });
+
+        holder.txtCancelSAL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mType.equalsIgnoreCase("1")
+                        && appointmentListResponseDetails.getStatusId() == 0
+                        && appointmentListResponseDetails.getIsCompleted() == 0) {
+                    listener.onItemClick(Constants.CANCEL, mAppointmentListResponseDetailsList.get(position));
+                }
             }
         });
 

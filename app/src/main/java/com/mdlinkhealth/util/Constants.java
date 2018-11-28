@@ -31,6 +31,8 @@ public class Constants {
     public static final String APPO_ROOM = "appo_room_";
     public static final String PATIENT_FILE = "PatientFile";
     public static final String JOIN = "Join";
+    public static final String APPROVE = "Approve";
+    public static final String CANCEL = "Cancel";
 
     public static String BASE_URL = "http://api.themdlink.com/api/v1/";
     public static final String SEPARATOR = ",";
