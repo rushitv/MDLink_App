@@ -21,13 +21,14 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:padding="@dimen/pad_10"
             android:id="@+id/tvInfo"
             style="@style/TextMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/viewpager"
             android:gravity="center"
-            android:text="Enter your Symptoms And Choose Between Message ,Audio and Video Appointment"
+            android:text="@string/message_guide_one"
             android:textColor="@color/colorBlack"
             android:textSize="16sp" />
 

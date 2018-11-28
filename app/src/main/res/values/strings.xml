@@ -277,6 +277,9 @@
     <string name="cea">CEA</string>
     <string name="ca125">CA125</string>
     <string name="other">Other</string>
+    <string name="message_guide_one">Enter your Symptoms And Choose Between Message ,Audio and Video Appointment</string>
+    <string name="alert_cancel_label">Are you sure you want to cancel this appointment?</string>
+    <string name="cancellation">Cancellation</string>
 
     <string-array name="array_gender">
         <item>Male</item>
@@ -287,4 +290,8 @@
         <item>No</item>
         <item>Yes</item>
     </string-array>
+    
+    <string name="pregnant_lady" translatable="false">Use our patient portal to create your \n free secure telemedicine account</string>
+    <string name="laptop_image" translatable="false">Enter your symptoms and choose between \n message, audio and video appointment</string>
+    <string name="doctor_at_desk" translatable="false">Your Prescription, Sick Note or Lab Request will be \n sent immediately to the relevant organization through email or fax.</string>
 </resources>

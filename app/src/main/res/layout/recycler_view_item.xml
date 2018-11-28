@@ -128,7 +128,7 @@
 
                 <TextView
                     android:layout_weight="5"
-                    android:id="@+id/txtCallCallSAL"
+                    android:id="@+id/txtCancelSAL"
                     style="@style/TextMedium.Bold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
