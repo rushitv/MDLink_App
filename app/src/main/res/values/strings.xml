@@ -291,7 +291,7 @@
         <item>Yes</item>
     </string-array>
     
-    <string name="pregnant_lady" translatable="false">Use our patient portal to create your \n free secure telemedicine account</string>
-    <string name="laptop_image" translatable="false">Enter your symptoms and choose between \n message, audio and video appointment</string>
-    <string name="doctor_at_desk" translatable="false">Your Prescription, Sick Note or Lab Request will be \n sent immediately to the relevant organization through email or fax.</string>
+    <string name="pregnant_lady" translatable="false">Use our patient portal to create your free secure telemedicine account</string>
+    <string name="laptop_image" translatable="false">Enter your symptoms and choose between message, audio and video appointment</string>
+    <string name="doctor_at_desk" translatable="false">Your Prescription, Sick Note or Lab Request will be sent immediately to the relevant organization through email or fax.</string>
 </resources>
