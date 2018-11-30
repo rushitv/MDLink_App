@@ -31,6 +31,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.mdlinkhealth.App;
 import com.mdlinkhealth.BaseActivity;
 import com.mdlinkhealth.Medical_CheckOut_Doctor;
 import com.mdlinkhealth.R;
@@ -448,7 +449,7 @@ public class VideoActivity extends BaseActivity {
          */
         connectOptionsBuilder.encodingParameters(encodingParameters);
 
-        room = Video.connect(this, connectOptionsBuilder.build(), roomListener());
+        room = Video.connect(App.getInstance(), connectOptionsBuilder.build(), roomListener());
         setDisconnectAction();
     }
 

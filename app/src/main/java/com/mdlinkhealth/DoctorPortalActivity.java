@@ -135,7 +135,7 @@ public class DoctorPortalActivity extends BaseActivity
             startActivity(intent);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
     }
 
     public void onClick(View v) {

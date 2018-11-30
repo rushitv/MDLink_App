@@ -25,7 +25,7 @@ public class PatientPortalActivity extends BaseActivity
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-    TextView tvThree,tvThree2,tvThree23,tvThree234,tvThree2345,tvThree23456, tvHeaderNavigation;
+    TextView tvThree, tvThree2, tvThree23, tvThree234, tvThree2345, tvThree23456, tvHeaderNavigation;
     View headerView;
 
     @Override
@@ -111,63 +111,64 @@ public class PatientPortalActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.pat_profile) {
-            Intent intent=new Intent(PatientPortalActivity.this,Patient_Profile.class);
+            Intent intent = new Intent(PatientPortalActivity.this, Patient_Profile.class);
             startActivity(intent);
 
         } else if (id == R.id.book_appoinment) {
 
-            Intent intent=new Intent(PatientPortalActivity.this,BookAppointmentActivity.class);
+            Intent intent = new Intent(PatientPortalActivity.this, BookAppointmentActivity.class);
             startActivity(intent);
 
 
-        }else if (id == R.id.ScheduledAppointmentList) {
-            Intent intentScheduleAppointment = new Intent(this,ScheduleAppointmentActivity.class);
+        } else if (id == R.id.ScheduledAppointmentList) {
+            Intent intentScheduleAppointment = new Intent(this, ScheduleAppointmentActivity.class);
             intentScheduleAppointment.putExtra(Constants.TYPE, Constants.PATIENT);
             startActivity(intentScheduleAppointment);
 
         } else if (id == R.id.aboutamne) {
 
-            Intent intent=new Intent(PatientPortalActivity.this,AboutUsActivity.class);
+            Intent intent = new Intent(PatientPortalActivity.this, AboutUsActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.contact) {
 
-            Intent intent=new Intent(PatientPortalActivity.this,ContactUsActivity.class);
+            Intent intent = new Intent(PatientPortalActivity.this, ContactUsActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.userguide) {
             Intent intent = new Intent(PatientPortalActivity.this, UserGuideActivity.class);
             startActivity(intent);
-        }else if (id == R.id.logout) {
+        } else if (id == R.id.logout) {
             //clear data
             sharedPreferenceManager.ClearData();
-            Intent intent=new Intent(PatientPortalActivity.this,SplashActivity.class);
+            Intent intent = new Intent(PatientPortalActivity.this, SplashActivity.class);
             startActivity(intent);
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
     }
+
     public void onClick(View v) {
 
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.tvThree:
-                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.URGENTCARE);
+                OpenTreatmentListActivity(this, TreatmentListActivity.class, Constants.URGENTCARE);
                 break;
             case R.id.tvThree2:
-                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.MEDICAL_ADVICE);
+                OpenTreatmentListActivity(this, TreatmentListActivity.class, Constants.MEDICAL_ADVICE);
                 break;
             case R.id.tvThree23:
-                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABS_AND_SCREEN);
+                OpenTreatmentListActivity(this, TreatmentListActivity.class, Constants.LABS_AND_SCREEN);
                 break;
             case R.id.tvThree234:
-                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABEL_ADDICTION);
+                OpenTreatmentListActivity(this, TreatmentListActivity.class, Constants.LABEL_ADDICTION);
                 break;
             case R.id.tvThree2345:
-                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABEL_DEPRESSION);
+                OpenTreatmentListActivity(this, TreatmentListActivity.class, Constants.LABEL_DEPRESSION);
                 break;
             case R.id.tvThree23456:
-                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABEL_THERAPY);
+                OpenTreatmentListActivity(this, TreatmentListActivity.class, Constants.LABEL_THERAPY);
                 break;
         }
     }

@@ -158,6 +158,8 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             public void onClick(View view) {
                 if (mType.equalsIgnoreCase("1")) {
                     listener.onItemClick("" + holder.tvJoin.getTag(), mAppointmentListResponseDetailsList.get(position));
+                }else {
+                    listener.onItemClick(Constants.JOIN, mAppointmentListResponseDetailsList.get(position));
                 }
             }
         });

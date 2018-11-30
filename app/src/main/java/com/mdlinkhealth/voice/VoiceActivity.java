@@ -39,6 +39,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.mdlinkhealth.App;
+import com.mdlinkhealth.BaseActivity;
 import com.mdlinkhealth.Medical_CheckOut_Doctor;
 import com.mdlinkhealth.R;
 import com.mdlinkhealth.preferences.SharedPreferenceManager;
@@ -52,7 +54,7 @@ import com.twilio.voice.Voice;
 
 import java.util.HashMap;
 
-public class VoiceActivity extends AppCompatActivity {
+public class VoiceActivity extends BaseActivity {
 
     private static final String TAG = "VoiceActivity";
     private String identity = "MDLink";
@@ -352,7 +354,7 @@ public class VoiceActivity extends AppCompatActivity {
                 EditText contact = (EditText) ((AlertDialog) dialog).findViewById(R.id.contact);
                 //twiMLParams.put("to", contact.getText().toString());
                 twiMLParams.put("phoneNumber", contact.getText().toString());
-                activeCall = Voice.call(VoiceActivity.this, accessToken, twiMLParams, callListener);
+                activeCall = Voice.call(App.getInstance(), accessToken, twiMLParams, callListener);
                 setCallUI();
                 alertDialog.dismiss();
             }
@@ -366,7 +368,7 @@ public class VoiceActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 soundPoolManager.stopRinging();
                 if (activeCallInvite != null) {
-                    activeCallInvite.reject(VoiceActivity.this);
+                    activeCallInvite.reject(App.getInstance());
                     notificationManager.cancel(activeCallNotificationId);
                 }
                 alertDialog.dismiss();
@@ -461,7 +463,7 @@ public class VoiceActivity extends AppCompatActivity {
      * Accept an incoming Call
      */
     private void answer() {
-        activeCallInvite.accept(this, callListener);
+        activeCallInvite.accept(App.getInstance(), callListener);
         notificationManager.cancel(activeCallNotificationId);
     }
 

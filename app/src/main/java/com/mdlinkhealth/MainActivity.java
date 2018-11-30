@@ -1,11 +1,11 @@
 package com.mdlinkhealth;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,9 +20,10 @@ public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     Toolbar toolbar;
-    TextView tvThree,tvThree2,tvThree23,tvThree234,tvThree2345,tvThree23456;
+    TextView tvThree, tvThree2, tvThree23, tvThree234, tvThree2345, tvThree23456;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,29 +116,29 @@ public class MainActivity extends BaseActivity
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
     }
 
     public void onClick(View v) {
 
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.tvThree:
-                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.URGENTCARE);
+                OpenTreatmentListActivity(this, TreatmentListActivity.class, Constants.URGENTCARE);
                 break;
             case R.id.tvThree2:
-                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.MEDICAL_ADVICE);
+                OpenTreatmentListActivity(this, TreatmentListActivity.class, Constants.MEDICAL_ADVICE);
                 break;
             case R.id.tvThree23:
-                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABS_AND_SCREEN);
+                OpenTreatmentListActivity(this, TreatmentListActivity.class, Constants.LABS_AND_SCREEN);
                 break;
             case R.id.tvThree234:
-                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABEL_ADDICTION);
+                OpenTreatmentListActivity(this, TreatmentListActivity.class, Constants.LABEL_ADDICTION);
                 break;
             case R.id.tvThree2345:
-                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABEL_DEPRESSION);
+                OpenTreatmentListActivity(this, TreatmentListActivity.class, Constants.LABEL_DEPRESSION);
                 break;
             case R.id.tvThree23456:
-                OpenTreatmentListActivity(this,TreatmentListActivity.class,Constants.LABEL_THERAPY);
+                OpenTreatmentListActivity(this, TreatmentListActivity.class, Constants.LABEL_THERAPY);
                 break;
         }
     }
