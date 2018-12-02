@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.mdlinkhealth.model.BookAppointmentRequest;
 import com.mdlinkhealth.model.CreateOrderRequest;
+import com.mdlinkhealth.util.Constants;
 import com.paypal.android.sdk.payments.PayPalAuthorization;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -41,9 +42,10 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
     private TextView txtRenewApptForCA,txtSicknoteApptForCA,txtApptTypeCA, txtNameCA, txtAgeCA, txtPurposeCA, txtPreviousHospitalCA,
             txtAllergiesCA, txtMedicalConditionCA, txtPharmacyCA, txtLocationCA, txtDateCA, txtTimeCA,
             txtPreferredDoctorCA, txtPayByPaypalCA,txtApptPaymentStatusCA;
-    private String AppointmentId;
+    private String AppointmentId,CouponCode;
     private BookAppointmentRequest bookAppointmentRequest;
     private LinearLayout llPaymentStatus;
+    private Double Amount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +89,11 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
 
     private void bindViews() {
         if(null != getIntent()){
+            Amount = getIntent().getExtras().getDouble("Amount");
+            if(Amount < 1){
+                txtPayByPaypalCA.setText(R.string.label_bookappointment);
+            }
+            CouponCode = getIntent().getStringExtra("CouponCode");
             AppointmentId = getIntent().getStringExtra("AppointmentId");
             String preferredDoctorName = getIntent().getStringExtra("PreferredDoctorName");
             bookAppointmentRequest = (BookAppointmentRequest)getIntent().getSerializableExtra("BookAppointmentRequest");
@@ -112,16 +119,16 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
             String type ="";
             switch (bookAppointmentRequest.getType()) {
                 case "1":
-                    type = "Audio ($12)";
+                    type = "Audio Call";
                     break;
                 case "2":
-                    type = "Instant Message ($12)";
+                    type = "Instant Message";
                     break;
                 case "3":
-                    type = "Video Call ($15)";
+                    type = "Video Call";
                     break;
             }
-            txtApptTypeCA.setText(getString(R.string.colon,type));
+            txtApptTypeCA.setText(getString(R.string.colon,type) +" "+ (Amount > 0 ? "$ "+ Amount : " FREE " ));
         }
     }
 
@@ -129,7 +136,18 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txtPayByPaypalCA:
-                callPaymentGatewayAPI();
+                if(Amount>0) {
+                    callPaymentGatewayAPI();
+                }else {
+                    //Amount is Zero so call dummy transaction number
+                    CreateOrderRequest createOrderRequest = new CreateOrderRequest();
+                    createOrderRequest.setAppId(Integer.parseInt(AppointmentId));
+                    createOrderRequest.setCouponCode(CouponCode);
+                    createOrderRequest.setTransactionId(Constants.DUMMY_TRANSACTIONID);
+                    createOrderRequest.setTransactionStatus(Constants.DUMMY_TRANSACTIONSTAUS);
+                    createOrderRequest.setTransactionResponse(Constants.DUMMY_TRANSACTIONRESPONSE);
+                    callCreateOrderAPI(createOrderRequest);
+                }
                 break;
         }
     }
@@ -177,23 +195,20 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
     }
 
     private PayPalPayment getThingToBuy(String paymentIntent) {
-        String amount ="", item="";
+        String item="";
         switch (bookAppointmentRequest.getType()) {
             case "1":
-                amount = "12";
                 item = "Audio ($12)";
                 break;
             case "2":
-                amount = "12";
                 item = "Instant Message ($12)";
                 break;
             case "3":
-                amount = "15";
                 item = "Video Call ($15)";
                 break;
         }
         return new PayPalPayment(
-                new BigDecimal(amount), "USD", item,
+                new BigDecimal(Amount), "USD", item,
                 paymentIntent);
     }
 
@@ -230,7 +245,7 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
                         String transactionId = jsonObject.getJSONObject("response").getString("id");
                         String state = jsonObject.getJSONObject("response").getString("state");
                         createOrderRequest.setAppId(Integer.parseInt(AppointmentId));
-                        createOrderRequest.setCouponCode("NOCODE");
+                        createOrderRequest.setCouponCode(CouponCode);
                         createOrderRequest.setTransactionId(transactionId);
                         createOrderRequest.setTransactionStatus(state);
                         createOrderRequest.setTransactionResponse(state);
@@ -275,7 +290,7 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.i(TAG, ">>>>>>>>>>>>>>>>>" + response.body());
                 if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
-                    Toast.makeText(ConfirmAppointmentActivity.this, createOrderRequest.getTransactionStatus().equalsIgnoreCase("approved") ?"Thank You!! " : " Oops " +response.body().get("message").getAsString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(ConfirmAppointmentActivity.this, createOrderRequest.getTransactionStatus().equalsIgnoreCase("approved") ?"Thank You!! " : " Thank You!! " +response.body().get("message").getAsString(),Toast.LENGTH_LONG).show();
                     finish();
                     Intent intent = new Intent(ConfirmAppointmentActivity.this, PatientPortalActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

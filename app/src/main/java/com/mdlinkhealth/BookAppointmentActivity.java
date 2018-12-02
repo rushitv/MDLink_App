@@ -287,9 +287,13 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
                     JsonObject jsonObject = response.body().get("result").getAsJsonObject();
                     Intent iConfirmAppt = new Intent(BookAppointmentActivity.this, ConfirmAppointmentActivity.class);
                     iConfirmAppt.putExtra("AppointmentId", jsonObject.get("id").getAsString());
+                    iConfirmAppt.putExtra("CouponCode", edtCouponCodeBookAppt.getText().toString());
+                    iConfirmAppt.putExtra("Amount",jsonObject.get("amount").getAsDouble());
                     iConfirmAppt.putExtra("BookAppointmentRequest", bookAppointmentRequest);
                     iConfirmAppt.putExtra("PreferredDoctorName", edtDoctorBookAppt.getText().toString());
                     startActivity(iConfirmAppt);
+                }else {
+                    Toast.makeText(BookAppointmentActivity.this, response.body().get("message").getAsString(), Toast.LENGTH_LONG).show();
                 }
             }
 

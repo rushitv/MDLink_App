@@ -15,7 +15,7 @@ public class PaypalConfigManager {
 
     // NO_NETWORK test transaction
     //public static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_NO_NETWORK;
-    public static final String CONFIG_ENVIRONMENT = production;
+    public static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_PRODUCTION;
 
     // note that these credentials will differ between live & sandbox environments.
     public static final String CONFIG_CLIENT_ID = "ASInx3EhrrvGCw8_KPMdCQbROVvWJKSHPKMxCi2GC1E7Y0GsKIcvDRHh0q_1vFWU34D4dwa0SFrPjzU-";
