@@ -294,4 +294,8 @@
     <string name="pregnant_lady" translatable="false">Use our patient portal to create your free secure telemedicine account</string>
     <string name="laptop_image" translatable="false">Enter your symptoms and choose between message, audio and video appointment</string>
     <string name="doctor_at_desk" translatable="false">Your Prescription, Sick Note or Lab Request will be sent immediately to the relevant organization through email or fax.</string>
+    <string name="please_tell_us_any_drug_allergies_you_may_have">please tell us any drug allergies you may have:</string>
+    <string name="please_tell_us_if_you_have_any_medical_conditions">Please tell us if you have any medical conditions:</string>
+    <string name="scheduled_appointment">Scheduled Appointment</string>
+    <string name="logout">Logout</string>
 </resources>
