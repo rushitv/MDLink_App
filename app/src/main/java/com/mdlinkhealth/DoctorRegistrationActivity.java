@@ -82,7 +82,7 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
     String format;
     private Toolbar toolbar;
     CountryCodePicker ccpDoc;
-    String CountryCode="";
+    String CountryCode = "";
 
     public static void start(Context context) {
         Intent starter = new Intent(context, DoctorRegistrationActivity.class);
@@ -165,13 +165,16 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
                 startActivity(intent);
             }
         });
+        fetchFCMToken();
     }
+
     private void initToolbar() {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent_white_180));
         setUpToolbar(toolbar, R.color.colorAccent);
         setToolbarTitle(getString(R.string.label_doctorregistration), R.color.colorAccent);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -340,11 +343,14 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
                 RequestBody userId = RequestBody.create(MediaType.parse("form-data"), edtEmailDP.getText().toString());
                 RequestBody created_at = RequestBody.create(MediaType.parse("form-data"), "2018-23-10 13:17:29");
 
+                RequestBody device_token = RequestBody.create(MediaType.parse("form-data"), getFCMToken());
+                RequestBody device_type = RequestBody.create(MediaType.parse("form-data"), Constants.DEVICE_TYPE);
+
                 callAPI(email, name, phone, age, qualification, speciality, medicalSchool, medicalCounsil,
                         graduationYear, registrationNumber, location, password, confirmPassword,
                         availabledaysVal, availMorning, availMorningTo, availEvening, availEveningTo, terms_and_condition, userId,
                         role_id, created_at
-                        , mpSignature, mpCertificate);
+                        , mpSignature, mpCertificate, device_token, device_type);
                 break;
         }
     }
@@ -441,7 +447,7 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
                          RequestBody confirmpassword, RequestBody available_day, RequestBody avail_morning,
                          RequestBody avail_morning_to, RequestBody avail_evening, RequestBody avail_evening_to,
                          RequestBody terms_and_cond, RequestBody userID, RequestBody role_id, RequestBody created_at,
-                         MultipartBody.Part signature, MultipartBody.Part medical_certificate) {
+                         MultipartBody.Part signature, MultipartBody.Part medical_certificate, RequestBody device_token, RequestBody device_type) {
 
         Call<DoctorPortalResponse> callToGetUserProfile = apiService.postDoctorRequest(
                 email, name, phone_no,
@@ -451,7 +457,7 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
                 confirmpassword, available_day, avail_morning,
                 avail_morning_to, avail_evening, avail_evening_to,
                 terms_and_cond, userID, role_id, created_at,
-                signature, medical_certificate);
+                signature, medical_certificate, device_token, device_type);
 
 
         callToGetUserProfile.enqueue(new Callback<DoctorPortalResponse>() {
@@ -461,15 +467,15 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
                 Log.i(TAG, ">>>>>>>>>>>>>" + response.body());
                 if (response.code() == 200) {
                     Log.i(TAG, ">>>>>>>>>>>>>" + response.body());
-                    if(response.body().getStatus()!=200) {
+                    if (response.body().getStatus() != 200) {
                         String message = "";
                         DoctorPortalResponse doctorPortalResponse = response.body();
                         for (String key : doctorPortalResponse.getResult().keySet()) {
                             Log.i(TAG, ">>>>>>>>>>>>>" + doctorPortalResponse.getResult().get(key));
-                            message += doctorPortalResponse.getResult().get(key).toString().replaceAll("\\[", "").replaceAll("\\]","") + "\n";
+                            message += doctorPortalResponse.getResult().get(key).toString().replaceAll("\\[", "").replaceAll("\\]", "") + "\n";
                         }
                         Toast.makeText(DoctorRegistrationActivity.this, message, Toast.LENGTH_LONG).show();
-                    }else {
+                    } else {
                         Toast.makeText(DoctorRegistrationActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(DoctorRegistrationActivity.this, LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

@@ -58,6 +58,8 @@ public class LoginActivity extends BaseActivity {
                     HashMap<String, String> loginRequestHashmap = new HashMap<>();
                     loginRequestHashmap.put("email", email.getText().toString());
                     loginRequestHashmap.put("password", password.getText().toString());
+                    loginRequestHashmap.put("device_token", getFCMToken());
+                    loginRequestHashmap.put("device_type", Constants.DEVICE_TYPE);
                     callLoginAPI(loginRequestHashmap);
                 } else {
                     new ConnectionCall(LoginActivity.this).isConnectingToInternet();
@@ -96,10 +98,10 @@ public class LoginActivity extends BaseActivity {
                 Log.i(TAG, "1>>>>>>>>>>>>" + response.body());
                 if (response.code() == 200) {
                     Log.i(TAG, "2>>>>>>>>>>>>>" + response.body());
-                    if(response.body().get("status").getAsInt()==200) {
+                    if (response.body().get("status").getAsInt() == 200) {
                         JsonObject jsonObject = response.body().getAsJsonObject("result");
                         setDataToPreference(jsonObject);
-                    }else {
+                    } else {
                         Toast.makeText(LoginActivity.this,
                                 response.body().get("message").getAsString(),
                                 Toast.LENGTH_LONG).show();
@@ -122,7 +124,7 @@ public class LoginActivity extends BaseActivity {
         if (jsonObject.get("role_id").getAsString().equalsIgnoreCase("1")) {
             Gson gson = new Gson();
             DoctorProfile doctorProfile = gson.fromJson(jsonObject.toString(), DoctorProfile.class);
-            Log.i(TAG,"age>>>>>"+doctorProfile.getAge());
+            Log.i(TAG, "age>>>>>" + doctorProfile.getAge());
             String json = gson.toJson(doctorProfile);
             sharedPreferenceManager.saveString(Constants.DOCTOR_PROFILE, json);
         }

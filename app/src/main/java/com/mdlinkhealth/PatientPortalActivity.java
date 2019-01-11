@@ -8,10 +8,12 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.mdlinkhealth.preferences.SharedPreferenceManager;
 import com.mdlinkhealth.splash.SplashActivity;
 import com.mdlinkhealth.util.Constants;
@@ -20,6 +22,8 @@ import static com.mdlinkhealth.util.Constants.INVALID;
 
 public class PatientPortalActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+
+    private String TAG = getClass().getSimpleName();
 
     private SharedPreferenceManager sharedPreferenceManager;
     DrawerLayout drawerLayout;
@@ -61,21 +65,23 @@ public class PatientPortalActivity extends BaseActivity
 
         tvThree = findViewById(R.id.tvThree);
         tvThree.setOnClickListener(this);
-        tvThree2 = findViewById(R.id.tvOne2);
+        tvThree2 = findViewById(R.id.tvThree2);
         tvThree2.setOnClickListener(this);
-        tvThree23 = findViewById(R.id.tvOne23);
+        tvThree23 = findViewById(R.id.tvThree23);
         tvThree23.setOnClickListener(this);
-        tvThree234 = findViewById(R.id.tvOne234);
+        tvThree234 = findViewById(R.id.tvThree234);
         tvThree234.setOnClickListener(this);
-        tvThree2345 = findViewById(R.id.tvOne2345);
+        tvThree2345 = findViewById(R.id.tvThree2345);
         tvThree2345.setOnClickListener(this);
-        tvThree23456 = findViewById(R.id.tvOne23456);
+        tvThree23456 = findViewById(R.id.tvThree23456);
         tvThree23456.setOnClickListener(this);
 
         headerView = navigationView.getHeaderView(0);
         tvHeaderNavigation = headerView.findViewById(R.id.text_header_name);
         tvHeaderNavigation.setText(sharedPreferenceManager.getStringData(Constants.NAME));
 
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "FCM token: " + refreshedToken);
     }
 
     @Override

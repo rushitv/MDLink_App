@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +17,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.mdlinkhealth.helper.StringHelper;
 import com.mdlinkhealth.helper.UiHelper;
+import com.mdlinkhealth.preferences.SharedPreferenceManager;
 import com.mdlinkhealth.util.Constants;
 
 import static com.mdlinkhealth.util.Constants.INVALID;
@@ -26,6 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public Toolbar mToolbar;
     private BaseActivity mActivity;
     private ProgressDialog progressDialog;
+    private SharedPreferenceManager sharedPreferenceManager;
 
     public BaseActivity getBaseActivity() {
         return mActivity;
@@ -35,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = this;
+        sharedPreferenceManager = new SharedPreferenceManager(this);
     }
 
     /**
@@ -122,13 +130,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void OpenTreatmentListActivity(Activity activity, Class toActivity, String type){
-        Intent intent = new Intent(activity,toActivity);
-        intent.putExtra(Constants.TYPE,type);
+    public void OpenTreatmentListActivity(Activity activity, Class toActivity, String type) {
+        Intent intent = new Intent(activity, toActivity);
+        intent.putExtra(Constants.TYPE, type);
         startActivity(intent);
     }
-    protected void showProgressDialog(){
-        if(progressDialog==null){
+
+    protected void showProgressDialog() {
+        if (progressDialog == null) {
             progressDialog = new ProgressDialog(this);
         }
         progressDialog.setMessage("Loading...");
@@ -137,8 +146,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         progressDialog.setProgress(0);
         progressDialog.show();
     }
-    protected void hideProgressDialog(){
-        if(progressDialog!=null&&progressDialog.isShowing()){
+
+    protected void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
     }
@@ -152,5 +162,21 @@ public abstract class BaseActivity extends AppCompatActivity {
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public void fetchFCMToken() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                Log.i(TAG, "token>>>" + instanceIdResult.getToken());
+                if (!StringHelper.isEmptyOrNull(instanceIdResult.getToken())) {
+                    sharedPreferenceManager.saveString(Constants.FCM_REG_TOKEN, instanceIdResult.getToken());
+                }
+            }
+        });
+    }
+
+    public String getFCMToken() {
+        return sharedPreferenceManager.getStringData(Constants.FCM_REG_TOKEN);
     }
 }

@@ -51,12 +51,12 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
     RecyclerView rvCheckboxList;
     private List<String> currentSelectedItems = new ArrayList<>();
     CheckboxAdapter checkboxAdapter;
-    private EditText editPharmacyCheckout, editFaxCheckout,edtLabCheckout,edtRadiologyLab,
-            edtRadiologyType,edtSickRequestDate,
-            edtPatientAddressCheckout,edtPatientPhoneNumberCheckout,edtPatientEmailCheckout,edtPatientNameCheckout,
-            edtBirthdateCheckout,edtAgeCheckout,edtOtherLabTest, edtPrescriptionRequest,edtDateCheckout,edtMedicalHistoryCheckout,
-            edtRadiologyRequest,edtDiagnosis;
-    private Spinner spnMedicalRecomm,spnGender;
+    private EditText editPharmacyCheckout, editFaxCheckout, edtLabCheckout, edtRadiologyLab,
+            edtRadiologyType, edtSickRequestDate,
+            edtPatientAddressCheckout, edtPatientPhoneNumberCheckout, edtPatientEmailCheckout, edtPatientNameCheckout,
+            edtBirthdateCheckout, edtAgeCheckout, edtOtherLabTest, edtPrescriptionRequest, edtDateCheckout, edtMedicalHistoryCheckout,
+            edtRadiologyRequest, edtDiagnosis;
+    private Spinner spnMedicalRecomm, spnGender;
     private String AppointmentId, PatientId;
     private SharedPreferenceManager sharedPreferenceManager;
     private TextView tvSubmitMedicalCheckout;
@@ -69,11 +69,10 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
         initToolbar();
         tvSubmitMedicalCheckout = findViewById(R.id.tvSubmitMedicalCheckout);
         tvSubmitMedicalCheckout.setOnClickListener(this);
-        if(getIntent().getStringExtra(Constants.APPOINTMENT_ID)!=null &&
-                getIntent().getStringExtra(Constants.PATIENT_ID)!=null)
-        {
+        if (getIntent().getStringExtra(Constants.APPOINTMENT_ID) != null &&
+                getIntent().getStringExtra(Constants.PATIENT_ID) != null) {
             AppointmentId = getIntent().getStringExtra(Constants.APPOINTMENT_ID);
-            PatientId =getIntent().getStringExtra(Constants.PATIENT_ID);
+            PatientId = getIntent().getStringExtra(Constants.PATIENT_ID);
         }
 
         sharedPreferenceManager = new SharedPreferenceManager(this);
@@ -87,8 +86,8 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
         spnGender = findViewById(R.id.spnGender);
 
         edtSickRequestDate = findViewById(R.id.edtSickRequestDate);
-        edtRadiologyType= findViewById(R.id.edtRadiologyType);
-        edtLabCheckout= findViewById(R.id.edtLabCheckout);
+        edtRadiologyType = findViewById(R.id.edtRadiologyType);
+        edtLabCheckout = findViewById(R.id.edtLabCheckout);
         edtRadiologyLab = findViewById(R.id.edtRadiologyLab);
         edtRadiologyLab.setOnClickListener(this);
         edtLabCheckout.setOnClickListener(this);
@@ -125,7 +124,7 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
             }
         });
         rvCheckboxList.setAdapter(checkboxAdapter);
-        if(getIntent().getStringExtra(Constants.PATIENT_ID)!=null){
+        if (getIntent().getStringExtra(Constants.PATIENT_ID) != null) {
             callGetPatientProfileAPI(getIntent().getStringExtra(Constants.PATIENT_ID));
         }
 
@@ -195,7 +194,7 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
-                                edtSickRequestDate.setText(year+"-"+(monthOfYear + 1) + "-" + dayOfMonth);
+                                edtSickRequestDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -276,11 +275,11 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
                 public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                     Log.d(TAG, "Selected Item is = " + listview.getItemAtPosition(position));
                     editPharmacyCheckout.setText("" + listview.getItemAtPosition(position));
-                    if(selectedPharmacyOptionObject().getFaxNumber()!=null){
-                        Log.i(TAG,">>>>>>>"+selectedPharmacyOptionObject().getFaxNumber());
+                    if (selectedPharmacyOptionObject().getFaxNumber() != null) {
+                        Log.i(TAG, ">>>>>>>" + selectedPharmacyOptionObject().getFaxNumber());
                         editFaxCheckout.setText(selectedPharmacyOptionObject().getFaxNumber());
-                    }else {
-                        Log.i(TAG,">>>null>>>>");
+                    } else {
+                        Log.i(TAG, ">>>null>>>>");
                     }
                     alert.dismiss();
                 }
@@ -288,7 +287,7 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
         }
     }
 
-    private void callPharmacyById(int PharmacyId){
+    private void callPharmacyById(int PharmacyId) {
         showProgressDialog();
         Call<PharmacyResponse> getPatientById = App.apiService.getPharmacyById(PharmacyId);
         getPatientById.enqueue(new Callback<PharmacyResponse>() {
@@ -299,7 +298,7 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
                 if (response.code() == 200) {
                     Log.i(TAG, "Labs>>>size>>>>>>>" + response.body());
                     if (response.body() != null) {
-                     Log.i(TAG,"pharmacy_email>>>>>>>>>"+response.body().getPharmacyResponseDetail().getEmail());
+                        Log.i(TAG, "pharmacy_email>>>>>>>>>" + response.body().getPharmacyResponseDetail().getEmail());
                     }
                 }
             }
@@ -410,7 +409,7 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
         }
     }
 
-    private void bindRadiologyType(){
+    private void bindRadiologyType() {
         //radiology_type
 
         if (radiologyType != null && radiologyType.size() > 0) {
@@ -449,7 +448,7 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
                 @Override
                 public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                     Log.d(TAG, "Selected Item is = " + listview.getItemAtPosition(position));
-                    edtRadiologyType.setText(""+listview.getItemAtPosition(position));
+                    edtRadiologyType.setText("" + listview.getItemAtPosition(position));
                     alert.dismiss();
                 }
             });
@@ -467,8 +466,8 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
                 if (response.code() == 200) {
                     Log.i(TAG, "2>>>>>>>>>>>>>" + response.body());
                     JsonObject jsonObject = response.body().getAsJsonObject("result");
-                    Log.i(TAG, "2>>name>>>>>>>>>>>" +jsonObject.get("name"));
-                    Log.i(TAG, "2>>email>>>>>>>>>>>" +jsonObject.get("email"));
+                    Log.i(TAG, "2>>name>>>>>>>>>>>" + jsonObject.get("name"));
+                    Log.i(TAG, "2>>email>>>>>>>>>>>" + jsonObject.get("email"));
                     setPatientFetchedData(jsonObject);
                 }
             }
@@ -481,41 +480,45 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
         });
     }
 
-    private void setPatientFetchedData(JsonObject jsonObject){
+    private void setPatientFetchedData(JsonObject jsonObject) {
         hideProgressDialog();
-        Log.i(TAG, "2>>name>>>>>>>>>>>" +jsonObject.get("name"));
-        Log.i(TAG, "2>>email>>>>>>>>>>>" +jsonObject.get("email"));
-        Log.i(TAG, "2>>email>>>>>>>>>>>" +jsonObject.get("phone_no"));
+        Log.i(TAG, "2>>name>>>>>>>>>>>" + jsonObject.get("name"));
+        Log.i(TAG, "2>>email>>>>>>>>>>>" + jsonObject.get("email"));
+        Log.i(TAG, "2>>email>>>>>>>>>>>" + jsonObject.get("phone_no"));
 
-        if(!TextUtils.isEmpty(jsonObject.get("name").getAsString())){
+        if (!TextUtils.isEmpty(jsonObject.get("name").getAsString())) {
             edtPatientNameCheckout.setText(jsonObject.get("name").getAsString());
         }
-        if(!TextUtils.isEmpty(jsonObject.get("email").getAsString())){
+        if (!TextUtils.isEmpty(jsonObject.get("email").getAsString())) {
             edtPatientEmailCheckout.setText(jsonObject.get("email").getAsString());
         }
-        if(!TextUtils.isEmpty(jsonObject.get("birthdate").getAsString())){
+        if (!TextUtils.isEmpty(jsonObject.get("birthdate").getAsString())) {
             edtBirthdateCheckout.setText(jsonObject.get("birthdate").getAsString());
         }
-        if(!TextUtils.isEmpty(jsonObject.get("phone_no").getAsString())){
+        if (!TextUtils.isEmpty(jsonObject.get("phone_no").getAsString())) {
             edtPatientPhoneNumberCheckout.setText(jsonObject.get("phone_no").getAsString());
         }
-        if(!TextUtils.isEmpty(jsonObject.get("address").getAsString())){
+        if (!TextUtils.isEmpty(jsonObject.get("address").getAsString())) {
             edtPatientAddressCheckout.setText(jsonObject.get("address").getAsString());
         }
-        if(jsonObject.get("age").getAsInt()!=0){
-            edtAgeCheckout.setText(""+jsonObject.get("age").getAsInt());
+        if (jsonObject.get("age").getAsInt() != 0) {
+            edtAgeCheckout.setText("" + jsonObject.get("age").getAsInt());
         }
 
     }
 
-    private String Validate(){
+    private String Validate() {
         String msg = "";
-        if(TextUtils.isEmpty(edtMedicalHistoryCheckout.getText().toString())){
-            msg += "Add Medical History \n";
+        if (TextUtils.isEmpty(edtMedicalHistoryCheckout.getText().toString())) {
+            msg += "Add Patient Notes \n";
         }
-        if(TextUtils.isEmpty(edtDiagnosis.getText().toString())){
+        if (TextUtils.isEmpty(edtDiagnosis.getText().toString())) {
             msg += "Add Diagnosis History \n";
         }
+        if (TextUtils.isEmpty(edtPrescriptionRequest.getText().toString())) {
+            msg += "Input Prescription Details\n";
+        }
+        /*
         if(TextUtils.isEmpty(editPharmacyCheckout.getText().toString())){
             msg += "Select Pharmacy \n";
         }
@@ -534,11 +537,12 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
         if(TextUtils.isEmpty(edtPatientPhoneNumberCheckout.getText().toString())){
             msg += "Input Patient Phone Number\n";
         }
+        */
         return msg;
     }
 
-    private void submitToAPI(){
-        if(Validate().length()>0){
+    private void submitToAPI() {
+        if (Validate().length() > 0) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Alert");
             builder.setMessage(Validate())
@@ -552,7 +556,7 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
             AlertDialog alert = builder.create();
             alert.show();
 
-        }else {
+        } else {
 
             AddPrescriptionDoctorSide addPrescriptionDoctorSide = new AddPrescriptionDoctorSide();
             addPrescriptionDoctorSide.setBirthDate(edtBirthdateCheckout.getText().toString());
@@ -560,14 +564,19 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
             addPrescriptionDoctorSide.setDocPhoneNo("");
             addPrescriptionDoctorSide.setDoctorEmail(sharedPreferenceManager.getStringData(Constants.USER_NAME));
             addPrescriptionDoctorSide.setDoctorId(sharedPreferenceManager.getStringData(Constants.USER_ID));
-            if(spnGender.getSelectedItem().equals("Male")){
+            if (spnGender.getSelectedItem().equals("Male")) {
                 addPrescriptionDoctorSide.setGender("M");
-            }else {
+            } else {
                 addPrescriptionDoctorSide.setGender("F");
             }
             addPrescriptionDoctorSide.setAge(edtAgeCheckout.getText().toString());
             addPrescriptionDoctorSide.setAppointmentId(AppointmentId);
-            addPrescriptionDoctorSide.setLabName(selectedLabOptionObject().getEmail());
+            if (null != selectedLabOptionObject() && null != selectedLabOptionObject().getEmail()) {
+                addPrescriptionDoctorSide.setLabName(selectedLabOptionObject().getEmail());
+            } else {
+                addPrescriptionDoctorSide.setLabName("");
+            }
+
             addPrescriptionDoctorSide.setLabRequestNote(edtOtherLabTest.getText().toString());
             addPrescriptionDoctorSide.setNotes(edtMedicalHistoryCheckout.getText().toString());
             addPrescriptionDoctorSide.setPatientAddress(edtPatientAddressCheckout.getText().toString());
@@ -584,19 +593,32 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
             }
             addPrescriptionDoctorSide.setTest(checkboxExtract.toString());
             addPrescriptionDoctorSide.setPrescription(edtPrescriptionRequest.getText().toString());
-            addPrescriptionDoctorSide.setPharmacyName(selectedPharmacyOptionObject().getEmail());
+
+            if (null != selectedPharmacyOptionObject() && null != selectedPharmacyOptionObject().getEmail()) {
+                addPrescriptionDoctorSide.setPharmacyName(selectedPharmacyOptionObject().getEmail());
+            } else {
+                addPrescriptionDoctorSide.setPharmacyName("");
+            }
+
             addPrescriptionDoctorSide.setPharmacyFaxNumber(editFaxCheckout.getText().toString());
-            addPrescriptionDoctorSide.setRadiologyEmail(selectedRadioLabOptionObject().getEmail());
+
+            if (null != selectedRadioLabOptionObject() && null != selectedRadioLabOptionObject().getEmail()) {
+                addPrescriptionDoctorSide.setRadiologyEmail(selectedRadioLabOptionObject().getEmail());
+            } else {
+                addPrescriptionDoctorSide.setRadiologyEmail("");
+            }
+
             addPrescriptionDoctorSide.setRadiologyRequest(edtRadiologyRequest.getText().toString());
             addPrescriptionDoctorSide.setRadiologyType(edtRadiologyType.getText().toString());
             addPrescriptionDoctorSide.setDoctorName(sharedPreferenceManager.getStringData(Constants.NAME));
+
             callSubmitPrescriptionAPI(addPrescriptionDoctorSide);
             //Gson gson = new Gson();
             //System.out.println(">>>>>>>>>>"+gson.toJson(addPrescriptionDoctorSide));
         }
     }
 
-    private void callSubmitPrescriptionAPI(AddPrescriptionDoctorSide addPrescriptionDoctorSide){
+    private void callSubmitPrescriptionAPI(AddPrescriptionDoctorSide addPrescriptionDoctorSide) {
         showProgressDialog();
         Call<JsonObject> callToGetUserProfile = App.apiService.prescription(addPrescriptionDoctorSide);
         callToGetUserProfile.enqueue(new Callback<JsonObject>() {
@@ -606,7 +628,7 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
                 Log.i(TAG, ">>>>>>>>>>>>>>>>>" + response.body());
                 if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
                     callCompleteAPI();
-                }else {
+                } else {
                     Toast.makeText(Medical_CheckOut_Doctor.this, response.body().get("message").getAsString(), Toast.LENGTH_LONG).show();
                 }
             }
@@ -619,7 +641,7 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
         });
     }
 
-    private void callCompleteAPI(){
+    private void callCompleteAPI() {
         showProgressDialog();
         Call<JsonObject> callToGetUserProfile = App.apiService.completeAppointment(Integer.parseInt(AppointmentId));
         callToGetUserProfile.enqueue(new Callback<JsonObject>() {
@@ -633,7 +655,7 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
                     finish();
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-                }else {
+                } else {
                     Toast.makeText(Medical_CheckOut_Doctor.this, response.body().get("message").getAsString(), Toast.LENGTH_LONG).show();
                 }
             }

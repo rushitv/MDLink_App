@@ -258,4 +258,6 @@ public class Constants {
 
     public static final String CHANNEL_DEFAULT_NAME = "appo_room_";
     public static final String TWILIO_USER = "RushitV-19000";
+    public static String FCM_REG_TOKEN = "FCM_REG_ID";
+    public static final String DEVICE_TYPE = "android";
 }

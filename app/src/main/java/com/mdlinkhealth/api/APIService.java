@@ -53,7 +53,9 @@ public interface APIService {
             @Part("role_id") RequestBody role_id,
             @Part("created_at") RequestBody created_at,
             @Part MultipartBody.Part signature,
-            @Part MultipartBody.Part medical_certificate
+            @Part MultipartBody.Part medical_certificate,
+            @Part("device_token") RequestBody device_token,
+            @Part("device_type") RequestBody device_type
     );
 
     @POST("availabledoctors")
@@ -101,7 +103,7 @@ public interface APIService {
     @GET("appointment/{id}")
     Call<JsonObject> getAppointmentById(@Path("id") int id);
 
-    @GET("completeappointment/{id}")
+    @POST("completeappointment/{id}")
     Call<JsonObject> completeAppointment(@Path("id") int id);
 
     @POST("actionappointment")

@@ -15,8 +15,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.hbb20.CountryCodePicker;
 import com.mdlinkhealth.asynctask.PatientRegisterAsyncTask;
+import com.mdlinkhealth.helper.StringHelper;
+import com.mdlinkhealth.preferences.SharedPreferenceManager;
+import com.mdlinkhealth.util.Constants;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -24,28 +30,30 @@ import java.util.HashMap;
 public class PatientRegistrationActivity extends BaseActivity implements View.OnClickListener {
     private String TAG = getClass().getSimpleName();
     TextView tvPatient_submit, tvSignIn;
-    EditText editEmail,editFullName, editPhone, editAge, editBirthdate, editAddress, editPassword, editConfirmPassword;
+    EditText editEmail, editFullName, editPhone, editAge, editBirthdate, editAddress, editPassword, editConfirmPassword;
     CountryCodePicker ccp;
     HashMap<String, String> hashMap = new HashMap<>();
-    int mYear,mMonth,mDay;
-    String CountryCode="";
+    int mYear, mMonth, mDay;
+    String CountryCode = "";
     private Toolbar toolbar;
+    private SharedPreferenceManager sharedPreferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_portal_);
         initToolbar();
+        sharedPreferenceManager = new SharedPreferenceManager(this);
 
         tvPatient_submit = (TextView) findViewById(R.id.patient_submit);
-        tvSignIn = (TextView)findViewById(R.id.textview_sing);
+        tvSignIn = (TextView) findViewById(R.id.textview_sing);
         ccp = findViewById(R.id.ccp);
         CountryCode = ccp.getSelectedCountryCode();
         ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
             public void onCountrySelected() {
                 CountryCode = "";
-               // Toast.makeText(getContext(), "Updated " + ccp.getSelectedCountryName(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getContext(), "Updated " + ccp.getSelectedCountryName(), Toast.LENGTH_SHORT).show();
                 CountryCode = ccp.getSelectedCountryCode();
             }
         });
@@ -65,12 +73,15 @@ public class PatientRegistrationActivity extends BaseActivity implements View.On
         tvSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PatientRegistrationActivity.this,LoginActivity.class);
+                Intent intent = new Intent(PatientRegistrationActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
 
+        fetchFCMToken();
+
     }
+
     private void initToolbar() {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent_white_180));
@@ -89,13 +100,13 @@ public class PatientRegistrationActivity extends BaseActivity implements View.On
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.patient_submit:
-                if(isFormValid().length()>0) {
-                    Toast.makeText(PatientRegistrationActivity.this,"",Toast.LENGTH_LONG).show();
-                }else {
+                if (isFormValid().length() > 0) {
+                    Toast.makeText(PatientRegistrationActivity.this, "", Toast.LENGTH_LONG).show();
+                } else {
                     hashMap.clear();
-                    Log.i(TAG,"CountryCode>>>>>"+CountryCode);
+                    Log.i(TAG, "CountryCode>>>>>" + CountryCode);
                     hashMap.put("email", editEmail.getText().toString());
                     hashMap.put("name", editFullName.getText().toString());
                     hashMap.put("phone_no", CountryCode + editPhone.getText().toString());
@@ -107,6 +118,8 @@ public class PatientRegistrationActivity extends BaseActivity implements View.On
                     hashMap.put("terms_and_cond", "1");
                     hashMap.put("userID", editEmail.getText().toString());
                     hashMap.put("role_id", "0");
+                    hashMap.put("device_token", getFCMToken());
+                    hashMap.put("device_type", Constants.DEVICE_TYPE);
 
                     new PatientRegisterAsyncTask(PatientRegistrationActivity.this, hashMap).execute();
                 }
@@ -122,33 +135,34 @@ public class PatientRegistrationActivity extends BaseActivity implements View.On
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
-                                editBirthdate.setText(year+"-"+(monthOfYear + 1) +"-"+dayOfMonth);
+                                editBirthdate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
                 break;
         }
     }
-    private String isFormValid(){
-        String str = "";
-        if(!TextUtils.isEmpty(editEmail.getText().toString()) && Patterns.EMAIL_ADDRESS.matcher(editEmail.getText().toString()).matches()){
 
-        }else {
+    private String isFormValid() {
+        String str = "";
+        if (!TextUtils.isEmpty(editEmail.getText().toString()) && Patterns.EMAIL_ADDRESS.matcher(editEmail.getText().toString()).matches()) {
+
+        } else {
             str += "Please enter valid email \n";
         }
-        if(TextUtils.isEmpty(editPhone.getText().toString())){
-            str+=" Please enter phone number \n";
+        if (TextUtils.isEmpty(editPhone.getText().toString())) {
+            str += " Please enter phone number \n";
         }
-        if(TextUtils.isEmpty(editPassword.getText().toString())){
-            str+=" Password should not be empty \n";
-        }
-
-        if(TextUtils.isEmpty(editConfirmPassword.getText().toString())){
-            str+="Confirm Password should not be empty \n";
+        if (TextUtils.isEmpty(editPassword.getText().toString())) {
+            str += " Password should not be empty \n";
         }
 
-        if(!(editPassword.getText().toString().equals(editConfirmPassword.getText().toString()))){
-            str+="Passwords do not match! \n";
+        if (TextUtils.isEmpty(editConfirmPassword.getText().toString())) {
+            str += "Confirm Password should not be empty \n";
+        }
+
+        if (!(editPassword.getText().toString().equals(editConfirmPassword.getText().toString()))) {
+            str += "Passwords do not match! \n";
         }
 
         return str;
