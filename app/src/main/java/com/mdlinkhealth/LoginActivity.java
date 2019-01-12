@@ -146,11 +146,13 @@ public class LoginActivity extends BaseActivity {
             Intent intent = new Intent(LoginActivity.this, DoctorPortalActivity.class);
             intent.putExtra(Constants.USER_NAME, jsonObject.get("name").getAsString());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            finish();
             startActivity(intent);
         } else {
             Intent intent = new Intent(LoginActivity.this, PatientPortalActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra(Constants.USER_NAME, jsonObject.get("name").getAsString());
+            finish();
             startActivity(intent);
         }
     }

@@ -1,5 +1,6 @@
 package com.mdlinkhealth.asynctask;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.mdlinkhealth.LoginActivity;
 import com.mdlinkhealth.MakeServiceCall;
 import com.mdlinkhealth.PatientPortalActivity;
 import com.mdlinkhealth.preferences.SharedPreferenceManager;
@@ -56,29 +58,15 @@ public class PatientRegisterAsyncTask extends AsyncTask<Void,Void,String> {
         try {
             JSONObject json = new JSONObject(s);
             if (json.getString("status").equalsIgnoreCase("200")) {
-                Toast.makeText(context, "Registered Successfully", Toast.LENGTH_SHORT).show();
-                JSONObject jsonArray = json.getJSONObject("result");
-                if(!TextUtils.isEmpty(jsonArray.getString("user_id"))){
-                    Log.i(TAG,"user_id>>"+jsonArray.getString("user_id"));
-                    Log.i(TAG,"name>>"+jsonArray.getString("name"));
-                    Log.i(TAG,"birthdate>>"+jsonArray.getString("birthdate"));
-
-                    Intent intent = new Intent(context, PatientPortalActivity.class);
-                    intent.putExtra(Constants.USER_NAME,hashMap.get("userID"));
-                    intent.putExtra(Constants.ROLE_ID,"2");
-                    intent.putExtra(Constants.USER_ID,jsonArray.getString("user_id"));
-                    SharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(context);
-                    sharedPreferenceManager.saveString(Constants.USER_NAME,hashMap.get("userID"));
-                    sharedPreferenceManager.saveString(Constants.ROLE_ID,"2");
-                    sharedPreferenceManager.saveString(Constants.USER_ID,jsonArray.getString("user_id"));
-                    sharedPreferenceManager.saveString(Constants.NAME,jsonArray.getString("name"));
-                    sharedPreferenceManager.saveString(Constants.BIRTH_DATE,jsonArray.getString("birthdate"));
-                    sharedPreferenceManager.saveString(Constants.ADDRESS,jsonArray.getString("address"));
-                    sharedPreferenceManager.saveString(Constants.AGE,jsonArray.getString("age"));
-                    sharedPreferenceManager.saveString(Constants.LOCATION,jsonArray.getString("location"));
-
+                if(json.has("message")){
+                    Toast.makeText(context,json.getString("message"), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     context.startActivity(intent);
+                }
+            }else {
+                if(json.has("message")) {
+                    Toast.makeText(context, json.getString("message"), Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (JSONException e) {

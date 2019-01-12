@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.hbb20.CountryCodePicker;
 import com.mdlinkhealth.api.APIService;
 import com.mdlinkhealth.api.RestAPIClent;
@@ -157,14 +158,6 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
 
         btnSubmit = findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(this);
-
-        singup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DoctorRegistrationActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
         fetchFCMToken();
     }
 
@@ -449,7 +442,7 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
                          RequestBody terms_and_cond, RequestBody userID, RequestBody role_id, RequestBody created_at,
                          MultipartBody.Part signature, MultipartBody.Part medical_certificate, RequestBody device_token, RequestBody device_type) {
 
-        Call<DoctorPortalResponse> callToGetUserProfile = apiService.postDoctorRequest(
+        Call<JsonObject> callToGetUserProfile = apiService.postDoctorRequest(
                 email, name, phone_no,
                 age, qualification, speciality,
                 medical_school, medical_council, graduation_year,
@@ -460,32 +453,32 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
                 signature, medical_certificate, device_token, device_type);
 
 
-        callToGetUserProfile.enqueue(new Callback<DoctorPortalResponse>() {
+        callToGetUserProfile.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<DoctorPortalResponse> call, Response<DoctorPortalResponse> response) {
-                //Log.i(TAG,">>>>>>>>>>>>>"+response.toString());
-                Log.i(TAG, ">>>>>>>>>>>>>" + response.body());
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
                 if (response.code() == 200) {
-                    Log.i(TAG, ">>>>>>>>>>>>>" + response.body());
-                    if (response.body().getStatus() != 200) {
-                        String message = "";
+                    if (response.body().get("status").getAsInt() == 200) {
+                        Toast.makeText(DoctorRegistrationActivity.this, response.body().get("message").getAsString(), Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(DoctorRegistrationActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        finish();
+                        startActivity(intent);
+
+                    } else {
+                        /*String message = "";
                         DoctorPortalResponse doctorPortalResponse = response.body();
                         for (String key : doctorPortalResponse.getResult().keySet()) {
                             Log.i(TAG, ">>>>>>>>>>>>>" + doctorPortalResponse.getResult().get(key));
                             message += doctorPortalResponse.getResult().get(key).toString().replaceAll("\\[", "").replaceAll("\\]", "") + "\n";
-                        }
-                        Toast.makeText(DoctorRegistrationActivity.this, message, Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(DoctorRegistrationActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(DoctorRegistrationActivity.this, LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+                        }*/
+                        Toast.makeText(DoctorRegistrationActivity.this, response.body().get("message").getAsString(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<DoctorPortalResponse> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 t.fillInStackTrace();
             }
         });

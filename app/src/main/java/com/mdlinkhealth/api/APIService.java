@@ -29,7 +29,7 @@ public interface APIService {
 
     @Multipart
     @POST("doctor")
-    Call<DoctorPortalResponse> postDoctorRequest(
+    Call<JsonObject> postDoctorRequest(
             @Part("email") RequestBody email,
             @Part("name") RequestBody name,
             @Part("phone_no") RequestBody phone_no,

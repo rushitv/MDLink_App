@@ -9,19 +9,19 @@ import java.util.List;
 public class DoctorPortalResponse {
     @SerializedName("status")
     @Expose
-    private int status;
+    private Integer status;
     @SerializedName("message")
     @Expose
     private String message;
     @SerializedName("result")
     @Expose
-    private HashMap<String,List<String>> result;
+    private HashMap<String, List<String>> result;
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
