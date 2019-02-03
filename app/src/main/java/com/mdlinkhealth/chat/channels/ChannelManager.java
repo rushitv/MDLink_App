@@ -2,6 +2,7 @@ package com.mdlinkhealth.chat.channels;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.mdlinkhealth.App;
 import com.mdlinkhealth.chat.ChatClientManager;
@@ -144,10 +145,10 @@ public class ChannelManager implements ChatClientListener {
           //createGeneralChannelWithCompletion(listener);
 
         if (channel != null) {
-          System.out.println("sID>>>>"+channel.getSid());
-          System.out.println("getUniqueName>>>"+channel.getUniqueName());
-          System.out.println("getType>>"+channel.getType());
-          System.out.println("getFriendlyName>>>>"+channel.getFriendlyName());
+          //System.out.println("sID>>>>"+channel.getSid());
+          //System.out.println("getUniqueName>>>"+channel.getUniqueName());
+          //System.out.println("getType>>"+channel.getType());
+          //System.out.println("getFriendlyName>>>>"+channel.getFriendlyName());
           joinGeneralChannelWithCompletion(listener);
         } else {
           createGeneralChannelWithCompletion(listener);
@@ -162,9 +163,9 @@ public class ChannelManager implements ChatClientListener {
   }
 
   private void joinGeneralChannelWithCompletion(final StatusListener listener) {
-    System.out.println("general_channel>>>>>>>>>>"+this.generalChannel.getSid());
-    System.out.println("general_channel>>>>>>>>>>"+this.generalChannel.getFriendlyName());
-    System.out.println("general_channel>>>>>>>>>>"+this.generalChannel.getUniqueName());
+    //System.out.println("general_channel>>>>>>>>>>"+this.generalChannel.getSid());
+    Log.d("","general_channel>>>>>>>>>>"+this.generalChannel.getFriendlyName());
+    //System.out.println("general_channel>>>>>>>>>>"+this.generalChannel.getUniqueName());
 
     this.generalChannel.join(new StatusListener() {
       @Override

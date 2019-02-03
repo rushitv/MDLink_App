@@ -7,6 +7,9 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorSkyBlue">#11b6f6</color>
     <color name="colorGreenCard">#2e7677</color>
+    <color name="colorGreen">#008000</color>
+    <color name="colorGreenChatSelf">#62b89b</color>
+    <color name="colorBlueChatOpponent">#254ef2</color>
     <color name="colorRedCard">#fe5a61</color>
     <color name="colorNevvyBlue">#02283b</color>
     <color name="colorLightGreenCard">#5dae95</color>

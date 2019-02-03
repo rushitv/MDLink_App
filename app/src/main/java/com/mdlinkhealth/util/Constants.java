@@ -36,6 +36,8 @@ public class Constants {
     public static final String DUMMY_TRANSACTIONID = "MDLINK100";
     public static final String DUMMY_TRANSACTIONSTAUS = "MDLINK_100_PAID";
     public static final String DUMMY_TRANSACTIONRESPONSE = "MDLINK_100_RESPONSE";
+    public static final String IMAGE_URI = "ImageUri";
+    public static final String IMAGE_URL = "ImageURL";
 
     public static String BASE_URL = "http://api.themdlink.com/api/v1/";
     public static final String SEPARATOR = ",";

@@ -298,4 +298,6 @@
     <string name="please_tell_us_if_you_have_any_medical_conditions">Please tell us if you have any medical conditions:</string>
     <string name="scheduled_appointment">Scheduled Appointment</string>
     <string name="logout">Logout</string>
+    <string name="send">Send</string>
+    <string name="label_preview">Preview</string>
 </resources>

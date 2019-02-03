@@ -108,4 +108,8 @@ public interface APIService {
 
     @POST("actionappointment")
     Call<JsonObject> actionappointment(@Body HashMap jsonObject);
+
+    @Multipart
+    @POST("upload-files/{id}")
+    Call<JsonObject> uploadFiles(@Path("id") String id, @Part MultipartBody.Part file);
 }

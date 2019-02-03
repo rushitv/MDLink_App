@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "341186123943",
-    "firebase_url": "https://mdlink-9572f.firebaseio.com",
-    "project_id": "mdlink-9572f",
-    "storage_bucket": "mdlink-9572f.appspot.com"
+    "project_number": "147682600343",
+    "firebase_url": "https://mdlink-health.firebaseio.com",
+    "project_id": "mdlink-health",
+    "storage_bucket": "mdlink-health.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:341186123943:android:c1715bbcce4f3c99",
+        "mobilesdk_app_id": "1:147682600343:android:c1715bbcce4f3c99",
         "android_client_info": {
           "package_name": "com.mdlinkhealth"
         }
       },
       "oauth_client": [
         {
-          "client_id": "341186123943-o1ivtu16pnn7ehh49lr9rsuq5bt1qpac.apps.googleusercontent.com",
+          "client_id": "147682600343-3g4d59rgkagvbu051v8k0ovmred24n3f.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBOiBIqL4Cxmi6q_X4VYy4CjmXR99jQBvI"
+          "current_key": "AIzaSyB8p938rzK1u8syI1e9F6RYWdgVC-khfhc"
         }
       ],
       "services": {

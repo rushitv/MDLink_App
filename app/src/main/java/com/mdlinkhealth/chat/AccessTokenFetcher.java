@@ -28,9 +28,8 @@ public class AccessTokenFetcher {
     public void fetch(final TaskCompletionListener<String, String> listener) {
 
         try {
-
-            String user = App.getInstance().GetUserName().substring(0, 4);
-
+            //String user = App.getInstance().GetUserName().substring(0, 4);
+            String user = App.getInstance().GetUserName();
             Call<JsonObject> getChatToken = App.apiService.getChatToken(
                     user, Constants.CHANNEL_DEFAULT_NAME + App.getInstance().GetChannelName());
 
@@ -44,7 +43,7 @@ public class AccessTokenFetcher {
 
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
-                    Log.i(TAG,">>>>>>>>>>>>>>failure>>>>>>>>>>");
+                    Log.i(TAG, ">>>>>>>>>>>>>>failure>>>>>>>>>>");
                 }
             });
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mdlinkhealth">
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -15,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".splash.SplashActivity"
+        <activity
+            android:name=".splash.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,11 +32,11 @@
         <activity
             android:name=".BookAppointmentActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".DoctorRegistrationActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".PatientRegistrationActivity"
             android:screenOrientation="portrait"
@@ -53,7 +55,8 @@
             android:name=".UserGuideActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".TreatmentListActivity"
+        <activity
+            android:name=".TreatmentListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!--<activity
@@ -78,7 +81,7 @@
         <activity
             android:name=".Scheduled_Appoinment_Doctor"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Medical_CheckOut_Doctor"
             android:label="Medical Checkout" />
@@ -96,34 +99,40 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
-        <activity android:name=".ViewPatientFileActivity"
+        <activity
+            android:name=".ViewPatientFileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".chat.ImagePreviewActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
             android:name=".DoctorPortalActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
 
-        <activity android:name=".ScheduleAppointmentActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ScheduleAppointmentActivity"
+            android:screenOrientation="portrait" />
         <!--<activity android:name=".Splash_Activity" />-->
         <activity android:name=".Signacture_Activity" />
-        <activity android:name=".Patient_Profile"
+        <activity
+            android:name=".Patient_Profile"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"></activity>
 
         <!-- [START fcm_listener] -->
-        <service
-            android:name=".fcm.VoiceFirebaseMessagingService">
+        <service android:name=".fcm.VoiceFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <!-- [END fcm_listener] -->
         <!-- [START instanceId_listener] -->
-        <service
-            android:name=".fcm.VoiceFirebaseInstanceIDService" >
+        <service android:name=".fcm.VoiceFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
