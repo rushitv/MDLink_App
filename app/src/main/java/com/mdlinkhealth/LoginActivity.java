@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +26,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends BaseActivity {
     private String TAG = getClass().getSimpleName();
-    TextView tv;
+    TextView tv, tvSignup;
     EditText email, password;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private Toolbar toolbar;
@@ -64,6 +65,14 @@ public class LoginActivity extends BaseActivity {
                 } else {
                     new ConnectionCall(LoginActivity.this).isConnectingToInternet();
                 }
+
+            }
+        });
+
+        tvSignup = findViewById(R.id.tv_signup);
+        tvSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });

@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,7 +17,10 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.mdlinkhealth.App;
 import com.mdlinkhealth.R;
+import com.mdlinkhealth.preferences.SharedPreferenceManager;
+import com.mdlinkhealth.util.Constants;
 import com.mdlinkhealth.voice.SoundPoolManager;
 import com.mdlinkhealth.voice.VoiceActivity;
 import com.twilio.voice.CallInvite;
@@ -61,7 +65,12 @@ public class VoiceFirebaseMessagingService extends FirebaseMessagingService {
             Voice.handleMessage(this, data, new MessageListener() {
                 @Override
                 public void onCallInvite(CallInvite callInvite) {
-                    VoiceFirebaseMessagingService.this.notify(callInvite, notificationId);
+                    if (App.getInstance().IsNotificationOn()) {
+                        VoiceFirebaseMessagingService.this.notify(callInvite, notificationId);
+                    } else {
+                        Log.d(TAG, "Notification is not ON:: " + App.getInstance().IsNotificationOn());
+                    }
+
                     VoiceFirebaseMessagingService.this.sendCallInviteToActivity(callInvite, notificationId);
                 }
 

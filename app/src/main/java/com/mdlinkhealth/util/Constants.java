@@ -13,7 +13,7 @@ public class Constants {
     public static final String EMAIL = "Email";
     public static final String PHONE = "PhoneNumber";
     public static final String AGE = "Age";
-    public static final String ROLE_ID ="RoleId";
+    public static final String ROLE_ID = "RoleId";
     public static final String BIRTH_DATE = "BirthDate";
     public static final String ADDRESS = "Address";
     public static final String LOCATION = "Location";
@@ -38,6 +38,7 @@ public class Constants {
     public static final String DUMMY_TRANSACTIONRESPONSE = "MDLINK_100_RESPONSE";
     public static final String IMAGE_URI = "ImageUri";
     public static final String IMAGE_URL = "ImageURL";
+    public static final String PUSH_NOTIFICATION_STATE = "PUSH_NOTIFICATION_STATE";
 
     public static String BASE_URL = "http://api.themdlink.com/api/v1/";
     public static final String SEPARATOR = ",";
@@ -167,7 +168,7 @@ public class Constants {
             "(MAMMOGRAM)",
             "(ECG)",
             "(ECHOCARDIOGRAM)"
-            );
+    );
 
     public static final List<String> URGENT_LIST = Arrays.asList(
             "Allergies",
@@ -255,7 +256,9 @@ public class Constants {
     );
 
     public static final String EXTRA_CHANNEL = "com.twilio.chat.Channel";
-    /** Key into an Intent's extras data that contains Channel SID. */
+    /**
+     * Key into an Intent's extras data that contains Channel SID.
+     */
     public static final String EXTRA_CHANNEL_SID = "C_SID";
 
     public static final String CHANNEL_DEFAULT_NAME = "appo_room_";

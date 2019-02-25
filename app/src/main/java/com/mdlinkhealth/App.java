@@ -18,7 +18,7 @@ public class App extends Application {
 
     private static App mAppInstance;
     private ChatClientManager basicClient;
-    private SharedPreferenceManager sharedPreferenceManager;
+    private static SharedPreferenceManager sharedPreferenceManager;
     public static APIService apiService =
             RestAPIClent.getClient().create(APIService.class);
 
@@ -43,8 +43,7 @@ public class App extends Application {
         showToast(text, Toast.LENGTH_SHORT);
     }
 
-    public void showToast(final String text, final int duration)
-    {
+    public void showToast(final String text, final int duration) {
         Log.d("MDLink", text);
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
@@ -56,32 +55,32 @@ public class App extends Application {
         });
     }
 
-    public String GetChannelName(){
+    public String GetChannelName() {
         return sharedPreferenceManager.getStringData(Constants.APPOINTMENT_ID);
     }
 
-    public String GetUserName(){
+    public String GetUserName() {
         return sharedPreferenceManager.getStringData(Constants.USER_NAME);
     }
 
-    public void showError(final ErrorInfo error)
-    {
+    public static boolean IsNotificationOn() {
+        return sharedPreferenceManager.getBooleanData(Constants.PUSH_NOTIFICATION_STATE);
+    }
+
+    public void showError(final ErrorInfo error) {
         showError("Something went wrong", error);
     }
 
-    public void showError(final String message, final ErrorInfo error)
-    {
+    public void showError(final String message, final ErrorInfo error) {
         showToast(formatted(message, error), Toast.LENGTH_LONG);
         logErrorInfo(message, error);
     }
 
-    public void logErrorInfo(final String message, final ErrorInfo error)
-    {
+    public void logErrorInfo(final String message, final ErrorInfo error) {
         Log.e("TwilioApplication", formatted(message, error));
     }
 
-    private String formatted(String message, ErrorInfo error)
-    {
+    private String formatted(String message, ErrorInfo error) {
         return String.format("%s. %s", message, error.toString());
     }
 }

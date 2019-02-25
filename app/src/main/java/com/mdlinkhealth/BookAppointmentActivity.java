@@ -169,9 +169,29 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.book_submit:
                 String type = "";
+
                 if (TextUtils.isEmpty(editPharmacyBookAppt.getText().toString())) {
                     Toast.makeText(this, "Please choose pharmacy", Toast.LENGTH_LONG).show();
                     return;
+                }
+
+                if (TextUtils.isEmpty(edtChooseTimeBookAppt.getText().toString())) {
+                    Toast.makeText(this, "Please choose time", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                BookAppointmentRequest bookAppointmentRequest = new BookAppointmentRequest();
+                try {
+                    if (selectedDoctor() != -1) {
+                        Log.i(TAG, ">>>>>" + selectedDoctor());
+                        Log.i(TAG, ">>doctor>>id>>>>>" + listDoctorsListByDateAndTimeModel.get(selectedDoctor()).getId());
+                        bookAppointmentRequest.setPreferredDoctor("" + listDoctorsListByDateAndTimeModel.get(selectedDoctor()).getId());
+                    } else {
+                        Toast.makeText(this, "Please choose doctor", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (ArrayIndexOutOfBoundsException exception) {
+                    bookAppointmentRequest.setPreferredDoctor("0");
                 }
 
                 int selectedId = rgHowToConnect.getCheckedRadioButtonId();
@@ -194,20 +214,6 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
                 } else {
                     Toast.makeText(this, "Choose How would you like to connect?", Toast.LENGTH_LONG).show();
                     return;
-                }
-
-                BookAppointmentRequest bookAppointmentRequest = new BookAppointmentRequest();
-                try {
-                    if (selectedDoctor() != -1) {
-                        Log.i(TAG, ">>>>>" + selectedDoctor());
-                        Log.i(TAG, ">>doctor>>id>>>>>" + listDoctorsListByDateAndTimeModel.get(selectedDoctor()).getId());
-                        bookAppointmentRequest.setPreferredDoctor("" + listDoctorsListByDateAndTimeModel.get(selectedDoctor()).getId());
-                    } else {
-                        Toast.makeText(this, "Please choose doctor", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                } catch (ArrayIndexOutOfBoundsException exception) {
-                    bookAppointmentRequest.setPreferredDoctor("0");
                 }
 
 
@@ -288,11 +294,11 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
                     Intent iConfirmAppt = new Intent(BookAppointmentActivity.this, ConfirmAppointmentActivity.class);
                     iConfirmAppt.putExtra("AppointmentId", jsonObject.get("id").getAsString());
                     iConfirmAppt.putExtra("CouponCode", edtCouponCodeBookAppt.getText().toString());
-                    iConfirmAppt.putExtra("Amount",jsonObject.get("amount").getAsDouble());
+                    iConfirmAppt.putExtra("Amount", jsonObject.get("amount").getAsDouble());
                     iConfirmAppt.putExtra("BookAppointmentRequest", bookAppointmentRequest);
                     iConfirmAppt.putExtra("PreferredDoctorName", edtDoctorBookAppt.getText().toString());
                     startActivity(iConfirmAppt);
-                }else {
+                } else {
                     Toast.makeText(BookAppointmentActivity.this, response.body().get("message").getAsString(), Toast.LENGTH_LONG).show();
                 }
             }
@@ -393,9 +399,11 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
         final DoctorsListByDateAndTimeModel doctorsListByDateAndTimeModel = new DoctorsListByDateAndTimeModel();
         doctorsListByDateAndTimeModel.setName(edtDoctorBookAppt.getText().toString());
         //return listDoctorsListByDateAndTimeModel.indexOf(doctorsListByDateAndTimeModel);
-        for (int i = 0; i < listDoctorsListByDateAndTimeModel.size(); i++) {
-            if (listDoctorsListByDateAndTimeModel.get(i).getName().equalsIgnoreCase(doctorsListByDateAndTimeModel.getName())) {
-                return i;
+        if (listDoctorsListByDateAndTimeModel != null) {
+            for (int i = 0; i < listDoctorsListByDateAndTimeModel.size(); i++) {
+                if (listDoctorsListByDateAndTimeModel.get(i).getName().equalsIgnoreCase(doctorsListByDateAndTimeModel.getName())) {
+                    return i;
+                }
             }
         }
         return -1;

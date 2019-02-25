@@ -113,6 +113,10 @@ public class MainActivity extends BaseActivity
             Intent intent = new Intent(MainActivity.this, UserGuideActivity.class);
             startActivity(intent);
 
+        } else if (id == R.id.usersettings) {
+            Intent intent = new Intent(MainActivity.this, UserSettingsActivity.class);
+            startActivity(intent);
+
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

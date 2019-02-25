@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -31,6 +32,7 @@ import com.hbb20.CountryCodePicker;
 import com.mdlinkhealth.api.APIService;
 import com.mdlinkhealth.api.RestAPIClent;
 import com.mdlinkhealth.drawing.MyDrawView;
+import com.mdlinkhealth.helper.UiHelper;
 import com.mdlinkhealth.model.DoctorPortalResponse;
 import com.mdlinkhealth.util.Constants;
 import com.mdlinkhealth.util.FileUtil;
@@ -66,7 +68,7 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
     RelativeLayout rlSignPad;
     MyDrawView myDrawView;
     private String filePath;
-    private TextView tvSignaturePath, tvSelectedFilePath;
+    private TextView tvSignaturePath, tvSelectedFilePath, tv_terms, tv_privacy;
     private TextView btnSubmit;
 
     APIService apiService =
@@ -84,6 +86,7 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
     private Toolbar toolbar;
     CountryCodePicker ccpDoc;
     String CountryCode = "";
+    private RadioButton rdbTermsCondition;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, DoctorRegistrationActivity.class);
@@ -142,6 +145,8 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
         edtSignPopup = findViewById(R.id.doc_selectfile);
         edtSignPopup.setOnClickListener(this);
 
+        rdbTermsCondition = findViewById(R.id.rdb_terms_condition);
+
         singup = (TextView) findViewById(R.id.singup);
         edtSelectFile = (EditText) findViewById(R.id.doc_file);
         edtSelectFile.setOnClickListener(this);
@@ -158,6 +163,13 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
 
         btnSubmit = findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(this);
+
+        tv_terms = findViewById(R.id.tv_terms);
+        tv_terms.setOnClickListener(this);
+        tv_privacy = findViewById(R.id.tv_privacy);
+        tv_privacy.setOnClickListener(this);
+
+
         fetchFCMToken();
     }
 
@@ -241,6 +253,11 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
                 showAndSetTimePopup(edtAvailEveningTimeTO);
                 break;
             case R.id.btnSubmit:
+
+                if (!rdbTermsCondition.isChecked()) {
+                    Toast.makeText(this, "Please accept the Terms of Use and privacy policy", Toast.LENGTH_LONG);
+                    return;
+                }
 
                 ArrayList<String> stringArrayList = new ArrayList<>();
                 if (checkboxSunday.isChecked()) {
@@ -344,6 +361,14 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
                         availabledaysVal, availMorning, availMorningTo, availEvening, availEveningTo, terms_and_condition, userId,
                         role_id, created_at
                         , mpSignature, mpCertificate, device_token, device_type);
+                break;
+
+            case R.id.tv_terms:
+                UiHelper.startURLIntent(this, this.getString(R.string.url_terms));
+                break;
+
+            case R.id.tv_privacy:
+                UiHelper.startURLIntent(this, this.getString(R.string.url_privacy_policy));
                 break;
         }
     }

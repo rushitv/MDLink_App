@@ -12,15 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.hbb20.CountryCodePicker;
 import com.mdlinkhealth.asynctask.PatientRegisterAsyncTask;
-import com.mdlinkhealth.helper.StringHelper;
+import com.mdlinkhealth.helper.UiHelper;
 import com.mdlinkhealth.preferences.SharedPreferenceManager;
 import com.mdlinkhealth.util.Constants;
 
@@ -29,7 +27,7 @@ import java.util.HashMap;
 
 public class PatientRegistrationActivity extends BaseActivity implements View.OnClickListener {
     private String TAG = getClass().getSimpleName();
-    TextView tvPatient_submit, tvSignIn;
+    TextView tvPatient_submit, tvSignIn, tv_terms, tv_privacy;
     EditText editEmail, editFullName, editPhone, editAge, editBirthdate, editAddress, editPassword, editConfirmPassword;
     CountryCodePicker ccp;
     HashMap<String, String> hashMap = new HashMap<>();
@@ -37,6 +35,7 @@ public class PatientRegistrationActivity extends BaseActivity implements View.On
     String CountryCode = "";
     private Toolbar toolbar;
     private SharedPreferenceManager sharedPreferenceManager;
+    private RadioButton rdbTermsCondition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +44,8 @@ public class PatientRegistrationActivity extends BaseActivity implements View.On
         initToolbar();
         sharedPreferenceManager = new SharedPreferenceManager(this);
 
-        tvPatient_submit = (TextView) findViewById(R.id.patient_submit);
-        tvSignIn = (TextView) findViewById(R.id.textview_sing);
+        tvPatient_submit = findViewById(R.id.patient_submit);
+        tvSignIn = findViewById(R.id.textview_sing);
         ccp = findViewById(R.id.ccp);
         CountryCode = ccp.getSelectedCountryCode();
         ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
@@ -64,6 +63,11 @@ public class PatientRegistrationActivity extends BaseActivity implements View.On
         editAge = findViewById(R.id.editAge);
         editBirthdate = findViewById(R.id.editBirthdate);
         editBirthdate.setOnClickListener(this);
+        rdbTermsCondition = findViewById(R.id.rdb_terms_condition);
+        tv_terms = findViewById(R.id.tv_terms);
+        tv_terms.setOnClickListener(this);
+        tv_privacy = findViewById(R.id.tv_privacy);
+        tv_privacy.setOnClickListener(this);
 
         editPassword = findViewById(R.id.editPassword);
         editConfirmPassword = findViewById(R.id.editConfirmPassword);
@@ -140,6 +144,14 @@ public class PatientRegistrationActivity extends BaseActivity implements View.On
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
                 break;
+
+            case R.id.tv_terms:
+                UiHelper.startURLIntent(this, this.getString(R.string.url_terms));
+                break;
+
+            case R.id.tv_privacy:
+                UiHelper.startURLIntent(this, this.getString(R.string.url_privacy_policy));
+                break;
         }
     }
 
@@ -163,6 +175,10 @@ public class PatientRegistrationActivity extends BaseActivity implements View.On
 
         if (!(editPassword.getText().toString().equals(editConfirmPassword.getText().toString()))) {
             str += "Passwords do not match! \n";
+        }
+
+        if (!rdbTermsCondition.isChecked()) {
+            str += "Please accept the Terms of Use and Privacy Policy";
         }
 
         return str;

@@ -2,9 +2,12 @@ package com.mdlinkhealth.helper;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.method.PasswordTransformationMethod;
 import android.util.DisplayMetrics;
@@ -40,7 +43,6 @@ public class UiHelper {
 
     /**
      * Switch visibility of password input persisting text selection
-     *
      */
     public static void switchPasswordVisibility(AppCompatEditText editText, boolean toShow) {
         int start = editText.getSelectionStart();
@@ -112,10 +114,31 @@ public class UiHelper {
             }
         }
     }
-    public static Intent startSharingIntent(){
+
+    public static Intent startSharingIntent() {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         return shareIntent;
+    }
+
+    public static void startURLIntent(Context context, String url) {
+        try {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            context.startActivity(i);
+        } catch (ActivityNotFoundException e) {
+
+        }
+    }
+
+    public static void rateAppAtPlaystore(Activity context) {
+        final String appPackageName = "com.mdlinkhealth";
+
+        try {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
     }
 }

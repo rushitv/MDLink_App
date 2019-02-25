@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Window;
 import android.view.animation.AlphaAnimation;
 
@@ -36,27 +37,16 @@ public class SplashActivity extends BaseActivity {
         animation.setDuration(2500);
         appCompatImageView.startAnimation(animation);
         SessionManager.getInstance().logoutUser();
-        //clientManager = App.getInstance().getChatClientManager();
-      /*  SessionManager.getInstance().createLoginSession("rushit@gmail.com");
-        new AsyncTask<Void, Void, String>(
-        ) {
-            @Override
-            protected String doInBackground(Void... voids) {
 
-                initializeChatClient();
-                return null;
-            }
-        }.execute();*/
+        Log.v(TAG, "PUSH_NOTIFICATION_STATE>>>>>>>>" + preferenceManager.getBooleanData(Constants.PUSH_NOTIFICATION_STATE));
+
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
                 if (TextUtils.isEmpty(preferenceManager.getStringData(Constants.USER_ID))) {
-                    //Intent intent = new Intent(SplashActivity.this, VoiceActivity.class);
-                    //Intent intent = new Intent(SplashActivity.this, Medical_CheckOut_Doctor.class);
                     Intent intent = new Intent(SplashActivity.this, Guide_Page.class);
-                    //intent.putExtra(Constants.PATIENT_ID,"3");
                     finish();
                     startActivity(intent);
                 } else {
@@ -74,7 +64,6 @@ public class SplashActivity extends BaseActivity {
             }
         }, 3000);
     }
-
 
 
 }
