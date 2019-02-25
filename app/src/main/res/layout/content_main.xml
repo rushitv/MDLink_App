@@ -29,6 +29,7 @@
         android:id="@+id/scrollView4"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,8 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,58 +48,56 @@
                 card_view:cardElevation="4dp"
                 card_view:cardUseCompatPadding="true">
 
-                <android.support.constraint.ConstraintLayout
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.constraint.ConstraintLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/card_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
-                    android:layout_marginBottom="@dimen/pad_10"
-                    >
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="72dp"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/argcare"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintStart_toStartOf="parent" />
+                    android:layout_marginBottom="@dimen/pad_10">
 
-                <TextView
-                    style="@style/TextSmall.Bold"
-                    android:id="@+id/tvOne"
-                    android:textColor="@color/colorWhite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_urgentcare"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView2"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    />
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="72dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/argcare"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintStart_toStartOf="parent" />
 
-                <TextView
-                    style="@style/TextSmall"
-                    android:id="@+id/tvTwo"
-                    android:paddingLeft="@dimen/pad_5"
-                    android:paddingRight="@dimen/pad_5"
-                    android:textAlignment="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/urgentcare"
-                    android:textColor="@color/colorWhite"
-                    app:layout_constraintTop_toBottomOf="@+id/tvOne"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintStart_toStartOf="parent" />
+                    <TextView
+                        android:id="@+id/tvOne"
+                        style="@style/TextSmall.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_urgentcare"
+                        android:textColor="@color/colorWhite"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvTwo"
+                        style="@style/TextSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/pad_5"
+                        android:paddingRight="@dimen/pad_5"
+                        android:text="@string/urgentcare"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorWhite"
+                        app:layout_constraintTop_toBottomOf="@+id/tvOne"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/tvThree"
+                        style="@style/TextMedium"
                         android:layout_width="match_parent"
                         android:layout_height="24dp"
                         android:gravity="center_horizontal"
                         android:text="@string/label_learnmore"
                         android:textColor="@color/colorWhite"
-                        style="@style/TextMedium"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@+id/tvTwo"
                         card_view:layout_constraintEnd_toEndOf="parent"
@@ -108,91 +106,89 @@
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_two"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/card_one"
                 card_view:cardBackgroundColor="@color/colorGreenCard"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="5dp"
-                card_view:cardUseCompatPadding="true"
-                app:layout_constraintTop_toBottomOf="@+id/card_one"
-                >
-                <android.support.constraint.ConstraintLayout
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                card_view:cardUseCompatPadding="true">
+
+                <android.support.constraint.ConstraintLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/card_view2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/pad_10">
-                <ImageView
-                    android:id="@+id/imageView22"
-                    android:layout_width="wrap_content"
-                    android:layout_height="72dp"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/medicaladvice"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintStart_toStartOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="72dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/medicaladvice"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
-                        style="@style/TextSmall.Bold"
                         android:id="@+id/tvOne2"
-                        android:textStyle="bold"
+                        style="@style/TextSmall.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_medicaladvice"
                         android:textAlignment="center"
                         android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@+id/imageView22"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
-                        android:paddingLeft="@dimen/pad_5"
-                        android:paddingRight="@dimen/pad_5"
-                        style="@style/TextSmall"
                         android:id="@+id/tvTwo2"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
+                        style="@style/TextSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/pad_5"
+                        android:paddingRight="@dimen/pad_5"
                         android:text="@string/medicaladvice"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorWhite"
                         app:layout_constraintTop_toBottomOf="@+id/tvOne2"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/tvThree2"
-                        android:textColor="@color/colorWhite"
-                        android:textAlignment="center"
-                        android:textStyle="bold"
+                        style="@style/TextMedium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/TextMedium"
                         android:text="@string/label_learnmore"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@+id/tvTwo2"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent" />
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_three"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/card_two"
                 card_view:cardBackgroundColor="@color/colorRedCard"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="5dp"
-                card_view:cardUseCompatPadding="true"
-                app:layout_constraintTop_toBottomOf="@+id/card_two"
-                >
-                <android.support.constraint.ConstraintLayout
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                card_view:cardUseCompatPadding="true">
+
+                <android.support.constraint.ConstraintLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/card_view23"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/pad_10">
+
                     <ImageView
                         android:id="@+id/imageView223"
                         android:layout_width="wrap_content"
@@ -203,39 +199,39 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
-                        style="@style/TextSmall.Bold"
                         android:id="@+id/tvOne23"
+                        style="@style/TextSmall.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_labesandscreen"
-                        android:textStyle="bold"
                         android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@+id/imageView223"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
-                        style="@style/TextSmall"
                         android:id="@+id/tvTwo23"
-                        android:paddingLeft="@dimen/pad_5"
-                        android:paddingRight="@dimen/pad_5"
+                        style="@style/TextSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/pad_5"
+                        android:paddingRight="@dimen/pad_5"
                         android:text="@string/labs"
-                        android:textColor="@color/colorWhite"
                         android:textAlignment="center"
+                        android:textColor="@color/colorWhite"
                         app:layout_constraintTop_toBottomOf="@+id/tvOne23"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/tvThree23"
+                        style="@style/TextMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_learnmore"
-                        style="@style/TextMedium"
-                        android:textStyle="bold"
                         android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@+id/tvTwo23"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent" />
@@ -243,23 +239,22 @@
             </android.support.v7.widget.CardView>
 
 
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_four"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/card_three"
                 card_view:cardBackgroundColor="@color/colorNevvyBlue"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="5dp"
-                card_view:cardUseCompatPadding="true"
-                app:layout_constraintTop_toBottomOf="@+id/card_three"
-                >
-                <android.support.constraint.ConstraintLayout
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                card_view:cardUseCompatPadding="true">
+
+                <android.support.constraint.ConstraintLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/card_view234"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/pad_10">
+
                     <ImageView
                         android:id="@+id/imageView2234"
                         android:layout_width="wrap_content"
@@ -270,62 +265,61 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
-                        style="@style/TextSmall.Bold"
                         android:id="@+id/tvOne234"
+                        style="@style/TextSmall.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_addiction"
-                        android:textStyle="bold"
                         android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@+id/imageView2234"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
-                        style="@style/TextSmall"
                         android:id="@+id/tvTwo234"
-                        android:paddingLeft="@dimen/pad_5"
-                        android:paddingRight="@dimen/pad_5"
+                        style="@style/TextSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/pad_5"
+                        android:paddingRight="@dimen/pad_5"
                         android:text="@string/addction"
-                        android:textColor="@color/colorWhite"
                         android:textAlignment="center"
+                        android:textColor="@color/colorWhite"
                         app:layout_constraintTop_toBottomOf="@+id/tvOne234"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/tvThree234"
+                        style="@style/TextMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_learnmore"
-                        android:textStyle="bold"
-                        style="@style/TextMedium"
                         android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@+id/tvTwo234"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent" />
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_five"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/card_four"
                 card_view:cardBackgroundColor="@color/colorLightGreenCard"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="5dp"
-                card_view:cardUseCompatPadding="true"
-                app:layout_constraintTop_toBottomOf="@+id/card_four"
-                >
-                <android.support.constraint.ConstraintLayout
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                card_view:cardUseCompatPadding="true">
+
+                <android.support.constraint.ConstraintLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/card_view2345"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/pad_10">
+
                     <ImageView
                         android:id="@+id/imageView22345"
                         android:layout_width="wrap_content"
@@ -336,62 +330,61 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
-                        style="@style/TextSmall.Bold"
                         android:id="@+id/tvOne2345"
+                        style="@style/TextSmall.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_depressandmood"
-                        android:textStyle="bold"
                         android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@+id/imageView22345"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
-                        android:paddingLeft="@dimen/pad_5"
-                        android:paddingRight="@dimen/pad_5"
-                        style="@style/TextSmall"
                         android:id="@+id/tvTwo2345"
+                        style="@style/TextSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/pad_5"
+                        android:paddingRight="@dimen/pad_5"
                         android:text="@string/mood"
-                        android:textColor="@color/colorWhite"
                         android:textAlignment="center"
+                        android:textColor="@color/colorWhite"
                         app:layout_constraintTop_toBottomOf="@+id/tvOne2345"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/tvThree2345"
+                        style="@style/TextMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/TextMedium"
                         android:text="@string/label_learnmore"
-                        android:textStyle="bold"
                         android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@+id/tvTwo2345"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent" />
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_six"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/card_five"
                 card_view:cardBackgroundColor="@color/colorDarkPink"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="5dp"
-                card_view:cardUseCompatPadding="true"
-                app:layout_constraintTop_toBottomOf="@+id/card_five"
-                >
-                <android.support.constraint.ConstraintLayout
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                card_view:cardUseCompatPadding="true">
+
+                <android.support.constraint.ConstraintLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/card_view23456"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/pad_10">
+
                     <ImageView
                         android:id="@+id/imageView223456"
                         android:layout_width="wrap_content"
@@ -402,39 +395,39 @@
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
-                        style="@style/TextSmall.Bold"
                         android:id="@+id/tvOne23456"
+                        style="@style/TextSmall.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_therapy"
-                        android:textStyle="bold"
                         android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@+id/imageView223456"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
-                        android:paddingLeft="@dimen/pad_5"
-                        android:paddingRight="@dimen/pad_5"
-                        style="@style/TextSmall"
                         android:id="@+id/tvTwo23456"
+                        style="@style/TextSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/pad_5"
+                        android:paddingRight="@dimen/pad_5"
                         android:text="@string/therapy"
-                        android:textColor="@color/colorWhite"
                         android:textAlignment="center"
+                        android:textColor="@color/colorWhite"
                         app:layout_constraintTop_toBottomOf="@+id/tvOne23456"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/tvThree23456"
+                        style="@style/TextMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_learnmore"
-                        android:textStyle="bold"
-                        style="@style/TextMedium"
                         android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@+id/tvTwo23456"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent" />

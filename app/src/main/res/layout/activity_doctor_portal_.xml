@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
     tools:targetApi="o">
 
@@ -110,7 +110,7 @@
                     android:id="@+id/ccpDoc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:ccp_defaultNameCode="JM"/>
+                    app:ccp_defaultNameCode="JM" />
 
                 <EditText
                     android:id="@+id/edtPhoneDP"
@@ -461,6 +461,64 @@
                     android:padding="8dp"
                     android:textSize="14sp" />
             </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pad_10">
+
+                <RadioButton
+                    android:checked="false"
+                    style="@style/TextSmall"
+                    android:id="@+id/rdb_terms_condition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/i_agree" />
+
+                <TextView
+                    style="@style/TextSmall"
+                    android:id="@+id/tv_terms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_5"
+                    android:clickable="true"
+                    android:text="@string/terms"
+                    android:textColor="@color/colorButtonBackground"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/TextSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_5"
+                    android:text="@string/and"
+                    android:textColor="@color/colorBlack" />
+
+                <TextView
+                    style="@style/TextSmall"
+                    android:id="@+id/tv_privacy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_5"
+                    android:clickable="true"
+                    android:text="@string/privacy_policy"
+                    android:textColor="@color/colorButtonBackground"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pad_5">
+
+                <TextView
+                    style="@style/TextMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disclaimer" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/btnSubmit"

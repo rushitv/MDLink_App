@@ -290,7 +290,7 @@
         <item>No</item>
         <item>Yes</item>
     </string-array>
-    
+
     <string name="pregnant_lady" translatable="false">Use our patient portal to create your free secure telemedicine account</string>
     <string name="laptop_image" translatable="false">Enter your symptoms and choose between message, audio and video appointment</string>
     <string name="doctor_at_desk" translatable="false">Your Prescription, Sick Note or Lab Request will be sent immediately to the relevant organization through email or fax.</string>
@@ -300,4 +300,19 @@
     <string name="logout">Logout</string>
     <string name="send">Send</string>
     <string name="label_preview">Preview</string>
+    <string name="register_now">Register Now</string>
+    <string name="label_signup">Don’t have an account,</string>
+    <string name="allow_notification">Allow Notification</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms">Terms of Use</string>
+    <string name="faqs">FAQs</string>
+    <string name="enjoy_app">Enjoying MDLink Health ?</string>
+    <string name="tap_to_rate">Tap a star to rate in the Play Store</string>
+    <string name="not_now">Not Now</string>
+    <string name="and">and</string>
+    <string name="i_agree">I agree the</string>
+    <string name="disclaimer">MDLink Physicians do not see emergencies. If you believe you are experiencing an emergency, please call 119 or proceed to your nearest emergency room.</string>
+    <string name="url_terms">https://themdlink.com/terms</string>
+    <string name="url_privacy_policy">https://themdlink.com/privacy</string>
+    <string name="url_faqs">https://themdlink.com/faq</string>
 </resources>

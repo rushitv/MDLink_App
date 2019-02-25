@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar_mdlink" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/pad_5"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="@dimen/size_40"
+                android:layout_height="@dimen/size_40"
+                android:src="@drawable/bell_ring"
+                android:tint="@color/yellow" />
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/TextMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_20"
+                android:text="@string/allow_notification" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switchNotificationONOff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                app:thumbTint="@color/colorLightGrey"
+                app:trackTint="@color/colorButtonBackground" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:layout_marginStart="@dimen/size_70"
+            android:background="@color/dark_gray" />
+
+        <RelativeLayout
+            android:id="@+id/rlPrivacyPolicy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/pad_5"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imgPrivacyPolicy"
+                android:layout_width="@dimen/size_40"
+                android:layout_height="@dimen/size_40"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_doc"
+                android:tint="@color/colorButtonBackground" />
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/TextMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/size_20"
+                android:layout_toEndOf="@+id/imgPrivacyPolicy"
+                android:text="@string/privacy_policy" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_next"
+                android:tint="@color/dark_gray" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:layout_marginStart="@dimen/size_70"
+            android:background="@color/dark_gray" />
+
+        <RelativeLayout
+            android:id="@+id/rlTerms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/pad_5"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imgTerms"
+                android:layout_width="@dimen/size_40"
+                android:layout_height="@dimen/size_40"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_doc"
+                android:tint="@color/colorButtonBackground" />
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/TextMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/size_20"
+                android:layout_toEndOf="@+id/imgTerms"
+                android:text="@string/terms" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_next"
+                android:tint="@color/dark_gray" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:layout_marginStart="@dimen/size_70"
+            android:background="@color/dark_gray" />
+
+        <RelativeLayout
+            android:id="@+id/rlFAQs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/pad_5"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imgFAQs"
+                android:layout_width="@dimen/size_40"
+                android:layout_height="@dimen/size_40"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_question_circle"
+                android:tint="@color/colorButtonBackground" />
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/TextMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/size_20"
+                android:layout_toEndOf="@+id/imgFAQs"
+                android:text="@string/faqs" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_next"
+                android:tint="@color/dark_gray" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

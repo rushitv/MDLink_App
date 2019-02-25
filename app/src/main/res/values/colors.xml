@@ -42,4 +42,6 @@
     <color name="message_date_color">#BA9E9E</color>
     <color name="message_text_color">#5B4F51</color>
     <color name="status_text_color">#939598</color>
+
+    <color name="yellow">#FFD700</color>
 </resources>

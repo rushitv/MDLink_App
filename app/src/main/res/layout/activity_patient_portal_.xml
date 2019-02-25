@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
     tools:targetApi="o">
 
@@ -18,8 +18,8 @@
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_marginTop="?actionBarSize"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
@@ -33,26 +33,26 @@
             tools:context=".PatientRegistrationActivity">
 
             <LinearLayout
-                android:layout_margin="@dimen/pad_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pad_5"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_already_have_account"/>
+                    android:text="@string/label_already_have_account"
+                    android:textSize="18sp" />
 
                 <TextView
-                    android:layout_marginLeft="@dimen/pad_5"
                     android:id="@+id/textview_sing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_5"
                     android:clickable="true"
-                    android:textColor="@color/colorButtonBackground"
                     android:text="@string/label_signin"
+                    android:textColor="@color/colorButtonBackground"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -61,8 +61,7 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/editEmail"
@@ -112,7 +111,7 @@
                     android:id="@+id/ccp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:ccp_defaultNameCode="JM"/>
+                    app:ccp_defaultNameCode="JM" />
 
                 <EditText
                     android:id="@+id/editPhone"
@@ -195,19 +194,76 @@
                     android:textSize="15dp" />
             </android.support.design.widget.TextInputLayout>
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pad_10">
+
+                <RadioButton
+                    android:id="@+id/rdb_terms_condition"
+                    style="@style/TextSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/i_agree" />
+
+                <TextView
+                    android:id="@+id/tv_terms"
+                    style="@style/TextSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_5"
+                    android:clickable="true"
+                    android:text="@string/terms"
+                    android:textColor="@color/colorButtonBackground"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/TextSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_5"
+                    android:text="@string/and"
+                    android:textColor="@color/colorBlack" />
+
+                <TextView
+                    android:id="@+id/tv_privacy"
+                    style="@style/TextSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_5"
+                    android:clickable="true"
+                    android:text="@string/privacy_policy"
+                    android:textColor="@color/colorButtonBackground"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pad_5">
+
+                <TextView
+                    style="@style/TextMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disclaimer" />
+            </LinearLayout>
+
             <TextView
-                android:padding="04dp"
-                style="@style/TextMedium"
                 android:id="@+id/patient_submit"
+                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/pad_15"
                 android:background="@drawable/custom_btn"
                 android:clickable="true"
                 android:gravity="center"
+                android:padding="04dp"
                 android:text="@string/label_register"
-                android:textColor="@color/colorWhite"
-                />
+                android:textColor="@color/colorWhite" />
 
         </LinearLayout>
     </ScrollView>

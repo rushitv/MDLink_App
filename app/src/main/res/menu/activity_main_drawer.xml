@@ -27,9 +27,12 @@
             android:id="@+id/userguide"
             android:icon="@drawable/useguideicon"
             android:title="User Guide" />
+
+        <item
+            android:id="@+id/usersettings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/action_settings" />
     </group>
-
-
 
 
 </menu>
