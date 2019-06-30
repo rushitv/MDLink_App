@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.mdlinkhealth.api.APIService;
 import com.mdlinkhealth.api.RestAPIClent;
 import com.mdlinkhealth.chat.ChatClientManager;
+import com.mdlinkhealth.helper.StringHelper;
 import com.mdlinkhealth.preferences.SharedPreferenceManager;
 import com.mdlinkhealth.util.Constants;
 import com.twilio.chat.ErrorInfo;
@@ -61,6 +62,15 @@ public class App extends Application {
 
     public String GetUserName() {
         return sharedPreferenceManager.getStringData(Constants.USER_NAME);
+    }
+
+    public String GetName() {
+        return sharedPreferenceManager.getStringData(Constants.NAME);
+    }
+
+    public String GetFirstName() {
+        String[] splitedName = sharedPreferenceManager.getStringData(Constants.NAME).split("\\s+");
+        return splitedName[0];
     }
 
     public static boolean IsNotificationOn() {

@@ -1,9 +1,16 @@
 package com.mdlinkhealth;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -29,19 +36,26 @@ import com.google.gson.JsonObject;
 import com.mdlinkhealth.api.APIService;
 import com.mdlinkhealth.api.RestAPIClent;
 import com.mdlinkhealth.model.AppointmentOptionsResponse;
+import com.mdlinkhealth.model.AvailableDoctorsRequest;
 import com.mdlinkhealth.model.BookAppointmentRequest;
 import com.mdlinkhealth.model.DoctorsListByDateAndTimeModel;
 import com.mdlinkhealth.model.DoctorsListModel;
 import com.mdlinkhealth.model.OptionDetails;
+import com.mdlinkhealth.model.Specialities;
 import com.mdlinkhealth.preferences.SharedPreferenceManager;
 import com.mdlinkhealth.util.Constants;
+import com.mdlinkhealth.util.FileUtil;
 import com.mdlinkhealth.util.ValidationsUtil;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,15 +63,22 @@ import retrofit2.Response;
 public class BookAppointmentActivity extends BaseActivity implements View.OnClickListener {
 
     private String TAG = getClass().getSimpleName();
+    private static final int WRITE_STORAGE_PERMISSION_REQUEST_CODE = 3;
+    private static final int ACTIVITY_CHOOSE_FILE = 2;
+    private static final String[] PERMISSION_PICTURES = {
+//            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
     int mYear, mMonth, mDay;
     String phamacysel, docsel;
     StringBuilder sb;
     CheckBox cbRenew, cbSickNote, cbCancerBookAppt, cbDiabetesBookAppt, cbHeartDiseasBookAppt, cbStrokeBookAppt, cbHighBPBookAppt, cbHighCholesterolBookAppt, cbHighAsthmaBookAppt, cbDepressionBookAppt, cbArthritisBookAppt, cbAbnormalThyroidBookAppt, cbAPregnantBookAppt, cbOtherBookAppt;
-    TextView submitbook;
+    TextView submitbook, tvExtraFile, tvExtraFilePath;
 
     EditText editPharmacyBookAppt, edtDoctorBookAppt, edtChooseTimeBookAppt, edtDateBookAppt, edtCouponCodeBookAppt,
             edtLocationBookAppt, edtPreviousVisitedHospitalBookAppt, edtAllergiesBookAppt,
-            edtNameBookAppt, edtAgeBookAppt, edtPurposeBookAppt;
+            edtNameBookAppt, edtAgeBookAppt, edtPurposeBookAppt, editSpecialityBookAppt;
     List<DoctorsListByDateAndTimeModel> listDoctorsListByDateAndTimeModel;
     String format;
     Calendar calendarTime;
@@ -70,6 +91,7 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
     Toolbar toolbar;
 
     List<OptionDetails> pharmacyList;
+    List<Specialities> specialitiesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +101,6 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
         edtNameBookAppt = findViewById(R.id.edtNameBookAppt);
         edtAgeBookAppt = findViewById(R.id.edtAgeBookAppt);
         edtPurposeBookAppt = findViewById(R.id.edtPurposeBookAppt);
-        edtLocationBookAppt = findViewById(R.id.edtLocationBookAppt);
 
         edtPreviousVisitedHospitalBookAppt = findViewById(R.id.edtPreviousVisitedHospitalBookAppt);
         edtAllergiesBookAppt = findViewById(R.id.edtAllergiesBookAppt);
@@ -96,6 +117,9 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
 
         editPharmacyBookAppt = findViewById(R.id.editPharmacyBookAppt);
         editPharmacyBookAppt.setOnClickListener(this);
+
+        editSpecialityBookAppt = findViewById(R.id.editSpecialityBookAppt);
+        editSpecialityBookAppt.setOnClickListener(this);
 
         submitbook = findViewById(R.id.book_submit);
         submitbook.setOnClickListener(this);
@@ -143,8 +167,22 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.doc_file:
+                if (checkPermissionForReadWriteExtertalStorage(BookAppointmentActivity.this)) {
+                    openFilesDirectory();
+                } else {
+                    try {
+                        requestPermissionForReadWriteExtertalStorage(BookAppointmentActivity.this);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
             case R.id.editPharmacyBookAppt:
                 bindPharmacyOptions();
+                break;
+            case R.id.editSpecialityBookAppt:
+                bindSpecialities();
                 break;
             case R.id.edtDoctorBookAppt:
                 bindDropdown();
@@ -180,6 +218,11 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
                     return;
                 }
 
+                if (TextUtils.isEmpty(editSpecialityBookAppt.getText().toString())) {
+                    Toast.makeText(this, "Please choose speciality", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 BookAppointmentRequest bookAppointmentRequest = new BookAppointmentRequest();
                 try {
                     if (selectedDoctor() != -1) {
@@ -194,19 +237,34 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
                     bookAppointmentRequest.setPreferredDoctor("0");
                 }
 
+                String Speciality = "";
+                try {
+
+                    if (selectedSpeciality() != -1) {
+                        Log.i(TAG, ">>setSpecialities_id>>" + specialitiesList.get(selectedSpeciality()).getId());
+                        Speciality = specialitiesList.get(selectedSpeciality()).getName();
+                        bookAppointmentRequest.setSpecialities_id(specialitiesList.get(selectedSpeciality()).getId());
+                    } else {
+                        Toast.makeText(this, "Please choose speciality", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    bookAppointmentRequest.setSpecialities_id(0);
+                }
+
                 int selectedId = rgHowToConnect.getCheckedRadioButtonId();
                 // find the radiobutton by returned id
                 rbHowToConnectVal = findViewById(selectedId);
                 if (rbHowToConnectVal != null) {
                     Log.i(TAG, ">>>>>>>>" + rbHowToConnectVal.getText());
                     switch (rbHowToConnectVal.getText().toString()) {
-                        case "Audio ($12)":
+                        case "Audio":
                             type = "1";
                             break;
-                        case "Instant Message ($12)":
+                        case "Instant Message":
                             type = "2";
                             break;
-                        case "Video Call ($15)":
+                        case "Video Call":
                             type = "3";
                             break;
                     }
@@ -266,7 +324,6 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
                 bookAppointmentRequest.setSickNote(cbSickNote.isChecked() ? "1" : "0");
                 bookAppointmentRequest.setCouponCode(edtCouponCodeBookAppt.getText().toString());
                 bookAppointmentRequest.setMedicalConditions(String.valueOf(checkboxMedicalCondition));
-                bookAppointmentRequest.setLocation(edtLocationBookAppt.getText().toString());
                 bookAppointmentRequest.setName(edtNameBookAppt.getText().toString());
                 bookAppointmentRequest.setPharmacy(editPharmacyBookAppt.getText().toString());
                 bookAppointmentRequest.setPreviousHospital(edtPreviousVisitedHospitalBookAppt.getText().toString());
@@ -275,13 +332,12 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
                 bookAppointmentRequest.setType(type);
                 bookAppointmentRequest.setUserId(sharedPreferenceManager.getStringData("UserId"));
 
-                callCreateAppointmentAPI(bookAppointmentRequest);
-
+                callCreateAppointmentAPI(Speciality, bookAppointmentRequest);
                 break;
         }
     }
 
-    private void callCreateAppointmentAPI(final BookAppointmentRequest bookAppointmentRequest) {
+    private void callCreateAppointmentAPI(final String Speciality, final BookAppointmentRequest bookAppointmentRequest) {
         Call<JsonObject> callToGetUserProfile = apiService.createAppointment(bookAppointmentRequest);
         callToGetUserProfile.enqueue(new Callback<JsonObject>() {
             @Override
@@ -292,6 +348,7 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
 
                     JsonObject jsonObject = response.body().get("result").getAsJsonObject();
                     Intent iConfirmAppt = new Intent(BookAppointmentActivity.this, ConfirmAppointmentActivity.class);
+                    iConfirmAppt.putExtra("Speciality", Speciality);
                     iConfirmAppt.putExtra("AppointmentId", jsonObject.get("id").getAsString());
                     iConfirmAppt.putExtra("CouponCode", edtCouponCodeBookAppt.getText().toString());
                     iConfirmAppt.putExtra("Amount", jsonObject.get("amount").getAsDouble());
@@ -320,13 +377,17 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
         Log.i(TAG, "date:: " + edtDateBookAppt.getText().toString());
         Log.i(TAG, "time:: " + edtChooseTimeBookAppt.getTag().toString());
 
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("scheduled_date", edtDateBookAppt.getText().toString());
-        hashMap.put("scheduled_time", edtChooseTimeBookAppt.getTag().toString());
-        Call<DoctorsListModel> callToGetUserProfile = apiService.availabledoctors(hashMap);
+        AvailableDoctorsRequest availableDoctorsRequest = new AvailableDoctorsRequest();
+        availableDoctorsRequest.setScheduledDate(edtDateBookAppt.getText().toString().trim());
+        availableDoctorsRequest.setScheduledTime(edtChooseTimeBookAppt.getText().toString().trim());
+        availableDoctorsRequest.setSpecialitiesId(specialitiesList.get(selectedSpeciality()).getId());
+
+        Call<DoctorsListModel> callToGetUserProfile = apiService.availabledoctors(availableDoctorsRequest);
+        showProgressDialog();
         callToGetUserProfile.enqueue(new Callback<DoctorsListModel>() {
             @Override
             public void onResponse(Call<DoctorsListModel> call, Response<DoctorsListModel> response) {
+                hideProgressDialog();
                 Log.i(TAG, ">>>>>>>>>>>>>>>>>" + response.body());
                 if (response.body().getResult().size() > 0) {
                     listDoctorsListByDateAndTimeModel = response.body().getResult();
@@ -335,11 +396,10 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
 
             @Override
             public void onFailure(Call<DoctorsListModel> call, Throwable t) {
+                hideProgressDialog();
                 Log.i(TAG, ">>>>>>>>>onFailure>>>>>>>>");
             }
         });
-
-
     }
 
     private void bindDropdown() {
@@ -390,7 +450,7 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
                 }
             });
         } else {
-            Toast.makeText(this, "Please choose date and time", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Make sure you have selected Date / Time / Pharmacy / Doctor's Speciality ", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -402,6 +462,20 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
         if (listDoctorsListByDateAndTimeModel != null) {
             for (int i = 0; i < listDoctorsListByDateAndTimeModel.size(); i++) {
                 if (listDoctorsListByDateAndTimeModel.get(i).getName().equalsIgnoreCase(doctorsListByDateAndTimeModel.getName())) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    private int selectedSpeciality() {
+        final Specialities specialities = new Specialities();
+        specialities.setName(editSpecialityBookAppt.getText().toString());
+        //return listDoctorsListByDateAndTimeModel.indexOf(doctorsListByDateAndTimeModel);
+        if (specialitiesList != null) {
+            for (int i = 0; i < specialitiesList.size(); i++) {
+                if (specialitiesList.get(i).getName().equalsIgnoreCase(specialities.getName())) {
                     return i;
                 }
             }
@@ -436,7 +510,6 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
                         String val = hourOfDay + ":" + ValidationsUtil.getPaddedNumber(minute) + format;
                         editText.setText(val);
                         editText.setTag(val);
-                        callAvailableDoctors();
                     }
                     //DisplayTime.setText(hourOfDay + ":" + minute + format);
 
@@ -460,6 +533,8 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
                             &&
                             response.body().getAppointmentOptions().getPharmacys().size() > 0) {
                         pharmacyList = response.body().getAppointmentOptions().getPharmacys();
+
+                        specialitiesList = response.body().getAppointmentOptions().getSpecialities();
                     }
                 }
             }
@@ -518,6 +593,117 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
                     alert.dismiss();
                 }
             });
+        }
+    }
+
+    private void bindSpecialities() {
+        if (specialitiesList != null && specialitiesList.size() > 0) {
+            final ArrayList<String> dataList = new ArrayList<>(specialitiesList.size());
+
+            for (int i = 0; i < specialitiesList.size(); i++) {
+                dataList.add(specialitiesList.get(i).getName());
+            }
+
+            AlertDialog.Builder myDialog = new AlertDialog.Builder(this, R.style.LightDialogTheme);
+            final EditText editText = new EditText(this);
+            final ListView listview = new ListView(this);
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.addView(editText);
+            layout.addView(listview);
+            myDialog.setView(layout);
+            final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dataList);
+
+            editText.addTextChangedListener(new TextWatcher() {
+
+                public void afterTextChanged(Editable s) {
+                }
+
+                public void beforeTextChanged(CharSequence s, int start, int count,
+                                              int after) {
+                }
+
+                public void onTextChanged(CharSequence s, int start, int before,
+                                          int count) {
+                    adapter.getFilter().filter(s);
+                }
+            });
+
+            listview.setAdapter(adapter);
+
+            final AlertDialog alert = myDialog.create();
+            alert.show();
+
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                    Log.d(TAG, "Selected Item is = " + listview.getItemAtPosition(position));
+                    editSpecialityBookAppt.setText("" + listview.getItemAtPosition(position));
+                    alert.dismiss();
+                    callAvailableDoctors();
+                }
+            });
+        }
+    }
+
+    private void openFilesDirectory() {
+        Intent chooseFile;
+        Intent intent;
+        chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+        chooseFile.setType("image/*");
+        intent = Intent.createChooser(chooseFile, "Choose a file");
+        startActivityForResult(intent, ACTIVITY_CHOOSE_FILE);
+    }
+
+    public boolean checkPermissionForReadWriteExtertalStorage(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int result = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            return result == PackageManager.PERMISSION_GRANTED;
+        }
+        return false;
+    }
+
+    public void requestPermissionForReadWriteExtertalStorage(Context context) throws Exception {
+        try {
+            ActivityCompat.requestPermissions((Activity) context,
+                    PERMISSION_PICTURES,
+                    WRITE_STORAGE_PERMISSION_REQUEST_CODE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //openFilesDirectory();
+                }
+            case 3:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openFilesDirectory();
+                }
+                break;
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) return;
+        if (requestCode == ACTIVITY_CHOOSE_FILE) {
+            try {
+                InputStream inputStream = this.getContentResolver().openInputStream(data.getData());
+                Uri imageUri = FileUtil.writeInputSteamToCache(BookAppointmentActivity.this, inputStream);
+                if (null != imageUri) {
+                    Log.i(TAG, "filePath>>>>>>>>" + imageUri);
+                    tvExtraFilePath.setText(imageUri.toString());
+                    return;
+                }
+            } catch (Exception e) {
+                Log.e(TAG, " onActivityResult :: " + e.getMessage());
+            }
         }
     }
 }

@@ -34,42 +34,42 @@
             tools:context="com.example.mrprashant_patel.mdlink.Book_Appoinment">
 
             <TextView
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Date"
-                style="@style/TextSmall" />
+                android:text="Date" />
 
 
             <EditText
                 android:id="@+id/edtDateBookAppt"
-                android:focusableInTouchMode="false"
-                android:onClick="onClick"
+                style="@style/TextSmall"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="@dimen/pad_10"
-                style="@style/TextSmall"
                 android:background="@drawable/custom_b"
-                android:hint="Select Date" />
+                android:focusableInTouchMode="false"
+                android:hint="Select Date"
+                android:onClick="onClick" />
 
 
             <CheckBox
                 android:id="@+id/cbRenew"
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:checked="false"
-                android:text="@string/label_i_would_to_renew_refill_a_prescription"
-                style="@style/TextSmall" />
+                android:text="@string/label_i_would_to_renew_refill_a_prescription" />
 
             <CheckBox
                 android:id="@+id/cbSickNote"
-                android:checked="false"
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="I would like to obtain a sick note"
-                style="@style/TextSmall" />
+                android:checked="false"
+                android:text="I would like to obtain a sick note" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -78,11 +78,11 @@
 
                 <EditText
                     android:id="@+id/edtNameBookAppt"
+                    style="@style/TextSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="What is your Name.? "
-                    style="@style/TextSmall" />
+                    android:hint="What is your Name.? " />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -92,12 +92,12 @@
 
                 <EditText
                     android:id="@+id/edtAgeBookAppt"
+                    style="@style/TextSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:hint="what's your age?"
-                    android:inputType="number"
-                    style="@style/TextSmall" />
+                    android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -107,11 +107,11 @@
 
                 <EditText
                     android:id="@+id/edtPurposeBookAppt"
+                    style="@style/TextSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="What is the purpose of your online visit? "
-                    style="@style/TextSmall" />
+                    android:hint="What is the purpose of your online visit? " />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -121,11 +121,11 @@
 
                 <EditText
                     android:id="@+id/edtPreviousVisitedHospitalBookAppt"
+                    style="@style/TextSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="Any previous hospital admission,if so why and when? "
-                    style="@style/TextSmall" />
+                    android:hint="Any previous hospital admission,if so why and when? " />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -135,127 +135,127 @@
 
                 <EditText
                     android:id="@+id/edtAllergiesBookAppt"
+                    style="@style/TextSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/please_tell_us_any_drug_allergies_you_may_have"
-                    style="@style/TextSmall" />
+                    android:hint="@string/please_tell_us_any_drug_allergies_you_may_have" />
             </android.support.design.widget.TextInputLayout>
 
             <TextView
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/please_tell_us_if_you_have_any_medical_conditions"
-                style="@style/TextSmall" />
+                android:text="@string/please_tell_us_if_you_have_any_medical_conditions" />
 
             <CheckBox
                 android:id="@+id/cbCancerBookAppt"
-                android:checked="false"
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Cancer"
-                style="@style/TextSmall" />
+                android:checked="false"
+                android:text="Cancer" />
 
             <CheckBox
                 android:id="@+id/cbDiabetesBookAppt"
-                android:checked="false"
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Diabetes"
-                style="@style/TextSmall" />
+                android:checked="false"
+                android:text="Diabetes" />
 
             <CheckBox
                 android:id="@+id/cbHeartDiseasBookAppt"
-                android:checked="false"
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Heart Disease(CHF,MI)"
-                style="@style/TextSmall" />
+                android:checked="false"
+                android:text="Heart Disease(CHF,MI)" />
 
             <CheckBox
                 android:id="@+id/cbStrokeBookAppt"
-                android:checked="false"
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Stroke"
-                style="@style/TextSmall" />
+                android:checked="false"
+                android:text="Stroke" />
 
             <CheckBox
                 android:id="@+id/cbHighBPBookAppt"
-                android:checked="false"
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="High Blood Pressure"
-                style="@style/TextSmall" />
+                android:checked="false"
+                android:text="High Blood Pressure" />
 
             <CheckBox
                 android:id="@+id/cbHighCholesterolBookAppt"
-                android:checked="false"
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="High Cholesterol"
-                style="@style/TextSmall" />
+                android:checked="false"
+                android:text="High Cholesterol" />
 
             <CheckBox
                 android:id="@+id/cbHighAsthmaBookAppt"
-                android:checked="false"
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Asthma / COPD"
-                style="@style/TextSmall" />
+                android:checked="false"
+                android:text="Asthma / COPD" />
 
             <CheckBox
                 android:id="@+id/cbDepressionBookAppt"
-                android:checked="false"
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Depression"
-                style="@style/TextSmall" />
+                android:checked="false"
+                android:text="Depression" />
 
             <CheckBox
                 android:id="@+id/cbArthritisBookAppt"
-                android:checked="false"
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Arthritis"
-                style="@style/TextSmall" />
+                android:checked="false"
+                android:text="Arthritis" />
 
             <CheckBox
                 android:id="@+id/cbAbnormalThyroidBookAppt"
-                android:checked="false"
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Abnormal Thyroid"
-                style="@style/TextSmall" />
+                android:checked="false"
+                android:text="Abnormal Thyroid" />
 
             <CheckBox
                 android:id="@+id/cbAPregnantBookAppt"
-                android:checked="false"
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Pregnant"
-                style="@style/TextSmall" />
+                android:checked="false"
+                android:text="Pregnant" />
 
             <CheckBox
                 android:id="@+id/cbOtherBookAppt"
-                android:checked="false"
+                style="@style/TextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Other"
-                style="@style/TextSmall" />
+                android:checked="false"
+                android:text="Other" />
 
 
             <android.support.design.widget.TextInputLayout
@@ -265,45 +265,31 @@
 
                 <EditText
                     android:id="@+id/editPharmacyBookAppt"
-                    android:inputType="none"
-                    android:focusableInTouchMode="false"
-                    android:onClick="onClick"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="please tell us your pharmacy ,if any"
-                    style="@style/TextSmall" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
-
-                <EditText
-                    android:id="@+id/edtLocationBookAppt"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="what is your location? "
-                    style="@style/TextSmall" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
-
-                <EditText
                     style="@style/TextSmall"
-                    android:id="@+id/edtChooseTimeBookAppt"
-                    android:onClick="onClick"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
                     android:focusableInTouchMode="false"
+                    android:hint="please tell us your pharmacy ,if any"
+                    android:inputType="none"
+                    android:onClick="onClick" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <EditText
+                    android:id="@+id/edtChooseTimeBookAppt"
+                    style="@style/TextSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="Choose Your Time: " />
+                    android:focusableInTouchMode="false"
+                    android:hint="Choose Your Time: "
+                    android:onClick="onClick" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -313,14 +299,32 @@
                 android:layout_marginTop="15dp">
 
                 <EditText
+                    android:id="@+id/editSpecialityBookAppt"
                     style="@style/TextSmall"
-                    android:hint="Choose Your preferred doctor: "
-                    android:id="@+id/edtDoctorBookAppt"
-                    android:inputType="none"
-                    android:focusableInTouchMode="false"
-                    android:onClick="onClick"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:focusableInTouchMode="false"
+                    android:hint="Choose your Doctor’s specialty"
+                    android:inputType="none"
+                    android:onClick="onClick" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <EditText
+                    android:id="@+id/edtDoctorBookAppt"
+                    style="@style/TextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false"
+                    android:hint="Choose Your preferred doctor: "
+                    android:inputType="none"
+                    android:onClick="onClick" />
 
                 <Spinner
                     android:id="@+id/doc_spinner"
@@ -337,11 +341,11 @@
 
                 <EditText
                     android:id="@+id/edtCouponCodeBookAppt"
+                    style="@style/TextSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/label_coupon_code"
-                    style="@style/TextSmall" />
+                    android:hint="@string/label_coupon_code" />
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
@@ -350,11 +354,11 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginTop="@dimen/pad_10"
-                    android:layout_marginBottom="@dimen/pad_10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_howconnect"/>
+                    android:layout_marginTop="@dimen/pad_10"
+                    android:layout_marginBottom="@dimen/pad_10"
+                    android:text="@string/label_howconnect" />
 
                 <RadioGroup
                     android:id="@+id/rgHowToConnect"
@@ -363,22 +367,24 @@
 
                     <RadioButton
                         android:id="@+id/rbAudio"
-                        android:checked="false"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/audio_12"/>
+                        android:checked="false"
+                        android:text="@string/audio_12" />
+
                     <RadioButton
                         android:id="@+id/rbInstantMessage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
-                        android:text="@string/instant_message_12"/>
+                        android:text="@string/instant_message_12" />
+
                     <RadioButton
                         android:id="@+id/rbVideoCall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
-                        android:text="@string/video_call_15"/>
+                        android:text="@string/video_call_15" />
                 </RadioGroup>
             </LinearLayout>
             <!--
@@ -414,15 +420,15 @@
             <TextView
                 android:id="@+id/book_submit"
                 style="@style/TextMedium"
-                android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/custom_btn"
-                android:padding="04dp"
-                android:textColor="@color/colorWhite"
                 android:gravity="center"
-                android:text="@string/label_submit" />
+                android:onClick="onClick"
+                android:padding="04dp"
+                android:text="@string/label_submit"
+                android:textColor="@color/colorWhite" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

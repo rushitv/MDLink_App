@@ -39,13 +39,14 @@ import static com.mdlinkhealth.util.PaypalConfigManager.config;
 public class ConfirmAppointmentActivity extends BaseActivity implements View.OnClickListener {
     private String TAG = getClass().getSimpleName();
     private Toolbar toolbar;
-    private TextView txtRenewApptForCA,txtSicknoteApptForCA,txtApptTypeCA, txtNameCA, txtAgeCA, txtPurposeCA, txtPreviousHospitalCA,
-            txtAllergiesCA, txtMedicalConditionCA, txtPharmacyCA, txtLocationCA, txtDateCA, txtTimeCA,
-            txtPreferredDoctorCA, txtPayByPaypalCA,txtApptPaymentStatusCA;
-    private String AppointmentId,CouponCode;
+    private TextView txtRenewApptForCA, txtSicknoteApptForCA, txtApptTypeCA, txtNameCA, txtAgeCA, txtPurposeCA, txtPreviousHospitalCA,
+            txtAllergiesCA, txtMedicalConditionCA, txtPharmacyCA, txtDateCA, txtTimeCA,
+            txtPreferredDoctorCA, txtPayByPaypalCA, txtApptPaymentStatusCA, txtSpecialityCA;
+    private String AppointmentId, CouponCode, Speciality;
     private BookAppointmentRequest bookAppointmentRequest;
     private LinearLayout llPaymentStatus;
     private Double Amount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,47 +80,48 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
         txtPreviousHospitalCA = findViewById(R.id.txtPreviousHospitalCA);
         txtMedicalConditionCA = findViewById(R.id.txtMedicalConditionCA);
         txtPharmacyCA = findViewById(R.id.txtPharmacyCA);
-        txtLocationCA = findViewById(R.id.txtLocationCA);
         txtDateCA = findViewById(R.id.txtDateCA);
         txtTimeCA = findViewById(R.id.txtTimeCA);
+        txtSpecialityCA = findViewById(R.id.txtSpecialityCA);
         txtPreferredDoctorCA = findViewById(R.id.txtPreferredDoctorCA);
         txtPayByPaypalCA = findViewById(R.id.txtPayByPaypalCA);
         txtPayByPaypalCA.setOnClickListener(this);
     }
 
     private void bindViews() {
-        if(null != getIntent()){
+        if (null != getIntent()) {
             Amount = getIntent().getExtras().getDouble("Amount");
-            if(Amount < 1){
+            if (Amount < 1) {
                 txtPayByPaypalCA.setText(R.string.label_bookappointment);
             }
+            Speciality = getIntent().getStringExtra("Speciality");
             CouponCode = getIntent().getStringExtra("CouponCode");
             AppointmentId = getIntent().getStringExtra("AppointmentId");
             String preferredDoctorName = getIntent().getStringExtra("PreferredDoctorName");
-            bookAppointmentRequest = (BookAppointmentRequest)getIntent().getSerializableExtra("BookAppointmentRequest");
-            Log.i(TAG,"name>>>>>>>>>>>"+bookAppointmentRequest.getName());
-            Log.i(TAG,"preferredDoctorName>>>>>>>>>>>"+preferredDoctorName);
-            txtSicknoteApptForCA.setText(getString(R.string.i_would_to_obtain_sicknote, bookAppointmentRequest.getSickNote().equalsIgnoreCase("1") ? "Yes":"No"));
-            txtRenewApptForCA.setText(getString(R.string.i_would_to_renew_refill_a_prescription, bookAppointmentRequest.getIsRenew().equalsIgnoreCase("1") ? "Yes":"No" ));
+            bookAppointmentRequest = (BookAppointmentRequest) getIntent().getSerializableExtra("BookAppointmentRequest");
+            Log.i(TAG, "name>>>>>>>>>>>" + bookAppointmentRequest.getName());
+            Log.i(TAG, "preferredDoctorName>>>>>>>>>>>" + preferredDoctorName);
+            txtSicknoteApptForCA.setText(getString(R.string.i_would_to_obtain_sicknote, bookAppointmentRequest.getSickNote().equalsIgnoreCase("1") ? "Yes" : "No"));
+            txtRenewApptForCA.setText(getString(R.string.i_would_to_renew_refill_a_prescription, bookAppointmentRequest.getIsRenew().equalsIgnoreCase("1") ? "Yes" : "No"));
             txtNameCA.setText(getString(R.string.colon, bookAppointmentRequest.getName()));
-            txtAgeCA.setText(getString(R.string.colon,bookAppointmentRequest.getAge()));
-            txtPurposeCA.setText(getString(R.string.colon,bookAppointmentRequest.getVisitPurpose()));
-            txtPreviousHospitalCA.setText(getString(R.string.colon,bookAppointmentRequest.getPreviousHospital()));
-            if(!TextUtils.isEmpty(bookAppointmentRequest.getMedicalConditions())){
+            txtAgeCA.setText(getString(R.string.colon, bookAppointmentRequest.getAge()));
+            txtPurposeCA.setText(getString(R.string.colon, bookAppointmentRequest.getVisitPurpose()));
+            txtPreviousHospitalCA.setText(getString(R.string.colon, bookAppointmentRequest.getPreviousHospital()));
+            if (!TextUtils.isEmpty(bookAppointmentRequest.getMedicalConditions())) {
                 txtMedicalConditionCA.setText(getString(R.string.medicalcondition, bookAppointmentRequest.getMedicalConditions().substring(0, bookAppointmentRequest.getMedicalConditions().length() - 1)));
-            }else {
-                txtMedicalConditionCA.setText(getString(R.string.medicalcondition,""));
+            } else {
+                txtMedicalConditionCA.setText(getString(R.string.medicalcondition, ""));
             }
-            txtPharmacyCA.setText(getString(R.string.colon,bookAppointmentRequest.getPharmacy()));
-            txtLocationCA.setText(getString(R.string.colon,bookAppointmentRequest.getLocation()));
-            txtDateCA.setText(getString(R.string.colon,bookAppointmentRequest.getScheduledDate()));
-            txtTimeCA.setText(getString(R.string.colon,bookAppointmentRequest.getScheduledTime()));
-            txtPreferredDoctorCA.setText(getString(R.string.colon,preferredDoctorName));
-            txtAllergiesCA.setText(getString(R.string.colon,bookAppointmentRequest.getAllergy()));
-            String type ="";
+            txtPharmacyCA.setText(getString(R.string.colon, bookAppointmentRequest.getPharmacy()));
+            txtDateCA.setText(getString(R.string.colon, bookAppointmentRequest.getScheduledDate()));
+            txtTimeCA.setText(getString(R.string.colon, bookAppointmentRequest.getScheduledTime()));
+            txtSpecialityCA.setText(getString(R.string.colon, Speciality));
+            txtPreferredDoctorCA.setText(getString(R.string.colon, preferredDoctorName));
+            txtAllergiesCA.setText(getString(R.string.colon, bookAppointmentRequest.getAllergy()));
+            String type = "";
             switch (bookAppointmentRequest.getType()) {
                 case "1":
-                    type = "Audio Call";
+                    type = "Audio";
                     break;
                 case "2":
                     type = "Instant Message";
@@ -128,7 +130,13 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
                     type = "Video Call";
                     break;
             }
-            txtApptTypeCA.setText(getString(R.string.colon,type) +" "+ (Amount > 0 ? "$ "+ Amount : " FREE " ));
+            if (Amount > 0) {
+                String amount_label = "" + Amount;
+                txtApptTypeCA.setText(getString(R.string.appt_price, type, amount_label));
+            } else {
+                txtApptTypeCA.setText(getString(R.string.colon, type) + " " + (Amount > 0 ? "$ " + Amount : " FREE "));
+            }
+
         }
     }
 
@@ -136,9 +144,9 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txtPayByPaypalCA:
-                if(Amount>0) {
+                if (Amount > 0) {
                     callPaymentGatewayAPI();
-                }else {
+                } else {
                     //Amount is Zero so call dummy transaction number
                     CreateOrderRequest createOrderRequest = new CreateOrderRequest();
                     createOrderRequest.setAppId(Integer.parseInt(AppointmentId));
@@ -165,7 +173,7 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
         }, 200);
     }
 
-    private void initialPaypalService(){
+    private void initialPaypalService() {
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);
@@ -195,16 +203,16 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
     }
 
     private PayPalPayment getThingToBuy(String paymentIntent) {
-        String item="";
+        String item = "";
         switch (bookAppointmentRequest.getType()) {
             case "1":
-                item = "Audio ($12)";
+                item = "Audio";
                 break;
             case "2":
-                item = "Instant Message ($12)";
+                item = "Instant Message";
                 break;
             case "3":
-                item = "Video Call ($15)";
+                item = "Video Call";
                 break;
         }
         return new PayPalPayment(
@@ -228,8 +236,8 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
                         data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
                 if (confirm != null) {
                     try {
-                        Log.i(TAG, "1>>>>>>"+confirm.toJSONObject().toString(4));
-                        Log.i(TAG, "2>>>>>>"+confirm.getPayment().toJSONObject().toString(4));
+                        Log.i(TAG, "1>>>>>>" + confirm.toJSONObject().toString(4));
+                        Log.i(TAG, "2>>>>>>" + confirm.getPayment().toJSONObject().toString(4));
                         /**
                          *  TODO: send 'confirm' (and possibly confirm.getPayment() to your server for verification
                          * or consent completion.
@@ -290,7 +298,7 @@ public class ConfirmAppointmentActivity extends BaseActivity implements View.OnC
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.i(TAG, ">>>>>>>>>>>>>>>>>" + response.body());
                 if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
-                    Toast.makeText(ConfirmAppointmentActivity.this, createOrderRequest.getTransactionStatus().equalsIgnoreCase("approved") ?"Thank You!! " : " Thank You!! " +response.body().get("message").getAsString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(ConfirmAppointmentActivity.this, createOrderRequest.getTransactionStatus().equalsIgnoreCase("approved") ? "Thank You!! " : " Thank You!! " + response.body().get("message").getAsString(), Toast.LENGTH_LONG).show();
                     finish();
                     Intent intent = new Intent(ConfirmAppointmentActivity.this, PatientPortalActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

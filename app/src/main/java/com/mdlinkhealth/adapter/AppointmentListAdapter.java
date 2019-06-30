@@ -34,6 +34,24 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         this.listener = listener;
     }
 
+    public void addAll(List<AppointmentListResponseDetails> mAppointmentListResponseDetailsList) {
+        if (mAppointmentListResponseDetailsList == null) {
+            this.mAppointmentListResponseDetailsList.clear();
+            notifyDataSetChanged();
+            return;
+        }
+        this.mAppointmentListResponseDetailsList.addAll(mAppointmentListResponseDetailsList);
+        notifyItemRangeInserted(this.mAppointmentListResponseDetailsList.size() - mAppointmentListResponseDetailsList.size(), mAppointmentListResponseDetailsList.size());
+    }
+
+    /**
+     * Clears all the items in the adapter.
+     */
+    public void clear() {
+        mAppointmentListResponseDetailsList.clear();
+        notifyDataSetChanged();
+    }
+
     public void update(AppointmentListResponseDetails item) {
         int position = mAppointmentListResponseDetailsList.indexOf(item);
         if (position > -1) {

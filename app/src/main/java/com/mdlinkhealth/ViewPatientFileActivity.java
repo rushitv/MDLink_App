@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
+import com.mdlinkhealth.helper.StringHelper;
 import com.mdlinkhealth.util.Constants;
 
 import retrofit2.Call;
@@ -20,7 +21,7 @@ public class ViewPatientFileActivity extends BaseActivity {
     private TextView txtRenewApptForCA, txtSicknoteApptForCA, txtApptTypeCA, txtNameCA, txtAgeCA, txtPurposeCA,
             txtPreviousHospitalCA,
             txtAllergiesCA, txtMedicalConditionCA, txtPharmacyCA, txtLocationCA, txtDateCA, txtTimeCA,
-            txtPreferredDoctorCA, txtPayByPaypalCA, txtApptPaymentStatusCA;
+            txtPreferredDoctorCA, txtPayByPaypalCA, txtApptPaymentStatusCA, txtSpecialityCA, txtSpecialityCALabel;
     private LinearLayout llPaymentStatus;
     private int AppointmentId;
 
@@ -30,8 +31,8 @@ public class ViewPatientFileActivity extends BaseActivity {
         setContentView(R.layout.activity_confirm_appt);
         initToolbar();
         initViews();
-        if (getIntent().getIntExtra(Constants.APPOINTMENT_ID,0) != 0) {
-            AppointmentId = getIntent().getIntExtra(Constants.APPOINTMENT_ID,0);
+        if (getIntent().getIntExtra(Constants.APPOINTMENT_ID, 0) != 0) {
+            AppointmentId = getIntent().getIntExtra(Constants.APPOINTMENT_ID, 0);
             getDataFromServer(AppointmentId);
         }
     }
@@ -44,6 +45,12 @@ public class ViewPatientFileActivity extends BaseActivity {
     }
 
     private void initViews() {
+        txtSpecialityCA = findViewById(R.id.txtSpecialityCA);
+        txtSpecialityCA.setVisibility(View.GONE);
+
+        txtSpecialityCALabel = findViewById(R.id.txtSpecialityCALabel);
+        txtSpecialityCALabel.setVisibility(View.GONE);
+
         llPaymentStatus = findViewById(R.id.llPaymentStatus);
         llPaymentStatus.setVisibility(View.VISIBLE);
         txtApptPaymentStatusCA = findViewById(R.id.txtApptPaymentStatusCA);
@@ -59,7 +66,6 @@ public class ViewPatientFileActivity extends BaseActivity {
         txtPreviousHospitalCA = findViewById(R.id.txtPreviousHospitalCA);
         txtMedicalConditionCA = findViewById(R.id.txtMedicalConditionCA);
         txtPharmacyCA = findViewById(R.id.txtPharmacyCA);
-        txtLocationCA = findViewById(R.id.txtLocationCA);
         txtDateCA = findViewById(R.id.txtDateCA);
         txtTimeCA = findViewById(R.id.txtTimeCA);
         txtPreferredDoctorCA = findViewById(R.id.txtPreferredDoctorCA);
@@ -90,7 +96,7 @@ public class ViewPatientFileActivity extends BaseActivity {
                             } else if (responseObj.get("type").getAsInt() == 2) {
                                 txtApptTypeCA.setText("Instant Message");
                             } else if (responseObj.get("type").getAsInt() == 1) {
-                                txtApptTypeCA.setText("Audio Call");
+                                txtApptTypeCA.setText("Audio");
                             }
                         }
                         if (responseObj.has("is_payed")) {
@@ -113,9 +119,9 @@ public class ViewPatientFileActivity extends BaseActivity {
                         if (responseObj.has("pharmacy")) {
                             txtPharmacyCA.setText(getString(R.string.colon, responseObj.get("pharmacy").getAsString()));
                         }
-                        if (responseObj.has("location")) {
+                       /* if (responseObj.has("location")) {
                             txtLocationCA.setText(getString(R.string.colon, responseObj.get("location").getAsString()));
-                        }
+                        }*/
                         if (responseObj.has("scheduled_date")) {
                             txtDateCA.setText(getString(R.string.colon, responseObj.get("scheduled_date").getAsString()));
                         }
@@ -126,13 +132,16 @@ public class ViewPatientFileActivity extends BaseActivity {
                             txtPreferredDoctorCA.setText(getString(R.string.colon, responseObj.get("preferred_doctor").getAsString()));
                         }
 
-                        if(responseObj.has("medical_conditions")){
-                            txtMedicalConditionCA.setText(getString(R.string.medicalcondition,responseObj.get("medical_conditions").getAsString()));
+                        if (responseObj.has("medical_conditions")) {
+                            txtMedicalConditionCA.setText(getString(R.string.medicalcondition, responseObj.get("medical_conditions").getAsString()));
                         }
 
-                        if(responseObj.has("preferred_doctor")){
-                            txtPreviousHospitalCA.setText(responseObj.get("preferred_doctor").getAsString());
+                        if (responseObj.has("previous_hospital")) {
+                            if (!StringHelper.isEmptyOrNull(responseObj.get("previous_hospital").getAsString())) {
+                                txtPreviousHospitalCA.setText(getString(R.string.colon, responseObj.get("previous_hospital").getAsString()));
+                            }
                         }
+
                     }
                 }
             }

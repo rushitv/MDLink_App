@@ -5,23 +5,45 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-    <TextView
-        android:id="@+id/textViewMessage"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:paddingLeft="7dp"
-        android:text="Hello"
-        android:textColor="@color/colorWhite"
-        android:textSize="14sp" />
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imageViewMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"
-        android:adjustViewBounds="true"
-        />
+        <TextView
+            android:id="@+id/textViewMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:paddingLeft="7dp"
+            android:text="Hello"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/imageViewMessage"
+                android:layout_width="@dimen/size_300"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true" />
+
+            <ProgressBar
+                android:id="@+id/progress_image_loading"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,9 +70,8 @@
             android:text="Author"
             android:textColor="@color/colorWhite"
             android:textSize="14sp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </LinearLayout>
-
 
 </LinearLayout>

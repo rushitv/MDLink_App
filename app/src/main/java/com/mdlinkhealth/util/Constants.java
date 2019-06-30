@@ -39,6 +39,7 @@ public class Constants {
     public static final String IMAGE_URI = "ImageUri";
     public static final String IMAGE_URL = "ImageURL";
     public static final String PUSH_NOTIFICATION_STATE = "PUSH_NOTIFICATION_STATE";
+    public static final String PATIENT_PHONE_NO = "PhoneNo";
 
     public static String BASE_URL = "http://api.themdlink.com/api/v1/";
     public static final String SEPARATOR = ",";

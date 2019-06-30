@@ -269,30 +269,6 @@
                         style="@style/TextMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Location"
-                        android:textColor="@color/colorWhite" />
-
-                    <TextView
-                        android:id="@+id/txtLocationCA"
-                        style="@style/TextMedium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/pad_10"
-                        android:text="@string/label_purpose"
-                        android:textColor="@color/colorWhite" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/TextMedium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:text="Date"
                         android:textColor="@color/colorWhite" />
 
@@ -321,6 +297,30 @@
 
                     <TextView
                         android:id="@+id/txtTimeCA"
+                        style="@style/TextMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/pad_10"
+                        android:text="@string/label_purpose"
+                        android:textColor="@color/colorWhite" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtSpecialityCALabel"
+                        style="@style/TextMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Doctor’s specialty"
+                        android:textColor="@color/colorWhite" />
+
+                    <TextView
+                        android:id="@+id/txtSpecialityCA"
                         style="@style/TextMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -170,6 +170,45 @@
                 android:tint="@color/dark_gray" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:layout_marginStart="@dimen/size_70"
+            android:background="@color/dark_gray" />
+
+        <RelativeLayout
+            android:id="@+id/rlShareApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/pad_5"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imgShareApp"
+                android:layout_width="@dimen/size_40"
+                android:layout_height="@dimen/size_40"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_menu_share"
+                android:tint="@color/colorButtonBackground" />
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/TextMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/size_20"
+                android:layout_toEndOf="@+id/imgShareApp"
+                android:text="@string/share_app" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_next"
+                android:tint="@color/dark_gray" />
+        </RelativeLayout>
     </LinearLayout>
 
 </FrameLayout>

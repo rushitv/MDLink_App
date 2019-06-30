@@ -37,9 +37,6 @@ public class BookAppointmentRequest implements Serializable {
     @SerializedName("pharmacy")
     @Expose
     private String pharmacy;
-    @SerializedName("location")
-    @Expose
-    private String location;
     @SerializedName("scheduled_time")
     @Expose
     private String scheduledTime;
@@ -55,6 +52,9 @@ public class BookAppointmentRequest implements Serializable {
     @SerializedName("user_id")
     @Expose
     private String userId;
+    @SerializedName("specialities_id")
+    @Expose
+    private int specialities_id;
 
     public String getScheduledDate() {
         return scheduledDate;
@@ -136,14 +136,6 @@ public class BookAppointmentRequest implements Serializable {
         this.pharmacy = pharmacy;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public String getScheduledTime() {
         return scheduledTime;
     }
@@ -184,4 +176,11 @@ public class BookAppointmentRequest implements Serializable {
         this.userId = userId;
     }
 
+    public int getSpecialities_id() {
+        return specialities_id;
+    }
+
+    public void setSpecialities_id(int specialities_id) {
+        this.specialities_id = specialities_id;
+    }
 }

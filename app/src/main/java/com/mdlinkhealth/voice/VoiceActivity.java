@@ -57,7 +57,7 @@ import java.util.HashMap;
 public class VoiceActivity extends BaseActivity {
 
     private static final String TAG = "VoiceActivity";
-    private String identity = "MDLink";
+    private String identity = "";
     /*
      * You must provide the URL to the publicly accessible Twilio access token server route
      *
@@ -99,7 +99,12 @@ public class VoiceActivity extends BaseActivity {
     private CallInvite activeCallInvite;
     private Call activeCall;
     private int activeCallNotificationId;
-    private String AppointmentId, RoleId,Name,DoctorName, PatientId;
+    private String AppointmentId;
+    private String RoleId;
+    private String Name;
+    private String DoctorName;
+    private String PatientId;
+    private static String PatientPhoneNumber;
 
     RegistrationListener registrationListener = registrationListener();
     Call.Listener callListener = callListener();
@@ -110,15 +115,15 @@ public class VoiceActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voice);
         sharedPreferenceManager = new SharedPreferenceManager(this);
-        if(getIntent()!=null){
+        identity = App.getInstance().GetFirstName();
+        if (getIntent() != null) {
             PatientId = getIntent().getStringExtra(Constants.PATIENT_ID);
             AppointmentId = getIntent().getStringExtra(Constants.APPOINTMENT_ID);
             RoleId = getIntent().getStringExtra(Constants.ROLE_ID);
             Name = getIntent().getStringExtra(Constants.NAME);
             DoctorName = getIntent().getStringExtra(Constants.DOCTOR_NAME);
+            PatientPhoneNumber = getIntent().getStringExtra(Constants.PATIENT_PHONE_NO);
         }
-        identity = sharedPreferenceManager.getStringData(Constants.NAME).substring(0,6);
-
         // These flags ensure that the activity can be launched when the screen is locked.
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
@@ -172,9 +177,9 @@ public class VoiceActivity extends BaseActivity {
          */
         if (!checkPermissionForMicrophone()) {
             requestPermissionForMicrophone();
-        } else {
-            retrieveAccessToken();
         }
+
+        retrieveAccessToken();
     }
 
     @Override
@@ -184,17 +189,20 @@ public class VoiceActivity extends BaseActivity {
     }
 
     private RegistrationListener registrationListener() {
+
         return new RegistrationListener() {
             @Override
             public void onRegistered(String accessToken, String fcmToken) {
+                hideProgress();
                 Log.d(TAG, "Successfully registered FCM " + fcmToken);
+                Snackbar.make(coordinatorLayout, "Registered Successfully", SNACKBAR_DURATION).show();
             }
 
             @Override
             public void onError(RegistrationException error, String accessToken, String fcmToken) {
                 String message = String.format("Registration Error: %d, %s", error.getErrorCode(), error.getMessage());
                 Log.e(TAG, message);
-                Snackbar.make(coordinatorLayout, message, SNACKBAR_DURATION).show();
+                //Snackbar.make(coordinatorLayout, message, SNACKBAR_DURATION).show();
             }
         };
     }
@@ -221,11 +229,11 @@ public class VoiceActivity extends BaseActivity {
             @Override
             public void onDisconnected(Call call, CallException error) {
                 setAudioFocus(false);
-                Log.d(TAG, "Disconnected"+call.getState());
-                Log.d(TAG, "Disconnected"+call.getSid());
-                Log.d(TAG, "Disconnected"+call.getTo());
+                Log.d(TAG, "Disconnected" + call.getState());
+                Log.d(TAG, "Disconnected" + call.getSid());
+                Log.d(TAG, "Disconnected" + call.getTo());
                 if (error != null) {
-                    Log.d(TAG,">>>>>>>>>>"+error.getExplanation());
+                    Log.d(TAG, ">>>>>>>>>>" + error.getExplanation());
                     String message = String.format("Call Error: %d, %s", error.getErrorCode(), error.getMessage());
                     Log.e(TAG, message);
                     Snackbar.make(coordinatorLayout, message, SNACKBAR_DURATION).show();
@@ -351,7 +359,11 @@ public class VoiceActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Place a call
-                EditText contact = (EditText) ((AlertDialog) dialog).findViewById(R.id.contact);
+                EditText contact = ((AlertDialog) dialog).findViewById(R.id.contact);
+                contact.setText(PatientPhoneNumber);
+                contact.setFocusable(false);
+                contact.setFocusableInTouchMode(false); // user touches widget on phone with touch screen
+                contact.setClickable(false); // user
                 //twiMLParams.put("to", contact.getText().toString());
                 twiMLParams.put("phoneNumber", contact.getText().toString());
                 activeCall = Voice.call(App.getInstance(), accessToken, twiMLParams, callListener);
@@ -403,7 +415,7 @@ public class VoiceActivity extends BaseActivity {
      */
     private void registerForCallInvites() {
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( this,  new OnSuccessListener<InstanceIdResult>() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 String fcmToken = instanceIdResult.getToken();
@@ -412,11 +424,11 @@ public class VoiceActivity extends BaseActivity {
                     Log.i(TAG, "Registering with FCM");
                     Voice.register(VoiceActivity.this, accessToken, Voice.RegistrationChannel.FCM, fcmToken, registrationListener);
                 }
-                Log.e("Token>>>>>>",fcmToken);
+                Log.e("Token>>>>>>", fcmToken);
             }
         });
 
-       // final String fcmToken = FirebaseInstanceId.getInstance().getToken();
+        // final String fcmToken = FirebaseInstanceId.getInstance().getToken();
 
     }
 
@@ -438,12 +450,13 @@ public class VoiceActivity extends BaseActivity {
                 resetUI();
                 disconnect();
 
-                if(RoleId.equalsIgnoreCase("1")) {
+                if (RoleId.equalsIgnoreCase("1")) {
                     Intent iMedicalCheckout = new Intent(VoiceActivity.this, Medical_CheckOut_Doctor.class);
                     iMedicalCheckout.putExtra(Constants.PATIENT_ID, PatientId);
                     iMedicalCheckout.putExtra(Constants.APPOINTMENT_ID, AppointmentId);
+                    finish();
                     startActivity(iMedicalCheckout);
-                }else {
+                } else {
                     finish();
                 }
             }
@@ -598,6 +611,10 @@ public class VoiceActivity extends BaseActivity {
         LayoutInflater li = LayoutInflater.from(context);
         View dialogView = li.inflate(R.layout.dialog_call, null);
         final EditText contact = (EditText) dialogView.findViewById(R.id.contact);
+        contact.setFocusable(false);
+        contact.setFocusableInTouchMode(false);
+        contact.setClickable(false);
+        contact.setText(PatientPhoneNumber);
         contact.setHint(R.string.callee);
         alertDialogBuilder.setView(dialogView);
 
@@ -609,19 +626,30 @@ public class VoiceActivity extends BaseActivity {
      * Get an access token from your Twilio access token server
      */
     private void retrieveAccessToken() {
-        Ion.with(this).load(TWILIO_ACCESS_TOKEN_SERVER_URL + "?identity=" + identity +"&device=android").asString().setCallback(new FutureCallback<String>() {
-            @Override
-            public void onCompleted(Exception e, String accessToken) {
-                if (e == null) {
-                    Log.d(TAG, "Access token: " + accessToken);
-                    VoiceActivity.this.accessToken = accessToken;
-                    registerForCallInvites();
-                } else {
-                    Snackbar.make(coordinatorLayout,
-                            "Error retrieving access token. Unable to make calls",
-                            Snackbar.LENGTH_LONG).show();
+        try {
+
+            showProgressDialog();
+            Ion.with(this).load(TWILIO_ACCESS_TOKEN_SERVER_URL + "?identity=" + identity + "&device=android").asString().setCallback(new FutureCallback<String>() {
+                @Override
+                public void onCompleted(Exception e, String accessToken) {
+                    if (e == null) {
+                        Log.d(TAG, "Access token: " + accessToken);
+                        VoiceActivity.this.accessToken = accessToken;
+                        hideProgressDialog();
+                        registerForCallInvites();
+                        alertDialog = createCallDialog(callClickListener(), cancelCallClickListener(), VoiceActivity.this);
+                        alertDialog.show();
+                    } else {
+                        hideProgressDialog();
+                        Snackbar.make(coordinatorLayout,
+                                "Error retrieving access token. Unable to make calls",
+                                Snackbar.LENGTH_LONG).show();
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception ignored) {
+            hideProgressDialog();
+        }
+
     }
 }

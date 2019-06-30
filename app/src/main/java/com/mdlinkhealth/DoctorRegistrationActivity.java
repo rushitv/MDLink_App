@@ -15,7 +15,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,8 +34,8 @@ import com.hbb20.CountryCodePicker;
 import com.mdlinkhealth.api.APIService;
 import com.mdlinkhealth.api.RestAPIClent;
 import com.mdlinkhealth.drawing.MyDrawView;
+import com.mdlinkhealth.helper.StringHelper;
 import com.mdlinkhealth.helper.UiHelper;
-import com.mdlinkhealth.model.DoctorPortalResponse;
 import com.mdlinkhealth.util.Constants;
 import com.mdlinkhealth.util.FileUtil;
 import com.mdlinkhealth.util.ValidationsUtil;
@@ -254,11 +256,6 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
                 break;
             case R.id.btnSubmit:
 
-                if (!rdbTermsCondition.isChecked()) {
-                    Toast.makeText(this, "Please accept the Terms of Use and privacy policy", Toast.LENGTH_LONG);
-                    return;
-                }
-
                 ArrayList<String> stringArrayList = new ArrayList<>();
                 if (checkboxSunday.isChecked()) {
                     stringArrayList.add("0");
@@ -289,6 +286,12 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
                 }
 
                 String availabledays = checkboxExtract.toString();
+
+                if (isFormValid(availabledays).length() > 0) {
+                    Toast.makeText(this, isFormValid(availabledays), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 Log.i(TAG, "Available Days>>>>" + availabledays);
 
                 //pass it like this
@@ -300,13 +303,13 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
                 MultipartBody.Part mpSignature =
                         MultipartBody.Part.createFormData("signature", fileSignature.getName(), requestFileSignature);
 
-                File fileCertificate = new File(tvSignaturePath.getText().toString());
+                File fileCertificate = new File(tvSelectedFilePath.getText().toString());
                 RequestBody requestFileCertificate =
                         RequestBody.create(MediaType.parse("multipart/form-data"), fileCertificate);
 
                 // MultipartBody.Part is used to send also the actual file name
                 MultipartBody.Part mpCertificate =
-                        MultipartBody.Part.createFormData("medical_certificate", fileSignature.getName(), requestFileCertificate);
+                        MultipartBody.Part.createFormData("medical_certificate", fileCertificate.getName(), requestFileCertificate);
 
                 RequestBody email =
                         RequestBody.create(MediaType.parse("form-data"), edtEmailDP.getText().toString());
@@ -371,6 +374,64 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
                 UiHelper.startURLIntent(this, this.getString(R.string.url_privacy_policy));
                 break;
         }
+    }
+
+    private String isFormValid(String availabledays) {
+        String str = "";
+        if (!TextUtils.isEmpty(edtEmailDP.getText().toString()) && Patterns.EMAIL_ADDRESS.matcher(edtEmailDP.getText().toString()).matches()) {
+
+        } else {
+            str += "Please enter valid email \n";
+        }
+        if (TextUtils.isEmpty(edtFullNameDP.getText().toString())) {
+            str += " Please enter full name \n";
+        }
+        if (TextUtils.isEmpty(edtQualificationDP.getText().toString())) {
+            str += " Please enter Qualification \n";
+        }
+
+        if (TextUtils.isEmpty(edtSpecialityDP.getText().toString())) {
+            str += "Please enter Speciality \n";
+        }
+
+        if (TextUtils.isEmpty(edtQualificationDP.getText().toString())) {
+            str += "Please enter Qualification \n";
+        }
+
+        if (TextUtils.isEmpty(edtMedicalSchoolDP.getText().toString())) {
+            str += "Please enter Medical School \n";
+        }
+
+        if (TextUtils.isEmpty(edtMedicalCouncilDP.getText().toString())) {
+            str += "Please enter Medical Council \n";
+        }
+
+        if (TextUtils.isEmpty(edtRegistrationNumberDP.getText().toString())) {
+            str += "Please enter Registration Number \n";
+        }
+
+        if (StringHelper.isEmptyOrNull(availabledays)) {
+            str += "Check available days \n";
+        }
+
+        if (!(edtPasswordDP.getText().toString().equals(edtConfirmPasswordDP.getText().toString()))) {
+            str += "Passwords do not match! \n";
+        }
+
+        if (TextUtils.isEmpty(tvSignaturePath.getText().toString())) {
+            str += "Please do the Signature \n";
+        }
+
+        if (TextUtils.isEmpty(tvSelectedFilePath.getText().toString())) {
+            str += "Please upload Medical Certificate \n";
+        }
+
+        if (!rdbTermsCondition.isChecked()) {
+            str += "Please accept the Terms of Use and Privacy Policy \n";
+        }
+
+        return str;
+
     }
 
     private void OpenSignPad() {

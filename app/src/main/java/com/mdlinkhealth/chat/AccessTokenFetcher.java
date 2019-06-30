@@ -29,13 +29,17 @@ public class AccessTokenFetcher {
 
         try {
             //String user = App.getInstance().GetUserName().substring(0, 4);
-            String user = App.getInstance().GetUserName();
+            //String user = App.getInstance().GetUserName();
+            String user = App.getInstance().GetFirstName();
+            Log.i(TAG, ">>>>>user>>>>" + user);
+            
             Call<JsonObject> getChatToken = App.apiService.getChatToken(
                     user, Constants.CHANNEL_DEFAULT_NAME + App.getInstance().GetChannelName());
 
             getChatToken.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    Log.i(TAG, ">>>>>>>>>>>>Success>>>>>>>");
                     identity = response.body().get("identity").getAsString();
                     accessToken = response.body().get("token").getAsString();
                     listener.onSuccess(accessToken);

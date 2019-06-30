@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.mdlinkhealth.App;
 import com.mdlinkhealth.R;
+import com.mdlinkhealth.util.Constants;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -84,6 +85,18 @@ public class UiHelper {
                     .create();
             mProgressDialog.show();
         }
+    }
+
+    public static int widthInPixels(int percentage) {
+        if (percentage > 100 || percentage == 0 || percentage == Constants.INVALID) {
+            percentage = 100;
+        }
+
+        int width = Resources.getSystem().getDisplayMetrics().widthPixels;
+
+        float rate = percentage / 100f;
+
+        return (int) (width * rate);
     }
 
     public static void displayMessage(Activity activity, String message, DialogInterface.OnClickListener positiveListener) {

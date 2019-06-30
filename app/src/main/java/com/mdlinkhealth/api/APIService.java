@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.mdlinkhealth.model.AddPrescriptionDoctorSide;
 import com.mdlinkhealth.model.AppointmentListResponse;
 import com.mdlinkhealth.model.AppointmentOptionsResponse;
+import com.mdlinkhealth.model.AvailableDoctorsRequest;
 import com.mdlinkhealth.model.BookAppointmentRequest;
 import com.mdlinkhealth.model.CreateOrderRequest;
 import com.mdlinkhealth.model.DoctorPortalResponse;
@@ -59,7 +60,7 @@ public interface APIService {
     );
 
     @POST("availabledoctors")
-    Call<DoctorsListModel> availabledoctors(@Body HashMap jsonObject);
+    Call<DoctorsListModel> availabledoctors(@Body AvailableDoctorsRequest availableDoctorsRequest);
 
     @POST("appointment")
     Call<JsonObject> createAppointment(@Body BookAppointmentRequest bookAppointmentRequest);

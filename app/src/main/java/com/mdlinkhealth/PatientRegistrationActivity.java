@@ -107,7 +107,7 @@ public class PatientRegistrationActivity extends BaseActivity implements View.On
         switch (v.getId()) {
             case R.id.patient_submit:
                 if (isFormValid().length() > 0) {
-                    Toast.makeText(PatientRegistrationActivity.this, "", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PatientRegistrationActivity.this, isFormValid(), Toast.LENGTH_LONG).show();
                 } else {
                     hashMap.clear();
                     Log.i(TAG, "CountryCode>>>>>" + CountryCode);
@@ -178,7 +178,7 @@ public class PatientRegistrationActivity extends BaseActivity implements View.On
         }
 
         if (!rdbTermsCondition.isChecked()) {
-            str += "Please accept the Terms of Use and Privacy Policy";
+            str += "Please accept the Terms of Use and Privacy Policy \n";
         }
 
         return str;

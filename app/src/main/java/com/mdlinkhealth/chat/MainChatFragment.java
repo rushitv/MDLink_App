@@ -2,6 +2,7 @@ package com.mdlinkhealth.chat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -27,6 +28,7 @@ import com.mdlinkhealth.R;
 import com.mdlinkhealth.api.APIService;
 import com.mdlinkhealth.api.RestAPIClent;
 import com.mdlinkhealth.chat.messages.MessageAdapter;
+import com.mdlinkhealth.helper.UiHelper;
 import com.mdlinkhealth.util.Constants;
 import com.twilio.chat.CallbackListener;
 import com.twilio.chat.Channel;
@@ -67,6 +69,7 @@ public class MainChatFragment extends Fragment implements ChannelListener {
     APIService apiService =
             RestAPIClent.getClient().create(APIService.class);
     private String AppointmentId;
+    private ProgressDialog dialog;
 
     public MainChatFragment() {
     }
@@ -87,6 +90,7 @@ public class MainChatFragment extends Fragment implements ChannelListener {
         super.onCreate(savedInstanceState);
         context = this.getActivity();
         mainActivity = this.getActivity();
+        dialog = new ProgressDialog(context);
     }
 
     @Override
@@ -358,6 +362,9 @@ public class MainChatFragment extends Fragment implements ChannelListener {
 
     private void uploadImageToServer(String path) {
         //pass it like this
+        dialog.show();
+        dialog.setMessage("Uploading Attachment...");
+
         File fileImage = new File(path);
         RequestBody requestFile =
                 RequestBody.create(MediaType.parse("multipart/form-data"), fileImage);
@@ -368,7 +375,9 @@ public class MainChatFragment extends Fragment implements ChannelListener {
         callToUploadImage.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 if (response.code() == 200) {
                     if (response.body().get("status").getAsInt() == 200) {
                         String url = response.body().get("url").getAsString();
@@ -381,6 +390,9 @@ public class MainChatFragment extends Fragment implements ChannelListener {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 t.fillInStackTrace();
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
             }
         });
 

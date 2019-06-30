@@ -13,6 +13,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FileUtil {
     /**
@@ -68,6 +70,15 @@ public class FileUtil {
     }
 
     public static boolean isURL(String urlVal) {
-        return Patterns.WEB_URL.matcher(urlVal).matches();
+        //return Patterns.WEB_URL.matcher(urlVal).matches();
+        String URL_REGEX = "^((https?|ftp)://|(www|ftp)\\.)?[a-z0-9-]+(\\.[a-z0-9-]+)+([/?].*)?$";
+        Pattern p = Pattern.compile(URL_REGEX);
+        Matcher m = p.matcher(urlVal);//replace with string to compare
+        if (m.find()) {
+            return true;
+        }
+        return false;
     }
+
+
 }

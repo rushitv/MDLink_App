@@ -2,15 +2,13 @@
     <string name="app_name">MDLink Health</string>
     <string name="action_settings">Settings</string>
     <string name="urgentcare">MDlink doctor see and treat several medical issue including 90% of the top issues seen by Urgent Care and the E.R. </string>
-    <string name="medicaladvice">Not sare to de? Get Medical advice from our MDLink doctors when you send us youe question </string>
+    <string name="medicaladvice">Not sure what to do? Get Medical advice from our MDLink doctors when you send us your question </string>
     <string name="labs"> if further investigation is required, our doctor can send \n a Lab Request to you / your nearest laboratory </string>
-    <string name="addction">If you have fallen into a pattern of misusing, alcohol , drugs, cigarette</string>
+    <string name="addction">If you have fallen into a pattern of misusing, alcohol , drugs, cigarettes, medications or food, our providers can help</string>
     <string name="mood">There are several treatment approaches for depressions and mood issues that can help yoy start to feel better </string>
-    <string name="therapy"> Our therapists can provide a safe, confidential space for you to get the treatment you</string>
+    <string name="therapy"> Our therapists can provide a safe, confidential space for you to get the treatment you need to help with your life</string>
     <string name="title_activity_depression__and__mood">Depression_And_Mood</string>
     <string name="title_activity_patient__portal__data">Patient_Portal_Data</string>
-    <string name="title_activity_doctor__portel__data">Doctor_Portel_Data</string>tes,medications or
-    food ,our provide can help
     <string name="addc">MDLink is a Secure online medical \n platform and service that allows \n patients to connect with the best \n doctors and receive treatment best \n video , audio or text messages. \n\n\n\n\n Our digital platform helps to address \n the challenges of connecting with \n patients who are unable to reach their \n delivering a personalized and \n convenient state-of-the-art service</string>
     <string name="label_login">Login</string>
     <string name="label_urgentcare">Urgent Care</string>
@@ -35,9 +33,9 @@
     <string name="label_register">Register</string>
     <string name="label_submit">Submit</string>
     <string name="label_howconnect">How would you like to connect?</string>
-    <string name="audio_12">Audio ($12)</string>
-    <string name="instant_message_12">Instant Message ($12)</string>
-    <string name="video_call_15">Video Call ($15)</string>
+    <string name="audio_12">Audio</string>
+    <string name="instant_message_12">Instant Message</string>
+    <string name="video_call_15">Video Call</string>
     <string name="label_coupon_code">Coupon Code</string>
     <string name="label_bookappointment">Book Appointment</string>
     <string name="label_medical_checkout">Medical Checkout</string>
@@ -55,6 +53,7 @@
     <string name="label_paybypaypal">Pay by Paypal</string>
     <string name="label_confirmappt">Confirm Appointment</string>
     <string name="colon">: %1$s</string>
+    <string name="appt_price">%1$s USD $ %2$s / per session</string>
     <string name="label_scheduledappointment">Scheduled Appointment</string>
     <string name="label_i_would_to_renew_refill_a_prescription">I would to renew/refill a prescription</string>
     <string name="i_would_to_renew_refill_a_prescription">I would to renew/refill a prescription : %1$s</string>
@@ -315,4 +314,8 @@
     <string name="url_terms">https://themdlink.com/terms</string>
     <string name="url_privacy_policy">https://themdlink.com/privacy</string>
     <string name="url_faqs">https://themdlink.com/faq</string>
+    <string name="filter">Search</string>
+    <string name="share_app">Share App</string>
+    <string name="playstore_link">https://play.google.com/store/apps/details?id=com.mdlinkhealth</string>
+    <string name="itunes_link">https://itunes.apple.com/us/app/mdlink-health/id1441006209?mt=8</string>
 </resources>

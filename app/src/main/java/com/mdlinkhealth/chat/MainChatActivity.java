@@ -22,11 +22,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mdlinkhealth.App;
 import com.mdlinkhealth.BaseActivity;
 import com.mdlinkhealth.Medical_CheckOut_Doctor;
 import com.mdlinkhealth.R;
+import com.mdlinkhealth.ScheduleAppointmentActivity;
 import com.mdlinkhealth.chat.channels.ChannelAdapter;
 import com.mdlinkhealth.chat.channels.ChannelManager;
 import com.mdlinkhealth.chat.channels.LoadChannelListener;
@@ -119,11 +121,11 @@ public class MainChatActivity extends BaseActivity implements ChatClientListener
         chatClientManager = new ChatClientManager(getApplicationContext());
         initToolbar();
 
-    /*drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-        R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-    drawer.setDrawerListener(toggle);
-    toggle.syncState();*/
+        /*drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();*/
 
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
 

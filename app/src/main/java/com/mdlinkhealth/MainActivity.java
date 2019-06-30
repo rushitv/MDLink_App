@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.mdlinkhealth.preferences.SharedPreferenceManager;
 import com.mdlinkhealth.util.Constants;
 
 import static com.mdlinkhealth.util.Constants.INVALID;
@@ -47,18 +48,18 @@ public class MainActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         tvThree = findViewById(R.id.tvThree);
-        tvThree.setOnClickListener(this);
         tvThree2 = findViewById(R.id.tvThree2);
-        tvThree2.setOnClickListener(this);
         tvThree23 = findViewById(R.id.tvThree23);
-        tvThree23.setOnClickListener(this);
         tvThree234 = findViewById(R.id.tvThree234);
-        tvThree234.setOnClickListener(this);
         tvThree2345 = findViewById(R.id.tvThree2345);
-        tvThree2345.setOnClickListener(this);
         tvThree23456 = findViewById(R.id.tvThree23456);
-        tvThree23456.setOnClickListener(this);
 
+        tvThree.setOnClickListener(this);
+        tvThree2.setOnClickListener(this);
+        tvThree23.setOnClickListener(this);
+        tvThree234.setOnClickListener(this);
+        tvThree2345.setOnClickListener(this);
+        tvThree23456.setOnClickListener(this);
     }
 
     @Override

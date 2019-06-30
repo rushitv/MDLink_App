@@ -3,19 +3,24 @@ package com.mdlinkhealth.chat.messages;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mdlinkhealth.App;
 import com.mdlinkhealth.R;
 import com.mdlinkhealth.chat.ImagePreviewActivity;
+import com.mdlinkhealth.helper.StringHelper;
+import com.mdlinkhealth.helper.UiHelper;
 import com.mdlinkhealth.util.Constants;
 import com.mdlinkhealth.util.FileUtil;
+import com.mdlinkhealth.util.ValidationsUtil;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.twilio.chat.Message;
@@ -101,17 +106,17 @@ public class MessageAdapter extends BaseAdapter {
         int res;
         switch (type) {
             case TYPE_MESSAGE:
-                String selfUser = messages.get(position).getAuthor().replace("-", "");
-                selfUser = selfUser.replaceAll("[0-9]", "");
-                if (selfUser.equalsIgnoreCase(App.getInstance().GetUserName())) {
+                String selfUser = messages.get(position).getAuthor();
+                Log.d(TAG, "selfUser>>>>" + selfUser + ">>>>" + App.getInstance().GetFirstName());
+                if (messages.get(position).getAuthor().contains("-")) {
+                    int firstSpace = (selfUser.indexOf("-") >= 0) ? selfUser.indexOf("-") : selfUser.length() - 1;
+                    selfUser = selfUser.substring(0, firstSpace);
+                }
+
+                if (StringHelper.equals(selfUser, App.getInstance().GetFirstName()) || StringHelper.equals(selfUser, App.getInstance().GetUserName())) {
                     res = R.layout.message_self;
                 } else {
-                    String selfUserFirstFourChar = App.getInstance().GetUserName().substring(0, 4);
-                    if (selfUser.equalsIgnoreCase(selfUserFirstFourChar)) {
-                        res = R.layout.message_self;
-                    } else {
-                        res = R.layout.message_opponent;
-                    }
+                    res = R.layout.message_opponent;
                 }
                 convertView = layoutInflater.inflate(res, viewGroup, false);
                 final ChatMessage message = messages.get(position);
@@ -119,40 +124,52 @@ public class MessageAdapter extends BaseAdapter {
                 TextView textViewAuthor = convertView.findViewById(R.id.textViewAuthor);
                 TextView textViewDate = convertView.findViewById(R.id.textViewDate);
                 ImageView imageViewMessage = convertView.findViewById(R.id.imageViewMessage);
-                try {
-                    if (FileUtil.isURL(message.getMessageBody())) {
-                        Log.i(TAG, ">>>>>>>isURL>>>>>" + message.getMessageBody());
-                        Picasso.get().load(message.getMessageBody()).into(imageViewMessage);
-                        imageViewMessage.setVisibility(View.VISIBLE);
-                        textViewMessage.setVisibility(View.GONE);
 
-                        imageViewMessage.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                showPhoto(message.getMessageBody());
-                            }
-                        });
-                    } else {
-                        imageViewMessage.setVisibility(View.GONE);
-                        textViewMessage.setVisibility(View.VISIBLE);
-                    }
-                } catch (Exception ex) {
+                final ProgressBar progressImageLoading = convertView.findViewById(R.id.progress_image_loading);
+                if (FileUtil.isURL(message.getMessageBody())) {
+                    progressImageLoading.setVisibility(View.VISIBLE);
+                    Log.i(TAG, ">>>>>>>isURL>>>>>" + message.getMessageBody());
+                    Picasso.get().load(message.getMessageBody())
+                            .resize(UiHelper.widthInPixels(50), 0)
+                            .into(imageViewMessage, new Callback() {
+                                        @Override
+                                        public void onSuccess() {
+                                            progressImageLoading.setVisibility(View.GONE);
+                                        }
+
+                                        @Override
+                                        public void onError(Exception e) {
+                                            progressImageLoading.setVisibility(View.GONE);
+                                        }
+                                    }
+                            );
+                    imageViewMessage.setVisibility(View.VISIBLE);
+                    textViewMessage.setVisibility(View.GONE);
+
+                    imageViewMessage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showPhoto(message.getMessageBody());
+                        }
+                    });
+                } else {
                     imageViewMessage.setVisibility(View.GONE);
-                    ex.printStackTrace();
+                    textViewMessage.setVisibility(View.VISIBLE);
+
+                    textViewMessage.setText(message.getMessageBody());
+                    textViewAuthor.setText(message.getAuthor());
+                    textViewAuthor.setVisibility(View.GONE);
                 }
-                textViewMessage.setText(message.getMessageBody());
-                textViewAuthor.setText(message.getAuthor());
-                textViewAuthor.setVisibility(View.GONE);
                 textViewDate.setText(DateFormatter.getFormattedDateFromISOString(message.getDateCreated()));
                 break;
-            case TYPE_STATUS:
+           /* case TYPE_STATUS:
                 res = R.layout.status_message;
                 convertView = layoutInflater.inflate(res, viewGroup, false);
                 ChatMessage status = messages.get(position);
                 TextView textViewStatus = (TextView) convertView.findViewById(R.id.textViewStatusMessage);
                 String statusMessage = status.getMessageBody();
                 textViewStatus.setText(statusMessage);
-                break;
+                break;*/
         }
         return convertView;
     }

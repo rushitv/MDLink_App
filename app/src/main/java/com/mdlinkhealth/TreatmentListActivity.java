@@ -30,7 +30,7 @@ public class TreatmentListActivity extends BaseActivity implements View.OnClickL
         setContentView(R.layout.activity_treatment_list);
         sharedPreferenceManager = new SharedPreferenceManager(this);
 
-        if(null != getIntent()) {
+        if (null != getIntent()) {
             val = getIntent().getStringExtra(Constants.TYPE);
         }
         initToolbar(val);
@@ -44,14 +44,18 @@ public class TreatmentListActivity extends BaseActivity implements View.OnClickL
         setToolbarTitle(val, R.color.colorAccent);
     }
 
-    private void initViews(){
+    private void initViews() {
         txtBookAppointmentTL = findViewById(R.id.txtBookAppointmentTL);
+        txtBookAppointmentTL.setVisibility(View.GONE);
+        if (!sharedPreferenceManager.getStringData(Constants.ROLE_ID).equalsIgnoreCase("1")) {
+            txtBookAppointmentTL.setVisibility(View.VISIBLE);
+        }
         rvBookAppointmentTL = findViewById(R.id.rvBookAppointmentTL);
 
         ArrayList<String> stringArrayList = new ArrayList<>();
-        if(null != getIntent()){
+        if (null != getIntent()) {
             String val = getIntent().getStringExtra(Constants.TYPE);
-            switch (val){
+            switch (val) {
                 case Constants.URGENTCARE:
                     stringArrayList = new ArrayList<>(Constants.URGENT_LIST);
                     break;
@@ -87,13 +91,13 @@ public class TreatmentListActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()) {
+        switch (v.getId()) {
             case R.id.txtBookAppointmentTL:
-                if(TextUtils.isEmpty(sharedPreferenceManager.getStringData(Constants.USER_ID))){
+                if (TextUtils.isEmpty(sharedPreferenceManager.getStringData(Constants.USER_ID))) {
                     finish();
                     Intent intent = new Intent(TreatmentListActivity.this, LoginActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     finish();
                     Intent intent = new Intent(TreatmentListActivity.this, BookAppointmentActivity.class);
                     startActivity(intent);

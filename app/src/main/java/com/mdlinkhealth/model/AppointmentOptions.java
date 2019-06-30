@@ -15,6 +15,9 @@ public class AppointmentOptions {
     @SerializedName("radiologys")
     @Expose
     private List<OptionDetails> radiologys = null;
+    @SerializedName("specialities")
+    @Expose
+    private List<Specialities> specialities = null;
 
     public List<OptionDetails> getLabs() {
         return labs;
@@ -40,5 +43,16 @@ public class AppointmentOptions {
         this.radiologys = radiologys;
     }
 
+    public void setPharmacys(List<OptionDetails> pharmacys) {
+        this.pharmacys = pharmacys;
+    }
+
+    public List<Specialities> getSpecialities() {
+        return specialities;
+    }
+
+    public void setSpecialities(List<Specialities> specialities) {
+        this.specialities = specialities;
+    }
 }
 

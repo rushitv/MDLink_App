@@ -146,7 +146,7 @@ public class VideoActivity extends BaseActivity {
     private boolean disconnectedFromOnDestroy;
     private SharedPreferenceManager sharedPreferenceManager;
     private String PatientId;
-    private String AppointmentId,RoleId,Name,DoctorName,identity = "";
+    private String AppointmentId, RoleId, Name, DoctorName, identity = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,14 +154,14 @@ public class VideoActivity extends BaseActivity {
         setContentView(R.layout.activity_video);
 
         sharedPreferenceManager = new SharedPreferenceManager(this);
-        if(getIntent()!=null){
+        if (getIntent() != null) {
             PatientId = getIntent().getStringExtra(Constants.PATIENT_ID);
             AppointmentId = getIntent().getStringExtra(Constants.APPOINTMENT_ID);
             RoleId = getIntent().getStringExtra(Constants.ROLE_ID);
             Name = getIntent().getStringExtra(Constants.NAME);
             DoctorName = getIntent().getStringExtra(Constants.DOCTOR_NAME);
         }
-        identity = sharedPreferenceManager.getStringData(Constants.NAME).substring(0,6);
+        identity = App.getInstance().GetFirstName();
 
         primaryVideoView = findViewById(R.id.primary_video_view);
         thumbnailVideoView = findViewById(R.id.thumbnail_video_view);
@@ -185,7 +185,7 @@ public class VideoActivity extends BaseActivity {
         /*
          * Needed for setting/abandoning audio focus during call
          */
-        audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         audioManager.setSpeakerphoneOn(true);
 
         /*
@@ -217,7 +217,7 @@ public class VideoActivity extends BaseActivity {
             case R.id.menu_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
-             case R.id.speaker_menu_item:
+            case R.id.speaker_menu_item:
                 if (audioManager.isSpeakerphoneOn()) {
                     audioManager.setSpeakerphoneOn(false);
                     item.setIcon(ic_phonelink_ring_white_24dp);
@@ -254,7 +254,7 @@ public class VideoActivity extends BaseActivity {
     }
 
     @Override
-    protected  void onResume() {
+    protected void onResume() {
         super.onResume();
 
         /*
@@ -352,14 +352,14 @@ public class VideoActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    private boolean checkPermissionForCameraAndMicrophone(){
+    private boolean checkPermissionForCameraAndMicrophone() {
         int resultCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         int resultMic = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
         return resultCamera == PackageManager.PERMISSION_GRANTED &&
-               resultMic == PackageManager.PERMISSION_GRANTED;
+                resultMic == PackageManager.PERMISSION_GRANTED;
     }
 
-    private void requestPermissionForCameraAndMicrophone(){
+    private void requestPermissionForCameraAndMicrophone() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA) ||
                 ActivityCompat.shouldShowRequestPermissionRationale(this,
                         Manifest.permission.RECORD_AUDIO)) {
@@ -408,13 +408,12 @@ public class VideoActivity extends BaseActivity {
              */
         //    this.accessToken = TWILIO_ACCESS_TOKEN;
         //} else {
-            /*
-             * OPTION 2 - Retrieve an access token from your own web app.
-             * Add the variable ACCESS_TOKEN_SERVER assigning it to the url of your
-             * token server and the variable USE_TOKEN_SERVER=true to your
-             * local.properties file.
-             */
-            retrieveAccessTokenFromServer();
+        /*
+         * OPTION 2 - Retrieve an access token from your own web app.
+         * Add the variable ACCESS_TOKEN_SERVER assigning it to the url of your
+         * token server and the variable USE_TOKEN_SERVER=true to your
+         * local.properties file.
+         */
         //}*/
     }
 
@@ -506,7 +505,7 @@ public class VideoActivity extends BaseActivity {
      */
     private void showConnectDialog() {
         EditText roomEditText = new EditText(this);
-        roomEditText.setText(Constants.APPO_ROOM+AppointmentId);
+        roomEditText.setText(Constants.APPO_ROOM + AppointmentId);
         roomEditText.setEnabled(false);
         connectDialog = Dialog.createConnectDialog(roomEditText,
                 connectClickListener(roomEditText),
@@ -530,7 +529,7 @@ public class VideoActivity extends BaseActivity {
             return;
         }
         remoteParticipantIdentity = remoteParticipant.getIdentity();
-        videoStatusTextView.setText("RemoteParticipant "+ remoteParticipantIdentity + " joined");
+        videoStatusTextView.setText("RemoteParticipant " + remoteParticipantIdentity + " joined");
 
         /*
          * Add remote participant renderer
@@ -636,6 +635,8 @@ public class VideoActivity extends BaseActivity {
 
             @Override
             public void onConnectFailure(Room room, TwilioException e) {
+                Log.i(TAG, ">>>>>>>>>1>>>>>>>>>>" + e.getMessage());
+                Log.i(TAG, ">>>>>>>>>2>>>>>>>>>>" + e.getExplanation());
                 videoStatusTextView.setText("Failed to connect");
                 configureAudio(false);
                 intializeUI();
@@ -719,7 +720,7 @@ public class VideoActivity extends BaseActivity {
 
             @Override
             public void onDataTrackPublished(RemoteParticipant remoteParticipant,
-                                              RemoteDataTrackPublication remoteDataTrackPublication) {
+                                             RemoteDataTrackPublication remoteDataTrackPublication) {
                 Log.i(TAG, String.format("onDataTrackPublished: " +
                                 "[RemoteParticipant: identity=%s], " +
                                 "[RemoteDataTrackPublication: sid=%s, enabled=%b, " +
@@ -734,7 +735,7 @@ public class VideoActivity extends BaseActivity {
 
             @Override
             public void onDataTrackUnpublished(RemoteParticipant remoteParticipant,
-                                                RemoteDataTrackPublication remoteDataTrackPublication) {
+                                               RemoteDataTrackPublication remoteDataTrackPublication) {
                 Log.i(TAG, String.format("onDataTrackUnpublished: " +
                                 "[RemoteParticipant: identity=%s], " +
                                 "[RemoteDataTrackPublication: sid=%s, enabled=%b, " +
@@ -807,8 +808,8 @@ public class VideoActivity extends BaseActivity {
 
             @Override
             public void onDataTrackSubscribed(RemoteParticipant remoteParticipant,
-                                               RemoteDataTrackPublication remoteDataTrackPublication,
-                                               RemoteDataTrack remoteDataTrack) {
+                                              RemoteDataTrackPublication remoteDataTrackPublication,
+                                              RemoteDataTrack remoteDataTrack) {
                 Log.i(TAG, String.format("onDataTrackSubscribed: " +
                                 "[RemoteParticipant: identity=%s], " +
                                 "[RemoteDataTrack: enabled=%b, name=%s]",
@@ -820,8 +821,8 @@ public class VideoActivity extends BaseActivity {
 
             @Override
             public void onDataTrackUnsubscribed(RemoteParticipant remoteParticipant,
-                                                 RemoteDataTrackPublication remoteDataTrackPublication,
-                                                 RemoteDataTrack remoteDataTrack) {
+                                                RemoteDataTrackPublication remoteDataTrackPublication,
+                                                RemoteDataTrack remoteDataTrack) {
                 Log.i(TAG, String.format("onDataTrackUnsubscribed: " +
                                 "[RemoteParticipant: identity=%s], " +
                                 "[RemoteDataTrack: enabled=%b, name=%s]",
@@ -907,12 +908,12 @@ public class VideoActivity extends BaseActivity {
                  */
                 if (room != null) {
                     room.disconnect();
-                    if(RoleId.equalsIgnoreCase("1")) {
+                    if (RoleId.equalsIgnoreCase("1")) {
                         Intent iMedicalCheckout = new Intent(VideoActivity.this, Medical_CheckOut_Doctor.class);
                         iMedicalCheckout.putExtra(Constants.PATIENT_ID, PatientId);
                         iMedicalCheckout.putExtra(Constants.APPOINTMENT_ID, AppointmentId);
                         startActivity(iMedicalCheckout);
-                    }else {
+                    } else {
                         finish();
                     }
                 }
@@ -922,7 +923,7 @@ public class VideoActivity extends BaseActivity {
     }
 
     private View.OnClickListener connectActionClickListener() {
-        return new View.OnClickListener(){
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showConnectDialog();
@@ -1004,10 +1005,14 @@ public class VideoActivity extends BaseActivity {
     }
 
     private void retrieveAccessTokenFromServer() {
+        String user = App.getInstance().GetFirstName();
+        String roomToConnect = Constants.APPO_ROOM + AppointmentId;
+        String urlRequest = String.format("%s?identity=" + user + "%s&room_name=" + roomToConnect, ACCESS_TOKEN_SERVER,
+                "");
+        Log.i(TAG, "urlRequest>>>>>>" + urlRequest);
 
         Ion.with(this)
-                .load(String.format("%s?identity="+identity, ACCESS_TOKEN_SERVER,
-                        UUID.randomUUID().toString()))
+                .load(String.format("%s?identity=" + user + "%s&room_name=" + roomToConnect, ACCESS_TOKEN_SERVER, ""))
                 .asString()
                 .setCallback(new FutureCallback<String>() {
                     @Override
@@ -1015,9 +1020,9 @@ public class VideoActivity extends BaseActivity {
                         if (e == null) {
 
                             JsonParser jsonParser = new JsonParser();
-                            JsonObject jo = (JsonObject)jsonParser.parse(token);
+                            JsonObject jo = (JsonObject) jsonParser.parse(token);
 
-                            Log.i(TAG,">>>>>>>>>"+jo.get("token").getAsString());
+                            Log.i(TAG, ">>>>>>>>>" + jo.get("token").getAsString());
                             token = jo.get("token").getAsString();
                             VideoActivity.this.accessToken = token;
                         } else {
@@ -1066,7 +1071,8 @@ public class VideoActivity extends BaseActivity {
                             .setOnAudioFocusChangeListener(
                                     new AudioManager.OnAudioFocusChangeListener() {
                                         @Override
-                                        public void onAudioFocusChange(int i) { }
+                                        public void onAudioFocusChange(int i) {
+                                        }
                                     })
                             .build();
             audioManager.requestAudioFocus(focusRequest);

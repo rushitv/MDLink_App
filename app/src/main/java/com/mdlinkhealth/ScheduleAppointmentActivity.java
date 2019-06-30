@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
@@ -15,15 +19,20 @@ import com.mdlinkhealth.adapter.AppointmentListAdapter;
 import com.mdlinkhealth.chat.ChatClientManager;
 import com.mdlinkhealth.chat.MainChatActivity;
 import com.mdlinkhealth.chat.listeners.TaskCompletionListener;
+import com.mdlinkhealth.helper.StringHelper;
 import com.mdlinkhealth.model.AppointmentListResponse;
 import com.mdlinkhealth.model.AppointmentListResponseDetails;
+import com.mdlinkhealth.model.GetApptList;
+import com.mdlinkhealth.model.PatientProfileRequest;
 import com.mdlinkhealth.preferences.SharedPreferenceManager;
 import com.mdlinkhealth.util.Constants;
+import com.mdlinkhealth.util.SearchTextWatcher;
 import com.mdlinkhealth.video.VideoActivity;
 import com.mdlinkhealth.voice.VoiceActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,11 +40,15 @@ import retrofit2.Response;
 
 public class ScheduleAppointmentActivity extends BaseActivity {
     private String TAG = getClass().getSimpleName();
-    Toolbar toolbar;
+    private Toolbar toolbar;
+    private AppCompatImageView imgCloseFilter;
+    private AppCompatEditText edtFilter;
     private RecyclerView rvScheduledApptList;
     private AppointmentListAdapter appointmentListAdapter;
     private SharedPreferenceManager sharedPreferenceManager;
     private ChatClientManager clientManager;
+    ArrayList<AppointmentListResponseDetails> appointmentListResponseDetailsArrayList;
+    private PatientProfileRequest patientProfileRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +57,9 @@ public class ScheduleAppointmentActivity extends BaseActivity {
         sharedPreferenceManager = new SharedPreferenceManager(this);
         initToolbar();
         initViews();
-
+        initSearch();
         callToGetListScheduledAppointment(sharedPreferenceManager.getStringData(Constants.USER_ID), sharedPreferenceManager.getStringData(Constants.ROLE_ID));
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     private void initToolbar() {
@@ -57,6 +71,14 @@ public class ScheduleAppointmentActivity extends BaseActivity {
 
     private void initViews() {
         rvScheduledApptList = findViewById(R.id.rvScheduledAppointmentList);
+        edtFilter = findViewById(R.id.edt_filter);
+        imgCloseFilter = findViewById(R.id.img_closeFavoriteFilter);
+        imgCloseFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtFilter.setText("");
+            }
+        });
     }
 
     private void callToGetListScheduledAppointment(String UserId, final String RoleId) {
@@ -89,6 +111,10 @@ public class ScheduleAppointmentActivity extends BaseActivity {
     }
 
     private void bindRVList(final ArrayList<AppointmentListResponseDetails> appointmentListResponseDetailsList, final String RoleId) {
+        if (appointmentListResponseDetailsArrayList == null) {
+            appointmentListResponseDetailsArrayList = new ArrayList<>();
+        }
+        appointmentListResponseDetailsArrayList.addAll(appointmentListResponseDetailsList);
         appointmentListAdapter = new AppointmentListAdapter(this,
                 appointmentListResponseDetailsList, RoleId, new AppointmentListAdapter.onItemClickListener() {
             @Override
@@ -113,11 +139,9 @@ public class ScheduleAppointmentActivity extends BaseActivity {
                         case "1": // Doctor
                             if (appointmentListResponseDetails.getIsCompleted() != 1 && appointmentListResponseDetails.getType() == 1) {
                                 // open audio call activity
-                                showMainVoiceActivity(sharedPreferenceManager.getStringData(Constants.ROLE_ID),
-                                        "" + appointmentListResponseDetails.getId(),
-                                        appointmentListResponseDetails.getName(),
-                                        appointmentListResponseDetails.getDocName(),
-                                        "" + appointmentListResponseDetails.getUserId());
+
+                                callGetPatientProfileAPI(appointmentListResponseDetails);
+
                             } else if (appointmentListResponseDetails.getIsCompleted() != 1 && appointmentListResponseDetails.getType() == 2) {
                                 // open chat  activity
                                 showMainChatActivity(sharedPreferenceManager.getStringData(Constants.ROLE_ID),
@@ -168,7 +192,7 @@ public class ScheduleAppointmentActivity extends BaseActivity {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which){
+                switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
                         dialog.dismiss();
@@ -192,7 +216,7 @@ public class ScheduleAppointmentActivity extends BaseActivity {
     private void callAppointmentStatusAPI(final AppointmentListResponseDetails appointmentListResponseDetails, final String action) {
 
         HashMap<String, String> stringHashMap = new HashMap<>();
-        stringHashMap.put("appo_id", ""+appointmentListResponseDetails.getId());
+        stringHashMap.put("appo_id", "" + appointmentListResponseDetails.getId());
         stringHashMap.put("status_id", action);
         showProgressDialog();
         Call<JsonObject> getPatientById = App.apiService.actionappointment(stringHashMap);
@@ -207,14 +231,13 @@ public class ScheduleAppointmentActivity extends BaseActivity {
                         Toast.makeText(ScheduleAppointmentActivity.this,
                                 response.body().get("message").getAsString(),
                                 Toast.LENGTH_LONG).show();
-                        if(action.equalsIgnoreCase("1")) {
+                        if (action.equalsIgnoreCase("1")) {
                             appointmentListResponseDetails.setStatusId(1);
                             appointmentListAdapter.update(appointmentListResponseDetails);
-                        }else {
+                        } else {
                             //2 cancel appt response
                             appointmentListAdapter.remove(appointmentListResponseDetails);
                         }
-                        //callToGetListScheduledAppointment(sharedPreferenceManager.getStringData(Constants.USER_ID), sharedPreferenceManager.getStringData(Constants.ROLE_ID));
                     }
                 }
             }
@@ -256,7 +279,7 @@ public class ScheduleAppointmentActivity extends BaseActivity {
 
     }
 
-    private void showMainVoiceActivity(String RoleId, String AppointmentId, String Name, String DoctorName, String PatientId) {
+    private void showMainVoiceActivity(String RoleId, String AppointmentId, String Name, String DoctorName, String PatientId, String PhoneNo) {
         Intent launchIntent = new Intent();
         launchIntent.setClass(getApplicationContext(), VoiceActivity.class);
         launchIntent.putExtra(Constants.ROLE_ID, RoleId);
@@ -264,6 +287,7 @@ public class ScheduleAppointmentActivity extends BaseActivity {
         launchIntent.putExtra(Constants.DOCTOR_NAME, DoctorName);
         launchIntent.putExtra(Constants.APPOINTMENT_ID, AppointmentId);
         launchIntent.putExtra(Constants.PATIENT_ID, PatientId);
+        launchIntent.putExtra(Constants.PATIENT_PHONE_NO, PhoneNo);
         startActivity(launchIntent);
     }
 
@@ -276,5 +300,101 @@ public class ScheduleAppointmentActivity extends BaseActivity {
         launchIntent.putExtra(Constants.APPOINTMENT_ID, AppointmentId);
         launchIntent.putExtra(Constants.PATIENT_ID, PatientId);
         startActivity(launchIntent);
+    }
+
+    private void initSearch() {
+        edtFilter.addTextChangedListener(new SearchTextWatcher() {
+            @Override
+            public void startSearch(String query) {
+                imgCloseFilter.setVisibility(View.VISIBLE);
+                filter(query);
+            }
+
+            @Override
+            public void closeSearch() {
+                imgCloseFilter.setVisibility(View.GONE);
+                appointmentListAdapter.clear();
+                appointmentListAdapter.addAll(getApptListCopy());
+            }
+        });
+    }
+
+    private void filter(String text) {
+        List<AppointmentListResponseDetails> temp = new ArrayList<>();
+        if (null != getApptListCopy()) {
+            for (AppointmentListResponseDetails d : getApptListCopy()) {
+                //or use .equal(text) with you want equal match
+                //use .toLowerCase() for better matches
+                if (d.getName().toLowerCase().contains(text.toLowerCase())
+                        || d.getScheduledDate().toLowerCase().contains(text.toLowerCase())
+                        || d.getDocName().toLowerCase().contains(text.toLowerCase())
+                        || d.getScheduledTime().toLowerCase().contains(text.toLowerCase())
+                        || d.getVisitPurpose().toLowerCase().contains(text.toLowerCase())
+                        || d.getType().equals(getTypeVal(text))) {
+                    temp.add(d);
+                }
+            }
+            //update recycler-view
+            appointmentListAdapter.clear();
+            appointmentListAdapter.addAll(temp);
+        }
+    }
+
+
+    private List<AppointmentListResponseDetails> getApptListCopy() {
+        return appointmentListResponseDetailsArrayList;
+    }
+
+    private int getTypeVal(String val) {
+        int type = 0;
+        if (val.equalsIgnoreCase("Audio Call")) {
+            type = 1;
+        } else if (val.equalsIgnoreCase("Instant Message")) {
+            type = 2;
+        } else if (val.equalsIgnoreCase("Video Call")) {
+            type = 3;
+        }
+        return type;
+    }
+
+    private synchronized void callGetPatientProfileAPI(final AppointmentListResponseDetails appointmentListResponseDetails) {
+        showProgressDialog();
+
+        String PatientId = "" + appointmentListResponseDetails.getUserId();
+        if (StringHelper.isEmptyOrNull(PatientId)) {
+            return;
+        }
+
+        Call<JsonObject> getPatientById = App.apiService.getPatientProfile(PatientId);
+        getPatientById.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(retrofit2.Call<JsonObject> call, Response<JsonObject> response) {
+                hideProgressDialog();
+                Log.i(TAG, "1>>>>>>>>>>>>" + response.body());
+                if (response.code() == 200) {
+                    Log.i(TAG, "2>>>>>>>>>>>>>" + response.body());
+                    JsonObject jsonObject = response.body().getAsJsonObject("result");
+                    Log.i(TAG, "2>>name>>>>>>>>>>>" + jsonObject.get("name"));
+                    Log.i(TAG, "2>>email>>>>>>>>>>>" + jsonObject.get("email"));
+                    if (patientProfileRequest == null) {
+                        patientProfileRequest = new PatientProfileRequest();
+                    }
+                    patientProfileRequest.setPhoneNo(jsonObject.get("phone_no").getAsString());
+
+                    showMainVoiceActivity(sharedPreferenceManager.getStringData(Constants.ROLE_ID),
+                            "" + appointmentListResponseDetails.getId(),
+                            appointmentListResponseDetails.getName(),
+                            appointmentListResponseDetails.getDocName(),
+                            "" + appointmentListResponseDetails.getUserId(),
+                            jsonObject.get("phone_no").getAsString());
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<JsonObject> call, Throwable t) {
+                hideProgressDialog();
+                t.fillInStackTrace();
+            }
+        });
     }
 }
