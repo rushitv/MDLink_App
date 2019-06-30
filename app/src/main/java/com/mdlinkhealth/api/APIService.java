@@ -95,6 +95,38 @@ public interface APIService {
     @POST("prescription")
     Call<JsonObject> prescription(@Body AddPrescriptionDoctorSide addPrescriptionDoctorSide);
 
+    @Multipart
+    @POST("prescription")
+    Call<JsonObject> prescription(
+            @Part("prescription_date") RequestBody prescription_date,
+            @Part("notes") RequestBody notes,
+            @Part("diagnosis") RequestBody diagnosis,
+            @Part("pharmacy_name") RequestBody pharmacy_name,
+            @Part("pharmacy_fax_number") RequestBody pharmacy_fax_number,
+            @Part("lab_name") RequestBody lab_name,
+            @Part("radiology_email") RequestBody radiology_email,
+            @Part("radiology_type") RequestBody radiology_type,
+            @Part("radiology_request") RequestBody radiology_request,
+            @Part("patient_id") RequestBody patient_id,
+            @Part("appointment_id") RequestBody appointment_id,
+            @Part("patient_name") RequestBody patient_name,
+            @Part("patient_email") RequestBody patient_email,
+            @Part("phone_no") RequestBody phone_no,
+            @Part("patient_address") RequestBody patient_address,
+            @Part("gender") RequestBody gender,
+            @Part("birth_date") RequestBody birth_date,
+            @Part("age") RequestBody age,
+            @Part("test") RequestBody test,
+            @Part("lab_request_note") RequestBody lab_request_note,
+            @Part("prescription") RequestBody prescription,
+            @Part("return_date") RequestBody return_date,
+            @Part("doctor_id") RequestBody doctor_id,
+            @Part("doctor_name") RequestBody doctor_name,
+            @Part("doctor_email") RequestBody doctor_email,
+            @Part("doc_phone_no") RequestBody doc_phone_no,
+            @Part MultipartBody.Part extra_file
+    );
+
     @POST("login")
     Call<JsonObject> login(@Body HashMap jsonObject);
 

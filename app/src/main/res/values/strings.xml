@@ -318,4 +318,8 @@
     <string name="share_app">Share App</string>
     <string name="playstore_link">https://play.google.com/store/apps/details?id=com.mdlinkhealth</string>
     <string name="itunes_link">https://itunes.apple.com/us/app/mdlink-health/id1441006209?mt=8</string>
+    <string name="attach_image">Add Image</string>
+    <string name="file_provider_authority" translatable="false">com.mdlinkhealth.fileprovider</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
 </resources>

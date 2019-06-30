@@ -83,65 +83,74 @@ public class ViewPatientFileActivity extends BaseActivity {
                 hideProgressDialog();
                 if (response.code() == 200) {
                     if (response.body() != null) {
-                        JsonObject responseObj = response.body().getAsJsonObject("result");
-                        if (responseObj.has("name")) {
-                            txtNameCA.setText(getString(R.string.colon, responseObj.get("name").getAsString()));
-                        }
-                        if (responseObj.has("age")) {
-                            txtAgeCA.setText(getString(R.string.colon, "" + responseObj.get("age").getAsInt()));
-                        }
-                        if (responseObj.has("type")) {
-                            if (responseObj.get("type").getAsInt() == 3) {
-                                txtApptTypeCA.setText("Video Call");
-                            } else if (responseObj.get("type").getAsInt() == 2) {
-                                txtApptTypeCA.setText("Instant Message");
-                            } else if (responseObj.get("type").getAsInt() == 1) {
-                                txtApptTypeCA.setText("Audio");
+                        try {
+                            JsonObject responseObj = response.body().getAsJsonObject("result");
+                            if (responseObj.has("name")) {
+                                txtNameCA.setText(getString(R.string.colon, responseObj.get("name").getAsString()));
                             }
-                        }
-                        if (responseObj.has("is_payed")) {
-                            txtApptPaymentStatusCA.setText(responseObj.get("is_payed").getAsInt() == 0 ? "Pending" : "Paid");
-                        }
-                        if (responseObj.has("is_renew")) {
-                            txtRenewApptForCA.setText(getString(R.string.i_would_to_renew_refill_a_prescription,
-                                    responseObj.get("is_renew").getAsInt() == 0 ? "No" : "Yes"));
-                        }
-                        if (responseObj.has("sick_note")) {
-                            txtSicknoteApptForCA.setText(getString(R.string.i_would_to_obtain_sicknote,
-                                    responseObj.get("sick_note").getAsInt() == 0 ? "No" : "Yes"));
-                        }
-                        if (responseObj.has("visit_purpose")) {
-                            txtPurposeCA.setText(getString(R.string.colon, responseObj.get("visit_purpose").getAsString()));
-                        }
-                        if (responseObj.has("allergy")) {
-                            txtAllergiesCA.setText(getString(R.string.colon, responseObj.get("allergy").getAsString()));
-                        }
-                        if (responseObj.has("pharmacy")) {
-                            txtPharmacyCA.setText(getString(R.string.colon, responseObj.get("pharmacy").getAsString()));
-                        }
+                            if (responseObj.has("age")) {
+                                txtAgeCA.setText(getString(R.string.colon, "" + responseObj.get("age").getAsInt()));
+                            }
+                            if (responseObj.has("type")) {
+                                if (responseObj.get("type").getAsInt() == 3) {
+                                    txtApptTypeCA.setText("Video Call");
+                                } else if (responseObj.get("type").getAsInt() == 2) {
+                                    txtApptTypeCA.setText("Instant Message");
+                                } else if (responseObj.get("type").getAsInt() == 1) {
+                                    txtApptTypeCA.setText("Audio");
+                                }
+                            }
+                            if (responseObj.has("is_payed")) {
+                                txtApptPaymentStatusCA.setText(responseObj.get("is_payed").getAsInt() == 0 ? "Pending" : "Paid");
+                            }
+                            if (responseObj.has("is_renew")) {
+                                txtRenewApptForCA.setText(getString(R.string.i_would_to_renew_refill_a_prescription,
+                                        responseObj.get("is_renew").getAsInt() == 0 ? "No" : "Yes"));
+                            }
+                            if (responseObj.has("sick_note")) {
+                                txtSicknoteApptForCA.setText(getString(R.string.i_would_to_obtain_sicknote,
+                                        responseObj.get("sick_note").getAsInt() == 0 ? "No" : "Yes"));
+                            }
+                            if (responseObj.has("visit_purpose")) {
+                                txtPurposeCA.setText(getString(R.string.colon, responseObj.get("visit_purpose").getAsString()));
+                            }
+                            if (responseObj.has("allergy")) {
+                                txtAllergiesCA.setText(getString(R.string.colon, responseObj.get("allergy").getAsString()));
+                            }
+                            if (responseObj.has("pharmacy")) {
+                                txtPharmacyCA.setText(getString(R.string.colon, responseObj.get("pharmacy").getAsString()));
+                            }
                        /* if (responseObj.has("location")) {
                             txtLocationCA.setText(getString(R.string.colon, responseObj.get("location").getAsString()));
                         }*/
-                        if (responseObj.has("scheduled_date")) {
-                            txtDateCA.setText(getString(R.string.colon, responseObj.get("scheduled_date").getAsString()));
-                        }
-                        if (responseObj.has("scheduled_time")) {
-                            txtTimeCA.setText(getString(R.string.colon, responseObj.get("scheduled_time").getAsString()));
-                        }
-                        if (responseObj.has("preferred_doctor")) {
-                            txtPreferredDoctorCA.setText(getString(R.string.colon, responseObj.get("preferred_doctor").getAsString()));
-                        }
-
-                        if (responseObj.has("medical_conditions")) {
-                            txtMedicalConditionCA.setText(getString(R.string.medicalcondition, responseObj.get("medical_conditions").getAsString()));
-                        }
-
-                        if (responseObj.has("previous_hospital")) {
-                            if (!StringHelper.isEmptyOrNull(responseObj.get("previous_hospital").getAsString())) {
-                                txtPreviousHospitalCA.setText(getString(R.string.colon, responseObj.get("previous_hospital").getAsString()));
+                            if (responseObj.has("scheduled_date")) {
+                                txtDateCA.setText(getString(R.string.colon, responseObj.get("scheduled_date").getAsString()));
                             }
-                        }
+                            if (responseObj.has("scheduled_time")) {
+                                txtTimeCA.setText(getString(R.string.colon, responseObj.get("scheduled_time").getAsString()));
+                            }
+                            if (responseObj.has("preferred_doctor")) {
+                                txtPreferredDoctorCA.setText(getString(R.string.colon, responseObj.get("preferred_doctor").getAsString()));
+                            }
 
+                            if (responseObj.has("medical_conditions")) {
+                                txtMedicalConditionCA.setText(getString(R.string.medicalcondition, responseObj.get("medical_conditions").getAsString()));
+                            }
+
+                            if (responseObj.has("previous_hospital")) {
+                                if (!StringHelper.isEmptyOrNull(responseObj.get("previous_hospital").getAsString())) {
+                                    String prev_hospital = "";
+                                    if (responseObj.get("previous_hospital").getAsString().equalsIgnoreCase("null")) {
+                                        prev_hospital = "";
+                                    } else {
+                                        prev_hospital = responseObj.get("previous_hospital").getAsString();
+                                    }
+                                    txtPreviousHospitalCA.setText(getString(R.string.colon, prev_hospital));
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

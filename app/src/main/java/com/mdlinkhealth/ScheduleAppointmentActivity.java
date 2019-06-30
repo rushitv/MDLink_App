@@ -372,21 +372,26 @@ public class ScheduleAppointmentActivity extends BaseActivity {
                 hideProgressDialog();
                 Log.i(TAG, "1>>>>>>>>>>>>" + response.body());
                 if (response.code() == 200) {
-                    Log.i(TAG, "2>>>>>>>>>>>>>" + response.body());
-                    JsonObject jsonObject = response.body().getAsJsonObject("result");
-                    Log.i(TAG, "2>>name>>>>>>>>>>>" + jsonObject.get("name"));
-                    Log.i(TAG, "2>>email>>>>>>>>>>>" + jsonObject.get("email"));
-                    if (patientProfileRequest == null) {
-                        patientProfileRequest = new PatientProfileRequest();
-                    }
-                    patientProfileRequest.setPhoneNo(jsonObject.get("phone_no").getAsString());
+                    try {
+                        Log.i(TAG, "2>>>>>>>>>>>>>" + response.body());
+                        JsonObject jsonObject = response.body().getAsJsonObject("result");
+                        Log.i(TAG, "2>>name>>>>>>>>>>>" + jsonObject.get("name"));
+                        Log.i(TAG, "2>>email>>>>>>>>>>>" + jsonObject.get("email"));
+                        if (patientProfileRequest == null) {
+                            patientProfileRequest = new PatientProfileRequest();
+                        }
+                        patientProfileRequest.setPhoneNo(jsonObject.get("phone_no").getAsString());
 
-                    showMainVoiceActivity(sharedPreferenceManager.getStringData(Constants.ROLE_ID),
-                            "" + appointmentListResponseDetails.getId(),
-                            appointmentListResponseDetails.getName(),
-                            appointmentListResponseDetails.getDocName(),
-                            "" + appointmentListResponseDetails.getUserId(),
-                            jsonObject.get("phone_no").getAsString());
+                        showMainVoiceActivity(sharedPreferenceManager.getStringData(Constants.ROLE_ID),
+                                "" + appointmentListResponseDetails.getId(),
+                                appointmentListResponseDetails.getName(),
+                                appointmentListResponseDetails.getDocName(),
+                                "" + appointmentListResponseDetails.getUserId(),
+                                jsonObject.get("phone_no").getAsString());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                 }
             }
 

@@ -1,10 +1,20 @@
 package com.mdlinkhealth;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -29,14 +40,22 @@ import com.mdlinkhealth.model.AddPrescriptionDoctorSide;
 import com.mdlinkhealth.model.AppointmentOptionsResponse;
 import com.mdlinkhealth.model.OptionDetails;
 import com.mdlinkhealth.model.PharmacyResponse;
+import com.mdlinkhealth.popup.CameraOrGallery;
 import com.mdlinkhealth.preferences.SharedPreferenceManager;
 import com.mdlinkhealth.util.Constants;
+import com.mdlinkhealth.util.FileUtil;
 import com.mdlinkhealth.util.ValidationsUtil;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,12 +74,26 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
             edtRadiologyType, edtSickRequestDate,
             edtPatientAddressCheckout, edtPatientPhoneNumberCheckout, edtPatientEmailCheckout, edtPatientNameCheckout,
             edtBirthdateCheckout, edtAgeCheckout, edtOtherLabTest, edtPrescriptionRequest, edtDateCheckout, edtMedicalHistoryCheckout,
-            edtRadiologyRequest, edtDiagnosis;
+            edtRadiologyRequest, edtDiagnosis, choose_image;
     private Spinner spnMedicalRecomm, spnGender;
     private String AppointmentId, PatientId;
     private SharedPreferenceManager sharedPreferenceManager;
     private TextView tvSubmitMedicalCheckout;
+    private ImageView imgImagePath;
     private Toolbar toolbar;
+    private static final int WRITE_STORAGE_PERMISSION_REQUEST_CODE = 3;
+    private static final int ACTIVITY_CHOOSE_CAMERA = 1;
+    private static final int ACTIVITY_CHOOSE_FILE = 2;
+    private static final String[] PERMISSION_PICTURES = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
+    private static final int CAMERA_PERMISSION_REQUEST_CODE = 4;
+    private static final String[] PERMISSION_CAMERA = {
+            Manifest.permission.CAMERA
+    };
+    private Uri mTakeImageUri;
+    private CameraOrGallery cameraOrGalleryDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +162,10 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
         }
 
         CallGetAppointmentOptions();
+
+        choose_image = findViewById(R.id.choose_image);
+        choose_image.setOnClickListener(this);
+        imgImagePath = findViewById(R.id.imgImagePath);
     }
 
     private void initToolbar() {
@@ -199,7 +236,40 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
                 break;
+            case R.id.choose_image:
+                openImageChooserDialog();
+                break;
         }
+    }
+
+    private void openImageChooserDialog() {
+        cameraOrGalleryDialog = new CameraOrGallery(Medical_CheckOut_Doctor.this) {
+            @Override
+            protected void onActionChoose(IMAGESOURCE imagesource) {
+                if (imagesource.equals(IMAGESOURCE.CAMERA)) {
+                    if (checkPermissionForCamera(Medical_CheckOut_Doctor.this)) {
+                        takeImage();
+                    } else {
+                        try {
+                            requestPermissionForCamera(Medical_CheckOut_Doctor.this);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                    if (checkPermissionForReadWriteExtertalStorage(Medical_CheckOut_Doctor.this)) {
+                        openFilesDirectory();
+                    } else {
+                        try {
+                            requestPermissionForReadWriteExtertalStorage(Medical_CheckOut_Doctor.this);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        };
+        cameraOrGalleryDialog.show();
     }
 
     private void CallGetAppointmentOptions() {
@@ -585,7 +655,7 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
             addPrescriptionDoctorSide.setPhoneNo(edtPatientPhoneNumberCheckout.getText().toString());
             addPrescriptionDoctorSide.setPatientId(PatientId);
             addPrescriptionDoctorSide.setPrescriptionDate(edtDateCheckout.getText().toString());
-
+            addPrescriptionDoctorSide.setReturnDate(edtSickRequestDate.getText().toString());
             StringBuilder checkboxExtract = new StringBuilder();
             for (String checkVal : currentSelectedItems) {
                 checkboxExtract.append(checkVal);
@@ -619,8 +689,90 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
     }
 
     private void callSubmitPrescriptionAPI(AddPrescriptionDoctorSide addPrescriptionDoctorSide) {
+
+        RequestBody prescription_date =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getPrescriptionDate());
+        RequestBody notes =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getNotes());
+        RequestBody diagnosis =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getDiagnosis());
+
+        RequestBody pharmacy_name =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getPharmacyName());
+        RequestBody pharmacy_fax_number =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getPharmacyFaxNumber());
+        RequestBody lab_name =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getLabName());
+        RequestBody radiology_email =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getRadiologyEmail());
+        RequestBody radiology_type =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getRadiologyType());
+        RequestBody radiology_request =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getRadiologyRequest());
+        RequestBody patient_id =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getPatientId());
+        RequestBody appointment_id =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getAppointmentId());
+        RequestBody patient_name =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getPatientName());
+
+        RequestBody patient_email =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getPatientEmail());
+
+        RequestBody phone_no =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getPhoneNo());
+
+        RequestBody patient_address =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getPatientAddress());
+
+        RequestBody gender =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getGender());
+
+        RequestBody birth_date =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getBirthDate());
+
+        RequestBody age =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getAge());
+
+        RequestBody test =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getTest());
+
+        RequestBody lab_request_note =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getLabRequestNote());
+        RequestBody prescription =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getPrescription());
+
+        RequestBody return_date =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getReturnDate());
+
+        RequestBody doctor_id =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getDoctorId());
+        RequestBody doctor_name =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getDoctorName());
+        RequestBody doctor_email =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getDoctorEmail());
+        RequestBody doc_phone_no =
+                RequestBody.create(MediaType.parse("form-data"), addPrescriptionDoctorSide.getDocPhoneNo());
+
+        MultipartBody.Part mExtraFile = null;
+        if (null != imgImagePath.getTag()) {
+            File extraFile = new File(Objects.requireNonNull(Uri.parse(imgImagePath.getTag().toString()).getPath()));
+            RequestBody requestFileCertificate =
+                    RequestBody.create(MediaType.parse("multipart/form-data"), extraFile);
+            mExtraFile =
+                    MultipartBody.Part.createFormData("extra_file", extraFile.getName(), requestFileCertificate);
+        }
+
         showProgressDialog();
-        Call<JsonObject> callToGetUserProfile = App.apiService.prescription(addPrescriptionDoctorSide);
+        //Call<JsonObject> callToGetUserProfile = App.apiService.prescription(addPrescriptionDoctorSide);
+        Call<JsonObject> callToGetUserProfile = App.apiService.prescription(
+                prescription_date, notes, diagnosis, pharmacy_name, pharmacy_fax_number,
+                lab_name, radiology_email, radiology_type, radiology_request,
+                patient_id, appointment_id, patient_name, patient_email, phone_no,
+                patient_address, gender, birth_date, age, test,
+                lab_request_note, prescription, return_date, doctor_id, doctor_name,
+                doctor_email, doc_phone_no, mExtraFile);
+
         callToGetUserProfile.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -668,4 +820,113 @@ public class Medical_CheckOut_Doctor extends BaseActivity implements View.OnClic
         });
     }
 
+    public boolean checkPermissionForCamera(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int result = context.checkSelfPermission(Manifest.permission.CAMERA);
+            return result == PackageManager.PERMISSION_GRANTED;
+        }
+        return false;
+    }
+
+    public void requestPermissionForCamera(Context context) throws Exception {
+        try {
+            ActivityCompat.requestPermissions((Activity) context,
+                    PERMISSION_CAMERA,
+                    CAMERA_PERMISSION_REQUEST_CODE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                takeImage();
+            }
+        } else if (requestCode == WRITE_STORAGE_PERMISSION_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openFilesDirectory();
+            }
+        }
+    }
+
+    public boolean checkPermissionForReadWriteExtertalStorage(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int result = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            return result == PackageManager.PERMISSION_GRANTED;
+        }
+        return false;
+    }
+
+    public void requestPermissionForReadWriteExtertalStorage(Context context) throws Exception {
+        try {
+            ActivityCompat.requestPermissions((Activity) context,
+                    PERMISSION_PICTURES,
+                    WRITE_STORAGE_PERMISSION_REQUEST_CODE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public void takeImage() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(this.getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            photoFile = getTemporaryFile();
+            if (photoFile != null) {
+                mTakeImageUri = FileProvider.getUriForFile(App.getInstance(),
+                        App.getInstance().getString(R.string.file_provider_authority), photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mTakeImageUri);
+                startActivityForResult(takePictureIntent, CAMERA_PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
+
+    private void openFilesDirectory() {
+        Intent chooseFile;
+        Intent intent;
+        chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+        chooseFile.setType("image/*");
+        intent = Intent.createChooser(chooseFile, "Choose a file");
+        startActivityForResult(intent, ACTIVITY_CHOOSE_FILE);
+    }
+
+    private static File getTemporaryFile() {
+        return new File(App.getInstance().getCacheDir(), System.currentTimeMillis() + ".jpg");
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case CAMERA_PERMISSION_REQUEST_CODE:
+                    Log.i(TAG, ">>>>>>>>>>>>" + mTakeImageUri);
+                    imgImagePath.setImageURI(mTakeImageUri);
+                    imgImagePath.setTag("" + mTakeImageUri);
+                    break;
+                case ACTIVITY_CHOOSE_FILE:
+                    try {
+                        InputStream inputStream = this.getContentResolver().openInputStream(data.getData());
+                        Uri imageUri = FileUtil.writeInputSteamToCache(this, inputStream);
+                        if (null != imageUri) {
+                            Log.i(TAG, "filePath>>>>>>>>" + imageUri);
+                            imgImagePath.setImageURI(imageUri);
+                            imgImagePath.setTag(imageUri.toString());
+                            return;
+                        }
+                    } catch (Exception e) {
+                    }
+            }
+        }
+    }
+
+    private void buildPrescriptionRequest(AddPrescriptionDoctorSide addPrescriptionDoctorSide) {
+
+
+    }
 }

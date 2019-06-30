@@ -56,7 +56,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DoctorRegistrationActivity extends BaseActivity implements View.OnClickListener {
-    private static final int READ_STORAGE_PERMISSION_REQUEST_CODE = 1;
+    //private static final int READ_STORAGE_PERMISSION_REQUEST_CODE = 1;
     private static final int WRITE_STORAGE_PERMISSION_REQUEST_CODE = 3;
     private static final int ACTIVITY_CHOOSE_FILE = 2;
     private static final String[] PERMISSION_PICTURES = {
@@ -64,6 +64,7 @@ public class DoctorRegistrationActivity extends BaseActivity implements View.OnC
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
+
     private String TAG = getClass().getSimpleName();
     EditText ed1, edtSelectFile, edtSignPopup;
     TextView singup, signcture;
